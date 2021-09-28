@@ -53,14 +53,16 @@ void LR1::buildDFA() {
     }
   }
   cout << "DFA States:\n";
-  for(const auto& states: this->idToDFAState){
+  for (const auto& states : this->idToDFAState) {
     states.second->print();
   }
 }
 
 SetOfItems* LR1::createState0() {
   set<Item*> items;
-  items.insert(new Item(this->firstPr, 0, {this->dollarSymbol}));
+  set<Symbol*> lookup;
+  lookup.insert({this->dollarSymbol});
+  items.insert(new Item(this->firstPr, 0, lookup));
   return new SetOfItems(items, this->totNumStates);
 }
 

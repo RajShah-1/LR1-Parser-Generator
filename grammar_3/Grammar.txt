@@ -1,11 +1,8 @@
-3
-E T F
-5
-( ) + * id
-3
-E -> [ E + T |  T ]
-T -> [ T * F | F ]
-F -> [ ( E ) | id ]
-E
-id + id
-./grammar_1
+2
+S C
+2
+c d
+2
+S -> [ C C ]
+C -> [ c C | d ]
+S

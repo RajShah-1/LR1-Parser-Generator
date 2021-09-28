@@ -38,8 +38,8 @@ class SetOfItems {
   set<Item*> items;
   int stateIndex;
 
-  vector<Item> closureOneItem(
-      const Item& it,
+  vector<Item*> closureOneItem(
+      const Item* it,
       const unordered_map<Symbol*, unordered_set<ProductionRule*>>&
           productionRules,
       const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const;
