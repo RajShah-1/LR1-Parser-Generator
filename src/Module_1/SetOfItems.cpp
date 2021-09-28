@@ -20,11 +20,25 @@ string Item::computeHash() const {
 }
 
 void Item::print() const {
-  cout << this->pr << "Dot-index: " << this->dotIndex << " Lookup: [ ";
+  cout << this->pr->lhs->symbol << " -> [ ";
+  int index = 0;
+  for (Symbol* rhsSym : this->pr->rhs) {
+    if (index == this->dotIndex) {
+      cout << "\033[1;32m.\033[0m ";
+    }
+    cout << rhsSym->symbol << " ";
+    index++;
+  }
+  if (index == this->dotIndex) {
+    cout << "\033[1;32m.\033[0m ";
+  }
+  cout << "] ";
+
+  cout << "Dot-index: " << this->dotIndex << " Lookup: [ ";
   for (Symbol* sym : this->lookup) {
     cout << sym->symbol << " ";
   }
-  cout << "]\n";
+  cout << "]";
 }
 
 // Methods for SetOfItems class
@@ -50,7 +64,8 @@ vector<Item> SetOfItems::closureOneItem(
         productionRules,
     const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const {
   vector<Item> closure;
-  // cout << "[DEBUG] closureOneItem " << it.dotIndex << " " << it.pr->rhs.size()
+  // cout << "[DEBUG] closureOneItem " << it.dotIndex << " " <<
+  // it.pr->rhs.size()
   //      << " "
   //      << "\n";
   if (it.dotIndex < it.pr->rhs.size() && !it.pr->rhs[it.dotIndex]->isTerminal) {
@@ -219,11 +234,13 @@ void SetOfItems::print() const {
   cout << "=====\n";
   cout << "State-index: " << this->stateIndex << ":\n";
   for (Item* item : this->items) {
-    cout << item->pr << "Dot-index: " << item->dotIndex << " Lookup: [ ";
-    for (Symbol* sym : item->lookup) {
-      cout << sym->symbol << " ";
-    }
-    cout << "]\n";
+    item->print();
+    cout << "\n";
+    // cout << item->pr << "Dot-index: " << item->dotIndex << " Lookup: [ ";
+    // for (Symbol* sym : item->lookup) {
+    //   cout << sym->symbol << " ";
+    // }
+    // cout << "]\n";
   }
   cout << "=====\n";
 }
