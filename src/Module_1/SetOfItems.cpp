@@ -19,10 +19,24 @@ string Item::computeHash() const {
   return hash;
 }
 
+void Item::print() const {
+  cout << this->pr << "Dot-index: " << this->dotIndex << " Lookup: [ ";
+  for (Symbol* sym : this->lookup) {
+    cout << sym->symbol << " ";
+  }
+  cout << "]\n";
+}
+
 // Methods for SetOfItems class
 
 SetOfItems::SetOfItems(const set<Item*>& items, int stateIndex)
     : items(items), stateIndex(stateIndex) {}
+
+SetOfItems::~SetOfItems() {
+  for (Item* it : this->items) {
+    delete it;
+  }
+}
 
 int SetOfItems::getStateIndex() const { return this->stateIndex; }
 
@@ -30,9 +44,61 @@ void SetOfItems::setStateIndex(int stateId) { this->stateIndex = stateId; }
 
 // void SetOfItems::addItem(Item* item) {}
 
-SetOfItems SetOfItems::getClosure(
-    unordered_map<Symbol*, unordered_set<ProductionRule*>>& productionRules,
-    unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const {
+vector<Item> SetOfItems::closureOneItem(
+    const Item& it,
+    const unordered_map<Symbol*, unordered_set<ProductionRule*>>&
+        productionRules,
+    const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const {
+  vector<Item> closure;
+  cout << "[DEBUG] closureOneItem " << it.dotIndex << " " << it.pr->rhs.size()
+       << " "
+       << "\n";
+  if (it.dotIndex < it.pr->rhs.size() && !it.pr->rhs[it.dotIndex]->isTerminal) {
+    const auto& prodRulesPtr = productionRules.find(it.pr->rhs[it.dotIndex]);
+    if (prodRulesPtr == productionRules.end()) return {};
+    // compute lookup for the rule to be processed
+    bool isEps = true;
+    set<Symbol*> newItemLookup;
+    const auto& itProdRHS = it.pr->rhs;
+    for (int i = it.dotIndex + 1; i < itProdRHS.size(); ++i) {
+      isEps = false;
+      auto firstSetPtr = firstSetsMap.find(itProdRHS[i]);
+      if (firstSetPtr == firstSetsMap.end()) {
+        continue;
+      }
+      auto firstSet = *firstSetPtr;
+      for (Symbol* sym : firstSet.second) {
+        if (sym->symbol != EPSILON_SYMBOL) {
+          newItemLookup.insert(sym);
+        } else {
+          isEps = true;
+        }
+      }
+      if (!isEps) break;
+    }
+    if (isEps) {
+      set<Symbol*> itLookup = it.lookup;
+      cout << "[DEBUG] lookup-size: " << itLookup.size() << "\n";
+      for (auto sym : itLookup) {
+        //  cout << sym->symbol << " ";
+        newItemLookup.insert(sym);
+      }
+      // cout << "\n";
+    }
+
+    const auto& prodRules = *prodRulesPtr;
+    for (const ProductionRule* prodRule : prodRules.second) {
+      closure.push_back(Item(prodRule, 0, newItemLookup));
+    }
+    // cout << "[DEBUG] Closure of item computed\n";
+  }
+  return closure;
+}
+
+SetOfItems* SetOfItems::getClosure(
+    const unordered_map<Symbol*, unordered_set<ProductionRule*>>&
+        productionRules,
+    const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const {
   // Note:
   // It is possible that while finding the closure, canonical items with a same
   // core are added multiple times (sometimes with different lookup symbol, for
@@ -41,10 +107,6 @@ SetOfItems SetOfItems::getClosure(
   // Map [pr -> Map [dot-index -> lookup-syms]]
   unordered_map<const ProductionRule*, unordered_map<int, set<Symbol*>>>
       closureMap;
-
-  // Map [pr -> lookup-syms]
-  // stores the rules that are to be processed (dotIndex = 1 for all)
-  queue<pair<const ProductionRule*, set<Symbol*>>> processingQueue;
 
   // Add items from current set to the closure
   for (Item* it : this->items) {
@@ -56,63 +118,104 @@ SetOfItems SetOfItems::getClosure(
     } else {
       closureMap[it->pr][it->dotIndex] = it->lookup;
     }
+  }
 
-    // Check if current rule will add new items in the closure
-    if (it->dotIndex < it->pr->rhs.size() &&
-        !it->pr->rhs[it->dotIndex]->isTerminal) {
-      const auto& prodRulesPtr =
-          productionRules.find(it->pr->rhs[it->dotIndex]);
-      if (prodRulesPtr == productionRules.end()) continue;
-      const auto& prodRules = *prodRulesPtr;
-
-      // compute lookup for the rule to be processed
-      set<Symbol*> newItemLookup;
-      bool isEps = true;
-      const auto& itProdRHS = it->pr->rhs;
-      for (int i = it->dotIndex + 1; i < itProdRHS.size(); ++i) {
-        isEps = false;
-        for (Symbol* sym : firstSetsMap[itProdRHS[i]]) {
-          if (sym->symbol != EPSILON_SYMBOL) {
-            newItemLookup.insert(sym);
-          } else {
-            isEps = true;
-          }
-        }
-        if (!isEps) break;
-      }
-      if (isEps) {
-        for (Symbol* sym : it->lookup) {
-          newItemLookup.insert(sym);
-        }
-      }
-
-      for (const ProductionRule* prodRule : prodRules.second) {
-        processingQueue.push({prodRule, newItemLookup});
-      }
+  // stores the rules that are to be processed
+  queue<Item> processingQueue;
+  for (const auto& pr : closureMap) {
+    for (const auto& item : pr.second) {
+      processingQueue.push(Item(pr.first, item.first, item.second));
     }
   }
 
   // process items in the processingQueue
   while (!processingQueue.empty()) {
-    const auto& item = processingQueue.front();
+    const Item& item = processingQueue.front();
     processingQueue.pop();
-    if (closureMap.find(item.first) != closureMap.end()) {
-      if (closureMap[item.first].find(1) != closureMap[item.first].end()) {
-        // try to add new lookup syms, if a new sym is added -> a new item must
-        // be added
-				
+
+    // find out the rules added by the item
+    auto itemClosure =
+        this->closureOneItem(item, productionRules, firstSetsMap);
+    for (const auto& newItem : itemClosure) {
+      cout << "[DEBUG] ";
+      newItem.print();
+
+      bool doesItemExist = false;
+      // -> attempt to add them to the closureMap and
+      if (closureMap.find(newItem.pr) != closureMap.end() &&
+          closureMap[newItem.pr].find(newItem.dotIndex) !=
+              closureMap[newItem.pr].end()) {
+        // Item with the same core is present, check for additional
+        // lookup/lookahead symbols
+        // cout << "[DEBUG] !!\n";
+        doesItemExist = true;
+        for (Symbol* sym : newItem.lookup) {
+          if (closureMap[newItem.pr][newItem.dotIndex].find(sym) ==
+              closureMap[newItem.pr][newItem.dotIndex].end()) {
+            doesItemExist = false;
+            closureMap[newItem.pr][newItem.dotIndex].insert(sym);
+          }
+        }
+      } else {
+        // cout << "[DEBUG] ##\n";
+        closureMap[newItem.pr][newItem.dotIndex] = newItem.lookup;
       }
+      if (!doesItemExist) {
+        processingQueue.push(newItem);
+      }
+      // cout << "[DEBUG] item processed\n";
     }
   }
+  cout << "[DEBUG] Queue processed\n";
 
+  // Note that new items are created!
+  // (If this was not done then destructor of the current set will delete the
+  // item allocated by it and hence making the ptr in the closure-set invalid)
   set<Item*> closureItems;
   for (const auto& pr : closureMap) {
     for (const auto& item : pr.second) {
       closureItems.insert(new Item(pr.first, item.first, item.second));
     }
   }
-  return SetOfItems(closureItems, this->stateIndex);
+
+  return new SetOfItems(closureItems, this->stateIndex);
 }
-// SetOfItems SetOfItems::goToNewState(Symbol* sym) const;
-// string SetOfItems::computeHash() const;
-// void SetOfItems::print() const;
+
+// sets stateIndex to -1 -> it must be changed later on
+SetOfItems* SetOfItems::goToNewState(Symbol* sym) const {
+  set<Item*> newStateItems;
+  for (Item* item : this->items) {
+    if (item->dotIndex < item->pr->rhs.size() &&
+        item->pr->rhs[item->dotIndex] == sym) {
+      newStateItems.insert(
+          new Item(item->pr, item->dotIndex + 1, item->lookup));
+    }
+  }
+  return new SetOfItems(newStateItems, -1);
+}
+
+string SetOfItems::computeHash() const {
+  vector<string> itemHashes;
+  for (Item* item : this->items) {
+    itemHashes.push_back(item->computeHash());
+  }
+  sort(itemHashes.begin(), itemHashes.end());
+  string hash = "";
+  for (string str : itemHashes) {
+    hash = str + " | ";
+  }
+  return hash;
+}
+
+void SetOfItems::print() const {
+  cout << "=====\n";
+  cout << "State-index: " << this->stateIndex << ":\n";
+  for (Item* item : this->items) {
+    cout << item->pr << "Dot-index: " << item->dotIndex << " Lookup: [ ";
+    for (Symbol* sym : item->lookup) {
+      cout << sym->symbol << " ";
+    }
+    cout << "]\n";
+  }
+  cout << "=====\n";
+}

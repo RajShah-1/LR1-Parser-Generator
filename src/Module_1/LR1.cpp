@@ -3,12 +3,31 @@
 LR1::LR1() {
   this->totNumSyms = 0;
   this->totNumPr = 0;
+  this->totNumStates = 0;
   // take cfg as an input from the user
   // fills up: startSymbol, terminals, nonTerminals, and production-rules
   this->readCFG();
   cout << "\n You entered:\n";
   this->printCFG();
   this->computeFirst();
+  // Add new start symbol S_'
+  Symbol* newStart = new Symbol(this->totNumSyms, "S_'", false);
+  vector<Symbol*> newPrRhs = {this->startSymbol, this->dollarSymbol};
+  this->firstPr = new ProductionRule(this->totNumPr, newStart, newPrRhs);
+  this->productionRules[newStart].insert(this->firstPr);
+  this->startSymbol = newStart;
+  this->totNumSyms++;
+  this->totNumPr++;
+  SetOfItems* state0 = this->createState0();
+  state0->print();
+}
+
+SetOfItems* LR1::createState0() {
+  set<Item*> items;
+  items.insert(new Item(this->firstPr, 0, {this->dollarSymbol}));
+  SetOfItems state0Kernel(items, this->totNumStates++);
+  state0Kernel.print();
+  return state0Kernel.getClosure(this->productionRules, this->firstSetsMap);
 }
 
 void LR1::computeFirstForSym(Symbol* sym) {
@@ -74,13 +93,14 @@ void LR1::readCFG() {
   cout << "Note: terminal symbols and non-terminal symbols can be strings. "
           "The string must not contain either of whitespace, tab, newline, "
           "']', " +
-              (this->dollarSymbol->symbol) + ", and '_'. Use \""
-       << EPSILON_SYMBOL << "\" as epsilon \n\n";
+              (DOLLAR_SYMBOL) + ", and '_'. Use \""
+       << EPSILON_SYMBOL << "\" as epsilon.\n\n";
 
   // add epsilon to grammar
   this->symToPtr[EPSILON_SYMBOL] =
       new Symbol(this->totNumSyms, EPSILON_SYMBOL, true);
   this->epsSymbol = this->symToPtr[EPSILON_SYMBOL];
+  this->terminals.push_back(this->epsSymbol);
   symToId[this->epsSymbol] = this->totNumSyms;
   // this->terminals.push_back(this->symToPtr[EPSILON_SYMBOL]);
   this->totNumSyms++;
@@ -89,6 +109,7 @@ void LR1::readCFG() {
   this->symToPtr[DOLLAR_SYMBOL] =
       new Symbol(this->totNumSyms, DOLLAR_SYMBOL, true);
   this->dollarSymbol = this->symToPtr[DOLLAR_SYMBOL];
+  this->terminals.push_back(this->dollarSymbol);
   symToId[this->dollarSymbol] = this->totNumSyms;
   // this->terminals.push_back(this->symToPtr[DOLLAR_SYMBOL]);
   this->totNumSyms++;

@@ -19,6 +19,7 @@ using namespace std;
 class LR1 {
   int totNumSyms;
   int totNumPr;
+  int totNumStates;
   Symbol* startSymbol;
   Symbol* epsSymbol;
   Symbol* dollarSymbol;
@@ -51,9 +52,13 @@ class LR1 {
   // Map [sym -> syms in the first set of the given sym]
   unordered_map<Symbol*, unordered_set<Symbol*>> firstSetsMap;
 
-  void computeFirst();
+  // Pointer to the first production rule
+  ProductionRule* firstPr;
 
+  void computeFirst();
   void computeFirstForSym(Symbol* sym);
+
+  SetOfItems* createState0();
 
  public:
   LR1();
