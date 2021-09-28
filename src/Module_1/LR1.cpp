@@ -18,16 +18,50 @@ LR1::LR1() {
   this->startSymbol = newStart;
   this->totNumSyms++;
   this->totNumPr++;
+  this->buildDFA();
+}
+
+void LR1::buildDFA() {
   SetOfItems* state0 = this->createState0();
-  state0->print();
+  SetOfItems* state0Closure =
+      state0->getClosure(this->productionRules, this->firstSetsMap);
+  this->idToDFAState[this->totNumStates++] = state0Closure;
+  this->hashToDFAStates[state0->computeHash()] = state0Closure;
+  delete state0;  // deleting as we have its closure
+
+  queue<SetOfItems*> processingQueue;
+  processingQueue.push(state0Closure);
+  while (!processingQueue.empty()) {
+    SetOfItems* currState = processingQueue.front();
+    processingQueue.pop();
+    auto nextSyms = currState->getNextSymbols();
+    for (Symbol* sym : nextSyms) {
+      // cout << "[DEBUG] " << sym->symbol << "\n";
+      SetOfItems* newState = currState->goToNewState(sym);
+      string newStateHash = newState->computeHash();
+      if (this->hashToDFAStates.find(newStateHash) ==
+          this->hashToDFAStates.end()) {
+        SetOfItems* newStateClosure =
+            newState->getClosure(this->productionRules, this->firstSetsMap);
+        delete newState;
+        newStateClosure->setStateIndex(this->totNumStates);
+        this->idToDFAState[this->totNumStates] = newStateClosure;
+        this->hashToDFAStates[newStateHash] = newStateClosure;
+        this->totNumStates++;
+        processingQueue.push(newStateClosure);
+      }
+    }
+  }
+  cout << "DFA States:\n";
+  for(const auto& states: this->idToDFAState){
+    states.second->print();
+  }
 }
 
 SetOfItems* LR1::createState0() {
   set<Item*> items;
   items.insert(new Item(this->firstPr, 0, {this->dollarSymbol}));
-  SetOfItems state0Kernel(items, this->totNumStates++);
-  state0Kernel.print();
-  return state0Kernel.getClosure(this->productionRules, this->firstSetsMap);
+  return new SetOfItems(items, this->totNumStates);
 }
 
 void LR1::computeFirstForSym(Symbol* sym) {

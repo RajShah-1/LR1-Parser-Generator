@@ -14,8 +14,8 @@ string Item::computeHash() const {
   for (const Symbol* sym : lookup) {
     hash += " " + to_string(sym->id);
   }
-  hash = "]";
-  cout << "[DEBUG Item Hash] " << hash << "\n";
+  hash += "]";
+  // cout << "[DEBUG Item Hash] " << hash << "\n";
   return hash;
 }
 
@@ -50,9 +50,9 @@ vector<Item> SetOfItems::closureOneItem(
         productionRules,
     const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const {
   vector<Item> closure;
-  cout << "[DEBUG] closureOneItem " << it.dotIndex << " " << it.pr->rhs.size()
-       << " "
-       << "\n";
+  // cout << "[DEBUG] closureOneItem " << it.dotIndex << " " << it.pr->rhs.size()
+  //      << " "
+  //      << "\n";
   if (it.dotIndex < it.pr->rhs.size() && !it.pr->rhs[it.dotIndex]->isTerminal) {
     const auto& prodRulesPtr = productionRules.find(it.pr->rhs[it.dotIndex]);
     if (prodRulesPtr == productionRules.end()) return {};
@@ -78,7 +78,7 @@ vector<Item> SetOfItems::closureOneItem(
     }
     if (isEps) {
       set<Symbol*> itLookup = it.lookup;
-      cout << "[DEBUG] lookup-size: " << itLookup.size() << "\n";
+      // cout << "[DEBUG] lookup-size: " << itLookup.size() << "\n";
       for (auto sym : itLookup) {
         //  cout << sym->symbol << " ";
         newItemLookup.insert(sym);
@@ -137,8 +137,8 @@ SetOfItems* SetOfItems::getClosure(
     auto itemClosure =
         this->closureOneItem(item, productionRules, firstSetsMap);
     for (const auto& newItem : itemClosure) {
-      cout << "[DEBUG] ";
-      newItem.print();
+      // cout << "[DEBUG] ";
+      // newItem.print();
 
       bool doesItemExist = false;
       // -> attempt to add them to the closureMap and
@@ -147,7 +147,6 @@ SetOfItems* SetOfItems::getClosure(
               closureMap[newItem.pr].end()) {
         // Item with the same core is present, check for additional
         // lookup/lookahead symbols
-        // cout << "[DEBUG] !!\n";
         doesItemExist = true;
         for (Symbol* sym : newItem.lookup) {
           if (closureMap[newItem.pr][newItem.dotIndex].find(sym) ==
@@ -157,7 +156,6 @@ SetOfItems* SetOfItems::getClosure(
           }
         }
       } else {
-        // cout << "[DEBUG] ##\n";
         closureMap[newItem.pr][newItem.dotIndex] = newItem.lookup;
       }
       if (!doesItemExist) {
@@ -166,7 +164,7 @@ SetOfItems* SetOfItems::getClosure(
       // cout << "[DEBUG] item processed\n";
     }
   }
-  cout << "[DEBUG] Queue processed\n";
+  // cout << "[DEBUG] Queue processed\n";
 
   // Note that new items are created!
   // (If this was not done then destructor of the current set will delete the
@@ -179,6 +177,16 @@ SetOfItems* SetOfItems::getClosure(
   }
 
   return new SetOfItems(closureItems, this->stateIndex);
+}
+
+unordered_set<Symbol*> SetOfItems::getNextSymbols() {
+  unordered_set<Symbol*> nextSyms;
+  for (Item* item : this->items) {
+    if (item->dotIndex < item->pr->rhs.size()) {
+      nextSyms.insert(item->pr->rhs[item->dotIndex]);
+    }
+  }
+  return nextSyms;
 }
 
 // sets stateIndex to -1 -> it must be changed later on

@@ -64,6 +64,7 @@ class LR1 {
   LR1();
   void readCFG();
   void printCFG();
+  void buildDFA();
   void setDirPath(const string& dirPath);
   // void createParseTableFile() const;
 };

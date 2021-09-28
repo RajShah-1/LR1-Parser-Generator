@@ -50,6 +50,7 @@ class SetOfItems {
   int getStateIndex() const;
   void setStateIndex(int stateId);
   // void addItem(Item* item);
+  unordered_set<Symbol*> getNextSymbols();
   SetOfItems* getClosure(
       const unordered_map<Symbol*, unordered_set<ProductionRule*>>&
           productionRules,
