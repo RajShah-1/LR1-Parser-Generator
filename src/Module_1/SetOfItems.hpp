@@ -38,11 +38,11 @@ class SetOfItems {
   set<Item*> items;
   int stateIndex;
 
-  vector<Item*> closureOneItem(
+  static vector<Item*> closureOneItem(
       const Item* it,
       const unordered_map<Symbol*, unordered_set<ProductionRule*>>&
           productionRules,
-      const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const;
+      const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) ;
 
  public:
   SetOfItems(const set<Item*>& items, int stateIndex);
@@ -56,6 +56,7 @@ class SetOfItems {
           productionRules,
       const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const;
   SetOfItems* goToNewState(Symbol* sym) const;
+  unordered_map<Symbol*, const ProductionRule*> getReductions();
   string computeHash() const;
   void print() const;
 };

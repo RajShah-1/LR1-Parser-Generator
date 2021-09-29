@@ -4,6 +4,7 @@
 #include <cassert>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <stack>
 #include <string>
 #include <unordered_map>
@@ -44,10 +45,14 @@ class LR1 {
   // hash of sets of LR(1) canonical items mapped to ptrs to sets
   unordered_map<string, SetOfItems*> hashToDFAStates;
   // integer id mapped to sets of LR(1) canonical items
-  unordered_map<int, SetOfItems*> idToDFAState;
+  map<int, SetOfItems*> idToDFAState;
 
   // lookup for which new state to go from a state-id and a symbol
   unordered_map<int, unordered_map<Symbol*, int>> gotoNewState;
+
+  // lookup for which reduction to use for  a state-id and a symbol
+  // map [state-id -> map [symbol -> pr-id]]
+  unordered_map<int, unordered_map<Symbol*, int>> reduction;
 
   // Map [sym -> syms in the first set of the given sym]
   unordered_map<Symbol*, unordered_set<Symbol*>> firstSetsMap;
@@ -62,6 +67,7 @@ class LR1 {
 
  public:
   LR1();
+  ~LR1();
   void readCFG();
   void printCFG();
   void buildDFA();

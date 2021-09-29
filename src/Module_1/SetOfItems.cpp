@@ -62,7 +62,7 @@ vector<Item*> SetOfItems::closureOneItem(
     const Item* it,
     const unordered_map<Symbol*, unordered_set<ProductionRule*>>&
         productionRules,
-    const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) const {
+    const unordered_map<Symbol*, unordered_set<Symbol*>>& firstSetsMap) {
   vector<Item*> closure;
   // cout << "[DEBUG] closureOneItem " << it.dotIndex << " " <<
   // it.pr->rhs.size()
@@ -139,7 +139,7 @@ SetOfItems* SetOfItems::getClosure(
   // Note that new items are created!
   // (If this was not done then destructor of the current set will delete the
   // item allocated by it and hence making the ptr in the closure-set invalid)
-  set<Item*> closureItems;
+  // set<Item*> closureItems;
 
   // stores the rules that are to be processed
   queue<Item*> processingQueue;
@@ -147,7 +147,7 @@ SetOfItems* SetOfItems::getClosure(
     for (const auto& item : pr.second) {
       Item* itemPtr = new Item(pr.first, item.first, item.second);
       processingQueue.push(itemPtr);
-      closureItems.insert(itemPtr);
+      // closureItems.insert(itemPtr);
     }
   }
 
@@ -160,8 +160,9 @@ SetOfItems* SetOfItems::getClosure(
     auto itemClosure =
         this->closureOneItem(item, productionRules, firstSetsMap);
     for (const auto& newItem : itemClosure) {
-      // cout << "[DEBUG] ";
-      // newItem.print();
+      cout << "[DEBUG] ";
+      newItem->print();
+      cout << "\n";
 
       bool doesItemExist = false;
       // -> attempt to add them to the closureMap and
@@ -183,12 +184,21 @@ SetOfItems* SetOfItems::getClosure(
       }
       if (!doesItemExist) {
         processingQueue.push(newItem);
-        closureItems.insert(newItem);
+        // closureItems.insert(newItem);
+      } else{
+        delete newItem;
       }
       // cout << "[DEBUG] item processed\n";
     }
+    delete item;
   }
   // cout << "[DEBUG] Queue processed\n";
+  set<Item*> closureItems;
+  for (const auto& pr : closureMap) {
+    for (const auto& item : pr.second) {
+      closureItems.insert(new Item(pr.first, item.first, item.second));
+    }
+  }
   return new SetOfItems(closureItems, this->stateIndex);
 }
 
@@ -215,14 +225,30 @@ SetOfItems* SetOfItems::goToNewState(Symbol* sym) const {
   return new SetOfItems(newStateItems, -1);
 }
 
+unordered_map<Symbol*, const ProductionRule*> SetOfItems::getReductions() {
+  unordered_map<Symbol*, const ProductionRule*> reductions;
+  for (Item* item : this->items) {
+    if (item->dotIndex == item->pr->rhs.size()) {
+      for (Symbol* sym : item->lookup) {
+        if (reductions.find(sym) != reductions.end()) {
+          cout << "[ERROR] Reduce-Reduce conflict!!!\n";
+        } else {
+          reductions[sym] = item->pr;
+        }
+      }
+    }
+  }
+  return reductions;
+}
+
 string SetOfItems::computeHash() const {
   vector<string> itemHashes;
   for (Item* item : this->items) {
     itemHashes.push_back(item->computeHash());
   }
   sort(itemHashes.begin(), itemHashes.end());
-  string hash = "";
-  for (string str : itemHashes) {
+  string hash;
+  for (const string& str : itemHashes) {
     hash = str + " | ";
   }
   return hash;

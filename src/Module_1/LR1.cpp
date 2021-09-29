@@ -11,7 +11,10 @@ LR1::LR1() {
   this->printCFG();
   this->computeFirst();
   // Add new start symbol S_'
-  Symbol* newStart = new Symbol(this->totNumSyms, "S_'", false);
+  auto newStart = new Symbol(this->totNumSyms, "S_'", false);
+  this->symToPtr["S_'"] = newStart;
+  this->symToId[newStart] = this->totNumSyms;
+  this->nonTerminals.push_back(newStart);
   vector<Symbol*> newPrRhs = {this->startSymbol, this->dollarSymbol};
   this->firstPr = new ProductionRule(this->totNumPr, newStart, newPrRhs);
   this->productionRules[newStart].insert(this->firstPr);
@@ -19,6 +22,23 @@ LR1::LR1() {
   this->totNumSyms++;
   this->totNumPr++;
   this->buildDFA();
+}
+
+LR1::~LR1() {
+  for (const auto& states : this->idToDFAState) {
+    delete states.second;
+  }
+  for (const auto& symPr : this->productionRules) {
+    for (ProductionRule* pr : symPr.second) {
+      delete pr;
+    }
+  }
+  for (Symbol* sym : this->terminals) {
+    delete sym;
+  }
+  for (Symbol* sym : this->nonTerminals) {
+    delete sym;
+  }
 }
 
 void LR1::buildDFA() {
@@ -49,12 +69,45 @@ void LR1::buildDFA() {
         this->hashToDFAStates[newStateHash] = newStateClosure;
         this->totNumStates++;
         processingQueue.push(newStateClosure);
+      } else{
+        delete newState;
       }
+      this->gotoNewState[currState->getStateIndex()][sym] =
+          this->hashToDFAStates[newStateHash]->getStateIndex();
     }
   }
+
+  // Fill reductions for each state
+  for (const auto& state : this->idToDFAState) {
+    SetOfItems* itemsSet = state.second;
+    int stateIndex = state.first;
+    auto redns = itemsSet->getReductions();
+    for (const auto& redn : redns) {
+      this->reduction[stateIndex][redn.first] = redn.second->id;
+    }
+  }
+
   cout << "DFA States:\n";
   for (const auto& states : this->idToDFAState) {
     states.second->print();
+  }
+
+  cout << "Action and Goto for all states:\n";
+  for (const auto& state : this->idToDFAState) {
+    int stateIndex = state.first;
+    cout << "State-" << stateIndex << "\n";
+    for (const auto& gotoEntry : this->gotoNewState[stateIndex]) {
+      cout << "GOTO( " << stateIndex << ", " << gotoEntry.first->symbol
+           << ") = "
+           << "S" << gotoEntry.second << "\n";
+    }
+    for (const auto& rednEntry : this->reduction[stateIndex]) {
+      cout << "REDUCE( " << stateIndex << ", " << rednEntry.first->symbol
+           << ") = "
+           << "S" << rednEntry.second << "\n";
+    }
+
+    cout << "===\n";
   }
 }
 
@@ -251,7 +304,7 @@ void LR1::printCFG() {
   cout << "Start symbol: " << this->startSymbol->symbol << "\n";
 
   cout << "\nProduction rules:\n";
-  for (auto pr : this->productionRules) {
+  for (const auto& pr : this->productionRules) {
     for (ProductionRule* productionRule : pr.second) {
       cout << productionRule << "\n";
     }
