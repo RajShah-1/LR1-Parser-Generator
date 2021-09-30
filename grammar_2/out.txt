@@ -1,0 +1,5450 @@
+Note: terminal symbols and non-terminal symbols can be strings. The string must not contain either of whitespace, tab, newline, ']', $, and '_'. Use "ε" as epsilon.
+
+Enter number of non-terminals: Enter 19 non-terminals:
+Enter number of terminals: Enter 32 terminals:
+
+===
+Production rule must have the following format:
+Non-terminal -> [ a space separated list of terminals and non-terminals ] (first and last symbols on rhs must be separated from the square brackets by at least one space)
+pipe-sign ('|') can be used "within square brackets" (not outside) as OR for multiple RHS
+Example: A -> [ a B C d a A | X y z W s ]
+NOTE: Do not include S' -> [ S $ ] as it is added by the program
+===
+
+Enter number of production rules:
+Enter 19 production rules:
+Enter start symbol: 
+ You entered:
+=== CFG
+Terminals: ε $ + - ∗ / = < > ( ) { } := ; and else end ic id if int do fc float not or \ print prog scan str then while 
+Non-terminals: AE BE D DL E F ES IOS IS NE P PE RE S SL T TY VL WS 
+Start symbol: P
+
+Production rules:
+Id: 37 id: 37 rule: T -> [ F ] 
+Id: 36 id: 36 rule: T -> [ T / F ] 
+Id: 35 id: 35 rule: T -> [ T ∗ F ] 
+Id: 34 id: 34 rule: E -> [ T ] 
+Id: 33 id: 33 rule: E -> [ E - T ] 
+Id: 32 id: 32 rule: E -> [ E + T ] 
+Id: 31 id: 31 rule: RE -> [ E > E ] 
+Id: 30 id: 30 rule: RE -> [ E < E ] 
+Id: 29 id: 29 rule: RE -> [ E = E ] 
+Id: 28 id: 28 rule: NE -> [ RE ] 
+Id: 27 id: 27 rule: NE -> [ { BE } ] 
+Id: 26 id: 26 rule: NE -> [ not NE ] 
+Id: 41 id: 41 rule: F -> [ fc ] 
+Id: 40 id: 40 rule: F -> [ ic ] 
+Id: 39 id: 39 rule: F -> [ id ] 
+Id: 38 id: 38 rule: F -> [ ( E ) ] 
+Id: 25 id: 25 rule: AE -> [ NE ] 
+Id: 24 id: 24 rule: AE -> [ AE and NE ] 
+Id: 0 id: 0 rule: P -> [ prog DL SL end ] 
+Id: 7 id: 7 rule: VL -> [ id ] 
+Id: 6 id: 6 rule: VL -> [ id VL ] 
+Id: 2 id: 2 rule: DL -> [ ε ] 
+Id: 1 id: 1 rule: DL -> [ D DL ] 
+Id: 9 id: 9 rule: SL -> [ ε ] 
+Id: 8 id: 8 rule: SL -> [ S SL ] 
+Id: 3 id: 3 rule: D -> [ TY VL ; ] 
+Id: 5 id: 5 rule: TY -> [ float ] 
+Id: 4 id: 4 rule: TY -> [ int ] 
+Id: 14 id: 14 rule: ES -> [ id := E ; ] 
+Id: 13 id: 13 rule: S -> [ IOS ] 
+Id: 12 id: 12 rule: S -> [ WS ] 
+Id: 11 id: 11 rule: S -> [ IS ] 
+Id: 10 id: 10 rule: S -> [ ES ] 
+Id: 23 id: 23 rule: BE -> [ AE ] 
+Id: 22 id: 22 rule: BE -> [ BE or AE ] 
+Id: 16 id: 16 rule: IS -> [ if BE then SL else SL end ] 
+Id: 15 id: 15 rule: IS -> [ if BE then SL end ] 
+Id: 17 id: 17 rule: WS -> [ while BE do SL end ] 
+Id: 21 id: 21 rule: PE -> [ str ] 
+Id: 20 id: 20 rule: PE -> [ E ] 
+Id: 19 id: 19 rule: IOS -> [ scan id ] 
+Id: 18 id: 18 rule: IOS -> [ print PE ] 
+===
+DFA States:
+=====
+State-index: 0:
+S_' -> [ . P $ ] Dot-index: 0 Lookup: [ $ ]
+P -> [ . prog DL SL end ] Dot-index: 0 Lookup: [ $ ]
+=====
+=====
+State-index: 1:
+TY -> [ . int ] Dot-index: 0 Lookup: [ id ]
+D -> [ . TY VL ; ] Dot-index: 0 Lookup: [ end id if int float print scan while ]
+TY -> [ . float ] Dot-index: 0 Lookup: [ id ]
+DL -> [ . D DL ] Dot-index: 0 Lookup: [ end id if print scan while ]
+DL -> [ . ε ] Dot-index: 0 Lookup: [ end id if print scan while ]
+P -> [ prog . DL SL end ] Dot-index: 1 Lookup: [ $ ]
+=====
+=====
+State-index: 2:
+S_' -> [ P . $ ] Dot-index: 1 Lookup: [ $ ]
+=====
+=====
+State-index: 3:
+S -> [ . IS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . ES ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ end ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ end ]
+P -> [ prog DL . SL end ] Dot-index: 2 Lookup: [ $ ]
+=====
+=====
+State-index: 4:
+TY -> [ . float ] Dot-index: 0 Lookup: [ id ]
+DL -> [ . D DL ] Dot-index: 0 Lookup: [ end id if print scan while ]
+DL -> [ . ε ] Dot-index: 0 Lookup: [ end id if print scan while ]
+DL -> [ D . DL ] Dot-index: 1 Lookup: [ end id if print scan while ]
+TY -> [ . int ] Dot-index: 0 Lookup: [ id ]
+D -> [ . TY VL ; ] Dot-index: 0 Lookup: [ end id if int float print scan while ]
+=====
+=====
+State-index: 5:
+TY -> [ float . ] Dot-index: 1 Lookup: [ id ]
+=====
+=====
+State-index: 6:
+VL -> [ . id VL ] Dot-index: 0 Lookup: [ ; ]
+VL -> [ . id ] Dot-index: 0 Lookup: [ ; ]
+D -> [ TY . VL ; ] Dot-index: 1 Lookup: [ end id if int float print scan while ]
+=====
+=====
+State-index: 7:
+TY -> [ int . ] Dot-index: 1 Lookup: [ id ]
+=====
+=====
+State-index: 8:
+S_' -> [ P $ . ] Dot-index: 2 Lookup: [ $ ]
+=====
+=====
+State-index: 9:
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . ES ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ end ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ end ]
+SL -> [ S . SL ] Dot-index: 1 Lookup: [ end ]
+=====
+=====
+State-index: 10:
+IOS -> [ scan . id ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 11:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+PE -> [ . E ] Dot-index: 0 Lookup: [ end id if print scan while ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+PE -> [ . str ] Dot-index: 0 Lookup: [ end id if print scan while ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - end id if print scan while ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - end id if print scan while ]
+IOS -> [ print . PE ] Dot-index: 1 Lookup: [ end id if print scan while ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 12:
+S -> [ WS . ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 13:
+S -> [ IOS . ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 14:
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and do or ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ and do or ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and do or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and do or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ and do or ]
+WS -> [ while . BE do SL end ] Dot-index: 1 Lookup: [ end id if print scan while ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ do or ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 15:
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and or then ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ or then ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+IS -> [ if . BE then SL else SL end ] Dot-index: 1 Lookup: [ end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and or then ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and or then ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ and or then ]
+IS -> [ if . BE then SL end ] Dot-index: 1 Lookup: [ end id if print scan while ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and or then ]
+=====
+=====
+State-index: 16:
+S -> [ ES . ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 17:
+P -> [ prog DL SL . end ] Dot-index: 3 Lookup: [ $ ]
+=====
+=====
+State-index: 18:
+ES -> [ id . := E ; ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 19:
+S -> [ IS . ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 20:
+DL -> [ D DL . ] Dot-index: 2 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 21:
+D -> [ TY VL . ; ] Dot-index: 2 Lookup: [ end id if int float print scan while ]
+=====
+=====
+State-index: 22:
+VL -> [ . id ] Dot-index: 0 Lookup: [ ; ]
+VL -> [ id . ] Dot-index: 1 Lookup: [ ; ]
+VL -> [ . id VL ] Dot-index: 0 Lookup: [ ; ]
+VL -> [ id . VL ] Dot-index: 1 Lookup: [ ; ]
+=====
+=====
+State-index: 23:
+SL -> [ S SL . ] Dot-index: 2 Lookup: [ end ]
+=====
+=====
+State-index: 24:
+IOS -> [ scan id . ] Dot-index: 2 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 25:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 26:
+IOS -> [ print PE . ] Dot-index: 2 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 27:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 28:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 29:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 30:
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+E -> [ T . ] Dot-index: 1 Lookup: [ + - end id if print scan while ]
+=====
+=====
+State-index: 31:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - end id if print scan while ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - end id if print scan while ]
+PE -> [ E . ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 32:
+PE -> [ str . ] Dot-index: 1 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 33:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 34:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 35:
+NE -> [ RE . ] Dot-index: 1 Lookup: [ and do or ]
+=====
+=====
+State-index: 36:
+AE -> [ AE . and NE ] Dot-index: 1 Lookup: [ and do or ]
+BE -> [ AE . ] Dot-index: 1 Lookup: [ do or ]
+=====
+=====
+State-index: 37:
+WS -> [ while BE . do SL end ] Dot-index: 2 Lookup: [ end id if print scan while ]
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ do or ]
+=====
+=====
+State-index: 38:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 39:
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ } and or ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ } and or ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ } and or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ { . BE } ] Dot-index: 1 Lookup: [ and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ } and or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ } or ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ } or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 40:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 41:
+AE -> [ NE . ] Dot-index: 1 Lookup: [ and do or ]
+=====
+=====
+State-index: 42:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 43:
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+E -> [ T . ] Dot-index: 1 Lookup: [ + - = < > ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 44:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 45:
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and do or ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and do or ]
+NE -> [ not . NE ] Dot-index: 1 Lookup: [ and do or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and do or ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and do or ]
+=====
+=====
+State-index: 46:
+RE -> [ E . < E ] Dot-index: 1 Lookup: [ and do or ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - = < > ]
+RE -> [ E . = E ] Dot-index: 1 Lookup: [ and do or ]
+RE -> [ E . > E ] Dot-index: 1 Lookup: [ and do or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - = < > ]
+=====
+=====
+State-index: 47:
+AE -> [ NE . ] Dot-index: 1 Lookup: [ and or then ]
+=====
+=====
+State-index: 48:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ } and or ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ } and or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ { . BE } ] Dot-index: 1 Lookup: [ and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ } and or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ } or ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ } or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 49:
+NE -> [ RE . ] Dot-index: 1 Lookup: [ and or then ]
+=====
+=====
+State-index: 50:
+IS -> [ if BE . then SL end ] Dot-index: 2 Lookup: [ end id if print scan while ]
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ or then ]
+IS -> [ if BE . then SL else SL end ] Dot-index: 2 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 51:
+BE -> [ AE . ] Dot-index: 1 Lookup: [ or then ]
+AE -> [ AE . and NE ] Dot-index: 1 Lookup: [ and or then ]
+=====
+=====
+State-index: 52:
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and or then ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and or then ]
+NE -> [ not . NE ] Dot-index: 1 Lookup: [ and or then ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and or then ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and or then ]
+=====
+=====
+State-index: 53:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - = < > ]
+RE -> [ E . = E ] Dot-index: 1 Lookup: [ and or then ]
+RE -> [ E . > E ] Dot-index: 1 Lookup: [ and or then ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - = < > ]
+RE -> [ E . < E ] Dot-index: 1 Lookup: [ and or then ]
+=====
+=====
+State-index: 54:
+P -> [ prog DL SL end . ] Dot-index: 4 Lookup: [ $ ]
+=====
+=====
+State-index: 55:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+ES -> [ id := . E ; ] Dot-index: 2 Lookup: [ end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ; ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ; ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ; ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 56:
+D -> [ TY VL ; . ] Dot-index: 3 Lookup: [ end id if int float print scan while ]
+=====
+=====
+State-index: 57:
+VL -> [ id VL . ] Dot-index: 2 Lookup: [ ; ]
+=====
+=====
+State-index: 58:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 59:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 60:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+E -> [ T . ] Dot-index: 1 Lookup: [ + - ) ]
+=====
+=====
+State-index: 61:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 62:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / end id if print scan while ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+=====
+=====
+State-index: 63:
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 64:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 65:
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 66:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 67:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - end id if print scan while ]
+=====
+=====
+State-index: 68:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - end id if print scan while ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 69:
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ AE and . NE ] Dot-index: 2 Lookup: [ and do or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and do or ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and do or ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and do or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 70:
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and do or ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and do or ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ and do or ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and do or ]
+BE -> [ BE or . AE ] Dot-index: 2 Lookup: [ do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 71:
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ end ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ end ]
+S -> [ . ES ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ while BE do . SL end ] Dot-index: 3 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 72:
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ } and or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ } and or ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ } and or ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ } and or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ { . BE } ] Dot-index: 1 Lookup: [ } and or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ } and or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ } or ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ } or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 73:
+NE -> [ RE . ] Dot-index: 1 Lookup: [ } and or ]
+=====
+=====
+State-index: 74:
+BE -> [ AE . ] Dot-index: 1 Lookup: [ } or ]
+AE -> [ AE . and NE ] Dot-index: 1 Lookup: [ } and or ]
+=====
+=====
+State-index: 75:
+NE -> [ { BE . } ] Dot-index: 2 Lookup: [ and do or ]
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ } or ]
+=====
+=====
+State-index: 76:
+AE -> [ NE . ] Dot-index: 1 Lookup: [ } and or ]
+=====
+=====
+State-index: 77:
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ } and or ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ not . NE ] Dot-index: 1 Lookup: [ } and or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ } and or ]
+=====
+=====
+State-index: 78:
+RE -> [ E . < E ] Dot-index: 1 Lookup: [ } and or ]
+RE -> [ E . = E ] Dot-index: 1 Lookup: [ } and or ]
+RE -> [ E . > E ] Dot-index: 1 Lookup: [ } and or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - = < > ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - = < > ]
+=====
+=====
+State-index: 79:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 80:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / = < > ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 81:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 82:
+NE -> [ not NE . ] Dot-index: 2 Lookup: [ and do or ]
+=====
+=====
+State-index: 83:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - = < > ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 84:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - and do or ]
+RE -> [ E > . E ] Dot-index: 2 Lookup: [ and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - and do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 85:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+RE -> [ E = . E ] Dot-index: 2 Lookup: [ and do or ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - and do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 86:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - = < > ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 87:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+RE -> [ E < . E ] Dot-index: 2 Lookup: [ and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - and do or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 88:
+NE -> [ { BE . } ] Dot-index: 2 Lookup: [ and or then ]
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ } or ]
+=====
+=====
+State-index: 89:
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and or then ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ and or then ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and or then ]
+BE -> [ BE or . AE ] Dot-index: 2 Lookup: [ or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 90:
+S -> [ . ES ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ if BE then . SL end ] Dot-index: 3 Lookup: [ end id if print scan while ]
+IS -> [ if BE then . SL else SL end ] Dot-index: 3 Lookup: [ end id if print scan while ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ else end ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ else end ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 91:
+AE -> [ AE and . NE ] Dot-index: 2 Lookup: [ and or then ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and or then ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and or then ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and or then ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 92:
+NE -> [ not NE . ] Dot-index: 2 Lookup: [ and or then ]
+=====
+=====
+State-index: 93:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+RE -> [ E < . E ] Dot-index: 2 Lookup: [ and or then ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 94:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+RE -> [ E > . E ] Dot-index: 2 Lookup: [ and or then ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - and or then ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 95:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - and or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+RE -> [ E = . E ] Dot-index: 2 Lookup: [ and or then ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 96:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 97:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 98:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 99:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 100:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ; ]
+ES -> [ id := E . ; ] Dot-index: 3 Lookup: [ end id if print scan while ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ; ]
+=====
+=====
+State-index: 101:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+E -> [ T . ] Dot-index: 1 Lookup: [ + - ; ]
+=====
+=====
+State-index: 102:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 103:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 104:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 105:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 106:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 107:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 108:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / ) ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+=====
+=====
+State-index: 109:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 110:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 111:
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - end id if print scan while ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 112:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - end id if print scan while ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / end id if print scan while ]
+=====
+=====
+State-index: 113:
+AE -> [ AE and NE . ] Dot-index: 3 Lookup: [ and do or ]
+=====
+=====
+State-index: 114:
+BE -> [ BE or AE . ] Dot-index: 3 Lookup: [ do or ]
+AE -> [ AE . and NE ] Dot-index: 1 Lookup: [ and do or ]
+=====
+=====
+State-index: 115:
+WS -> [ while BE do SL . end ] Dot-index: 4 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 116:
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ } or ]
+NE -> [ { BE . } ] Dot-index: 2 Lookup: [ } and or ]
+=====
+=====
+State-index: 117:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ AE and . NE ] Dot-index: 2 Lookup: [ } and or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ } and or ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ } and or ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 118:
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ } and or ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ } and or ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ } and or ]
+BE -> [ BE or . AE ] Dot-index: 2 Lookup: [ } or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 119:
+NE -> [ { BE } . ] Dot-index: 3 Lookup: [ and do or ]
+=====
+=====
+State-index: 120:
+NE -> [ not NE . ] Dot-index: 2 Lookup: [ } and or ]
+=====
+=====
+State-index: 121:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - } and or ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - } and or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+RE -> [ E > . E ] Dot-index: 2 Lookup: [ } and or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 122:
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+RE -> [ E = . E ] Dot-index: 2 Lookup: [ } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - } and or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 123:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+RE -> [ E < . E ] Dot-index: 2 Lookup: [ } and or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - } and or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - } and or ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 124:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 125:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 126:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 127:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - = < > ]
+=====
+=====
+State-index: 128:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 129:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 130:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 131:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - and do or ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - and do or ]
+RE -> [ E > E . ] Dot-index: 3 Lookup: [ and do or ]
+=====
+=====
+State-index: 132:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 133:
+E -> [ T . ] Dot-index: 1 Lookup: [ + - and do or ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 134:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 135:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - and do or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - and do or ]
+RE -> [ E = E . ] Dot-index: 3 Lookup: [ and do or ]
+=====
+=====
+State-index: 136:
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - = < > ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 137:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - and do or ]
+RE -> [ E < E . ] Dot-index: 3 Lookup: [ and do or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - and do or ]
+=====
+=====
+State-index: 138:
+NE -> [ { BE } . ] Dot-index: 3 Lookup: [ and or then ]
+=====
+=====
+State-index: 139:
+BE -> [ BE or AE . ] Dot-index: 3 Lookup: [ or then ]
+AE -> [ AE . and NE ] Dot-index: 1 Lookup: [ and or then ]
+=====
+=====
+State-index: 140:
+S -> [ IS . ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 141:
+S -> [ . IS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . ES ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ else end ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ else end ]
+SL -> [ S . SL ] Dot-index: 1 Lookup: [ else end ]
+=====
+=====
+State-index: 142:
+IOS -> [ scan . id ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 143:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ and do or ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and do or ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and do or ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ and do or ]
+WS -> [ while . BE do SL end ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ do or ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+=====
+=====
+State-index: 144:
+S -> [ IOS . ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 145:
+S -> [ WS . ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 146:
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - else end id if print scan while ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - else end id if print scan while ]
+PE -> [ . E ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+PE -> [ . str ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IOS -> [ print . PE ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - else end id if print scan while ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 147:
+RE -> [ . E < E ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - = < > ]
+BE -> [ . AE ] Dot-index: 0 Lookup: [ or then ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - = < > ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - = < > ]
+RE -> [ . E > E ] Dot-index: 0 Lookup: [ and or then ]
+BE -> [ . BE or AE ] Dot-index: 0 Lookup: [ or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+IS -> [ if . BE then SL else SL end ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+NE -> [ . not NE ] Dot-index: 0 Lookup: [ and or then ]
+NE -> [ . RE ] Dot-index: 0 Lookup: [ and or then ]
+AE -> [ . AE and NE ] Dot-index: 0 Lookup: [ and or then ]
+IS -> [ if . BE then SL end ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+NE -> [ . { BE } ] Dot-index: 0 Lookup: [ and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+AE -> [ . NE ] Dot-index: 0 Lookup: [ and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / = < > ]
+RE -> [ . E = E ] Dot-index: 0 Lookup: [ and or then ]
+=====
+=====
+State-index: 148:
+IS -> [ if BE then SL . end ] Dot-index: 4 Lookup: [ end id if print scan while ]
+IS -> [ if BE then SL . else SL end ] Dot-index: 4 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 149:
+ES -> [ id . := E ; ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 150:
+S -> [ ES . ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 151:
+AE -> [ AE and NE . ] Dot-index: 3 Lookup: [ and or then ]
+=====
+=====
+State-index: 152:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 153:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 154:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 155:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+E -> [ T . ] Dot-index: 1 Lookup: [ + - and or then ]
+=====
+=====
+State-index: 156:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - and or then ]
+RE -> [ E < E . ] Dot-index: 3 Lookup: [ and or then ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - and or then ]
+=====
+=====
+State-index: 157:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 158:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 159:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - and or then ]
+RE -> [ E > E . ] Dot-index: 3 Lookup: [ and or then ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - and or then ]
+=====
+=====
+State-index: 160:
+RE -> [ E = E . ] Dot-index: 3 Lookup: [ and or then ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - and or then ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - and or then ]
+=====
+=====
+State-index: 161:
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / ; ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+=====
+=====
+State-index: 162:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - ; ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 163:
+ES -> [ id := E ; . ] Dot-index: 4 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 164:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - ; ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 165:
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / ; ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 166:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 167:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 168:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 169:
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - ) ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 170:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - ) ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 171:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 172:
+WS -> [ while BE do SL end . ] Dot-index: 5 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 173:
+NE -> [ { BE } . ] Dot-index: 3 Lookup: [ } and or ]
+=====
+=====
+State-index: 174:
+AE -> [ AE and NE . ] Dot-index: 3 Lookup: [ } and or ]
+=====
+=====
+State-index: 175:
+BE -> [ BE or AE . ] Dot-index: 3 Lookup: [ } or ]
+AE -> [ AE . and NE ] Dot-index: 1 Lookup: [ } and or ]
+=====
+=====
+State-index: 176:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 177:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 178:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 179:
+RE -> [ E > E . ] Dot-index: 3 Lookup: [ } and or ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - } and or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - } and or ]
+=====
+=====
+State-index: 180:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 181:
+E -> [ T . ] Dot-index: 1 Lookup: [ + - } and or ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 182:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 183:
+RE -> [ E = E . ] Dot-index: 3 Lookup: [ } and or ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - } and or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - } and or ]
+=====
+=====
+State-index: 184:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - } and or ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - } and or ]
+RE -> [ E < E . ] Dot-index: 3 Lookup: [ } and or ]
+=====
+=====
+State-index: 185:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / and do or ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+=====
+=====
+State-index: 186:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - and do or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 187:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - and do or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 188:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 189:
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / and do or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 190:
+SL -> [ S SL . ] Dot-index: 2 Lookup: [ else end ]
+=====
+=====
+State-index: 191:
+IOS -> [ scan id . ] Dot-index: 2 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 192:
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ do or ]
+WS -> [ while BE . do SL end ] Dot-index: 2 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 193:
+F -> [ id . ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 194:
+PE -> [ str . ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 195:
+F -> [ ic . ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 196:
+F -> [ fc . ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 197:
+IOS -> [ print PE . ] Dot-index: 2 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 198:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ) ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ) ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ) ]
+=====
+=====
+State-index: 199:
+T -> [ F . ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 200:
+E -> [ T . ] Dot-index: 1 Lookup: [ + - else end id if print scan while ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 201:
+PE -> [ E . ] Dot-index: 1 Lookup: [ else end id if print scan while ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - else end id if print scan while ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - else end id if print scan while ]
+=====
+=====
+State-index: 202:
+BE -> [ BE . or AE ] Dot-index: 1 Lookup: [ or then ]
+IS -> [ if BE . then SL end ] Dot-index: 2 Lookup: [ else end id if print scan while ]
+IS -> [ if BE . then SL else SL end ] Dot-index: 2 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 203:
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . ES ] Dot-index: 0 Lookup: [ end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ end ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ end ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ if BE then SL else . SL end ] Dot-index: 5 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 204:
+IS -> [ if BE then SL end . ] Dot-index: 5 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 205:
+E -> [ . E - T ] Dot-index: 0 Lookup: [ + - ; ]
+ES -> [ id := . E ; ] Dot-index: 2 Lookup: [ else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ + - ; ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+E -> [ . T ] Dot-index: 0 Lookup: [ + - ; ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 206:
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 207:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 208:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - and or then ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 209:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - and or then ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 210:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 211:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 212:
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - ; ]
+=====
+=====
+State-index: 213:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - ; ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 214:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 215:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / ; ]
+=====
+=====
+State-index: 216:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 217:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 218:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - } and or ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 219:
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / } and or ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 220:
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / } and or ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 221:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 222:
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - and do or ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 223:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - and do or ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 224:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 225:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / and do or ]
+=====
+=====
+State-index: 226:
+S -> [ . ES ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ end ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ end ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ while BE do . SL end ] Dot-index: 3 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 227:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ) ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ + - ∗ / else end id if print scan while ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ) ]
+=====
+=====
+State-index: 228:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+T -> [ T ∗ . F ] Dot-index: 2 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 229:
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+T -> [ T / . F ] Dot-index: 2 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 230:
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+E -> [ E - . T ] Dot-index: 2 Lookup: [ + - else end id if print scan while ]
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 231:
+T -> [ . F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ic ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . id ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+T -> [ . T ∗ F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ + - else end id if print scan while ]
+T -> [ . T / F ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . fc ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 232:
+IS -> [ if BE then . SL end ] Dot-index: 3 Lookup: [ else end id if print scan while ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ else end ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+S -> [ . ES ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ else end ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ else end id if print scan while ]
+IS -> [ if BE then . SL else SL end ] Dot-index: 3 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 233:
+IS -> [ if BE then SL else SL . end ] Dot-index: 6 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 234:
+E -> [ E . - T ] Dot-index: 1 Lookup: [ + - ; ]
+ES -> [ id := E . ; ] Dot-index: 3 Lookup: [ else end id if print scan while ]
+E -> [ E . + T ] Dot-index: 1 Lookup: [ + - ; ]
+=====
+=====
+State-index: 235:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 236:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 237:
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - and or then ]
+=====
+=====
+State-index: 238:
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - and or then ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 239:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / and or then ]
+=====
+=====
+State-index: 240:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 241:
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - } and or ]
+=====
+=====
+State-index: 242:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - } and or ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 243:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 244:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / } and or ]
+=====
+=====
+State-index: 245:
+WS -> [ while BE do SL . end ] Dot-index: 4 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 246:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 247:
+T -> [ T ∗ F . ] Dot-index: 3 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 248:
+T -> [ T / F . ] Dot-index: 3 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 249:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+E -> [ E - T . ] Dot-index: 3 Lookup: [ + - else end id if print scan while ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 250:
+T -> [ T . ∗ F ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ + - else end id if print scan while ]
+T -> [ T . / F ] Dot-index: 1 Lookup: [ + - ∗ / else end id if print scan while ]
+=====
+=====
+State-index: 251:
+IS -> [ if BE then SL . else SL end ] Dot-index: 4 Lookup: [ else end id if print scan while ]
+IS -> [ if BE then SL . end ] Dot-index: 4 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 252:
+IS -> [ if BE then SL else SL end . ] Dot-index: 7 Lookup: [ end id if print scan while ]
+=====
+=====
+State-index: 253:
+ES -> [ id := E ; . ] Dot-index: 4 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 254:
+WS -> [ while BE do SL end . ] Dot-index: 5 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 255:
+IS -> [ if BE then SL end . ] Dot-index: 5 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 256:
+S -> [ . ES ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ . if BE then SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+ES -> [ . id := E ; ] Dot-index: 0 Lookup: [ end id if print scan while ]
+WS -> [ . while BE do SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . WS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . print PE ] Dot-index: 0 Lookup: [ end id if print scan while ]
+S -> [ . IOS ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IOS -> [ . scan id ] Dot-index: 0 Lookup: [ end id if print scan while ]
+SL -> [ . S SL ] Dot-index: 0 Lookup: [ end ]
+SL -> [ . ε ] Dot-index: 0 Lookup: [ end ]
+IS -> [ . if BE then SL else SL end ] Dot-index: 0 Lookup: [ end id if print scan while ]
+IS -> [ if BE then SL else . SL end ] Dot-index: 5 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 257:
+IS -> [ if BE then SL else SL . end ] Dot-index: 6 Lookup: [ else end id if print scan while ]
+=====
+=====
+State-index: 258:
+IS -> [ if BE then SL else SL end . ] Dot-index: 7 Lookup: [ else end id if print scan while ]
+=====
+Action and Goto for all states:
+State-0
+GOTO( 0, P) = S2
+GOTO( 0, prog) = S1
+===
+State-1
+GOTO( 1, int) = S7
+GOTO( 1, TY) = S6
+GOTO( 1, float) = S5
+GOTO( 1, D) = S4
+GOTO( 1, DL) = S3
+REDUCE( 1, end) = R2
+REDUCE( 1, scan) = R2
+REDUCE( 1, id) = R2
+REDUCE( 1, if) = R2
+REDUCE( 1, print) = R2
+REDUCE( 1, while) = R2
+===
+State-2
+GOTO( 2, $) = S8
+===
+State-3
+GOTO( 3, IS) = S19
+GOTO( 3, id) = S18
+GOTO( 3, SL) = S17
+GOTO( 3, ES) = S16
+GOTO( 3, if) = S15
+GOTO( 3, while) = S14
+GOTO( 3, IOS) = S13
+GOTO( 3, WS) = S12
+GOTO( 3, print) = S11
+GOTO( 3, scan) = S10
+GOTO( 3, S) = S9
+REDUCE( 3, end) = R9
+===
+State-4
+GOTO( 4, float) = S5
+GOTO( 4, D) = S4
+GOTO( 4, DL) = S20
+GOTO( 4, int) = S7
+GOTO( 4, TY) = S6
+REDUCE( 4, end) = R2
+REDUCE( 4, scan) = R2
+REDUCE( 4, id) = R2
+REDUCE( 4, if) = R2
+REDUCE( 4, print) = R2
+REDUCE( 4, while) = R2
+===
+State-5
+REDUCE( 5, id) = R5
+===
+State-6
+GOTO( 6, id) = S22
+GOTO( 6, VL) = S21
+===
+State-7
+REDUCE( 7, id) = R4
+===
+State-8
+REDUCE( 8, $) = R42
+===
+State-9
+GOTO( 9, id) = S18
+GOTO( 9, SL) = S23
+GOTO( 9, if) = S15
+GOTO( 9, IS) = S19
+GOTO( 9, ES) = S16
+GOTO( 9, while) = S14
+GOTO( 9, IOS) = S13
+GOTO( 9, WS) = S12
+GOTO( 9, print) = S11
+GOTO( 9, scan) = S10
+GOTO( 9, S) = S9
+REDUCE( 9, end) = R9
+===
+State-10
+GOTO( 10, id) = S24
+===
+State-11
+GOTO( 11, ic) = S33
+GOTO( 11, str) = S32
+GOTO( 11, E) = S31
+GOTO( 11, T) = S30
+GOTO( 11, F) = S29
+GOTO( 11, id) = S28
+GOTO( 11, fc) = S27
+GOTO( 11, PE) = S26
+GOTO( 11, () = S25
+===
+State-12
+REDUCE( 12, end) = R12
+REDUCE( 12, scan) = R12
+REDUCE( 12, id) = R12
+REDUCE( 12, if) = R12
+REDUCE( 12, print) = R12
+REDUCE( 12, while) = R12
+===
+State-13
+REDUCE( 13, end) = R13
+REDUCE( 13, scan) = R13
+REDUCE( 13, id) = R13
+REDUCE( 13, if) = R13
+REDUCE( 13, print) = R13
+REDUCE( 13, while) = R13
+===
+State-14
+GOTO( 14, E) = S46
+GOTO( 14, not) = S45
+GOTO( 14, F) = S44
+GOTO( 14, T) = S43
+GOTO( 14, () = S42
+GOTO( 14, NE) = S41
+GOTO( 14, id) = S40
+GOTO( 14, {) = S39
+GOTO( 14, ic) = S38
+GOTO( 14, BE) = S37
+GOTO( 14, AE) = S36
+GOTO( 14, RE) = S35
+GOTO( 14, fc) = S34
+===
+State-15
+GOTO( 15, E) = S53
+GOTO( 15, not) = S52
+GOTO( 15, AE) = S51
+GOTO( 15, T) = S43
+GOTO( 15, F) = S44
+GOTO( 15, BE) = S50
+GOTO( 15, ic) = S38
+GOTO( 15, () = S42
+GOTO( 15, id) = S40
+GOTO( 15, RE) = S49
+GOTO( 15, {) = S48
+GOTO( 15, NE) = S47
+GOTO( 15, fc) = S34
+===
+State-16
+REDUCE( 16, end) = R10
+REDUCE( 16, scan) = R10
+REDUCE( 16, id) = R10
+REDUCE( 16, if) = R10
+REDUCE( 16, print) = R10
+REDUCE( 16, while) = R10
+===
+State-17
+GOTO( 17, end) = S54
+===
+State-18
+GOTO( 18, :=) = S55
+===
+State-19
+REDUCE( 19, end) = R11
+REDUCE( 19, scan) = R11
+REDUCE( 19, id) = R11
+REDUCE( 19, if) = R11
+REDUCE( 19, print) = R11
+REDUCE( 19, while) = R11
+===
+State-20
+REDUCE( 20, end) = R1
+REDUCE( 20, scan) = R1
+REDUCE( 20, id) = R1
+REDUCE( 20, if) = R1
+REDUCE( 20, print) = R1
+REDUCE( 20, while) = R1
+===
+State-21
+GOTO( 21, ;) = S56
+===
+State-22
+GOTO( 22, id) = S22
+GOTO( 22, VL) = S57
+REDUCE( 22, ;) = R7
+===
+State-23
+REDUCE( 23, end) = R8
+===
+State-24
+REDUCE( 24, end) = R19
+REDUCE( 24, scan) = R19
+REDUCE( 24, id) = R19
+REDUCE( 24, if) = R19
+REDUCE( 24, print) = R19
+REDUCE( 24, while) = R19
+===
+State-25
+GOTO( 25, ic) = S64
+GOTO( 25, () = S63
+GOTO( 25, E) = S62
+GOTO( 25, F) = S61
+GOTO( 25, T) = S60
+GOTO( 25, id) = S59
+GOTO( 25, fc) = S58
+===
+State-26
+REDUCE( 26, end) = R18
+REDUCE( 26, scan) = R18
+REDUCE( 26, id) = R18
+REDUCE( 26, if) = R18
+REDUCE( 26, print) = R18
+REDUCE( 26, while) = R18
+===
+State-27
+REDUCE( 27, +) = R41
+REDUCE( 27, -) = R41
+REDUCE( 27, print) = R41
+REDUCE( 27, ∗) = R41
+REDUCE( 27, /) = R41
+REDUCE( 27, while) = R41
+REDUCE( 27, end) = R41
+REDUCE( 27, scan) = R41
+REDUCE( 27, id) = R41
+REDUCE( 27, if) = R41
+===
+State-28
+REDUCE( 28, +) = R39
+REDUCE( 28, -) = R39
+REDUCE( 28, print) = R39
+REDUCE( 28, ∗) = R39
+REDUCE( 28, /) = R39
+REDUCE( 28, while) = R39
+REDUCE( 28, end) = R39
+REDUCE( 28, scan) = R39
+REDUCE( 28, id) = R39
+REDUCE( 28, if) = R39
+===
+State-29
+REDUCE( 29, +) = R37
+REDUCE( 29, -) = R37
+REDUCE( 29, print) = R37
+REDUCE( 29, ∗) = R37
+REDUCE( 29, /) = R37
+REDUCE( 29, while) = R37
+REDUCE( 29, end) = R37
+REDUCE( 29, scan) = R37
+REDUCE( 29, id) = R37
+REDUCE( 29, if) = R37
+===
+State-30
+GOTO( 30, /) = S66
+GOTO( 30, ∗) = S65
+REDUCE( 30, +) = R34
+REDUCE( 30, -) = R34
+REDUCE( 30, print) = R34
+REDUCE( 30, end) = R34
+REDUCE( 30, scan) = R34
+REDUCE( 30, id) = R34
+REDUCE( 30, if) = R34
+REDUCE( 30, while) = R34
+===
+State-31
+GOTO( 31, +) = S68
+GOTO( 31, -) = S67
+REDUCE( 31, end) = R20
+REDUCE( 31, scan) = R20
+REDUCE( 31, id) = R20
+REDUCE( 31, if) = R20
+REDUCE( 31, print) = R20
+REDUCE( 31, while) = R20
+===
+State-32
+REDUCE( 32, end) = R21
+REDUCE( 32, scan) = R21
+REDUCE( 32, id) = R21
+REDUCE( 32, if) = R21
+REDUCE( 32, print) = R21
+REDUCE( 32, while) = R21
+===
+State-33
+REDUCE( 33, +) = R40
+REDUCE( 33, -) = R40
+REDUCE( 33, print) = R40
+REDUCE( 33, ∗) = R40
+REDUCE( 33, /) = R40
+REDUCE( 33, while) = R40
+REDUCE( 33, end) = R40
+REDUCE( 33, scan) = R40
+REDUCE( 33, id) = R40
+REDUCE( 33, if) = R40
+===
+State-34
+REDUCE( 34, +) = R41
+REDUCE( 34, -) = R41
+REDUCE( 34, ∗) = R41
+REDUCE( 34, /) = R41
+REDUCE( 34, =) = R41
+REDUCE( 34, <) = R41
+REDUCE( 34, >) = R41
+===
+State-35
+REDUCE( 35, and) = R28
+REDUCE( 35, do) = R28
+REDUCE( 35, or) = R28
+===
+State-36
+GOTO( 36, and) = S69
+REDUCE( 36, do) = R23
+REDUCE( 36, or) = R23
+===
+State-37
+GOTO( 37, do) = S71
+GOTO( 37, or) = S70
+===
+State-38
+REDUCE( 38, +) = R40
+REDUCE( 38, -) = R40
+REDUCE( 38, ∗) = R40
+REDUCE( 38, /) = R40
+REDUCE( 38, =) = R40
+REDUCE( 38, <) = R40
+REDUCE( 38, >) = R40
+===
+State-39
+GOTO( 39, E) = S78
+GOTO( 39, not) = S77
+GOTO( 39, NE) = S76
+GOTO( 39, () = S42
+GOTO( 39, T) = S43
+GOTO( 39, F) = S44
+GOTO( 39, id) = S40
+GOTO( 39, BE) = S75
+GOTO( 39, ic) = S38
+GOTO( 39, AE) = S74
+GOTO( 39, RE) = S73
+GOTO( 39, {) = S72
+GOTO( 39, fc) = S34
+===
+State-40
+REDUCE( 40, +) = R39
+REDUCE( 40, -) = R39
+REDUCE( 40, ∗) = R39
+REDUCE( 40, /) = R39
+REDUCE( 40, =) = R39
+REDUCE( 40, <) = R39
+REDUCE( 40, >) = R39
+===
+State-41
+REDUCE( 41, and) = R25
+REDUCE( 41, do) = R25
+REDUCE( 41, or) = R25
+===
+State-42
+GOTO( 42, T) = S60
+GOTO( 42, F) = S61
+GOTO( 42, id) = S59
+GOTO( 42, () = S63
+GOTO( 42, E) = S79
+GOTO( 42, fc) = S58
+GOTO( 42, ic) = S64
+===
+State-43
+GOTO( 43, /) = S81
+GOTO( 43, ∗) = S80
+REDUCE( 43, +) = R34
+REDUCE( 43, -) = R34
+REDUCE( 43, =) = R34
+REDUCE( 43, <) = R34
+REDUCE( 43, >) = R34
+===
+State-44
+REDUCE( 44, +) = R37
+REDUCE( 44, -) = R37
+REDUCE( 44, ∗) = R37
+REDUCE( 44, /) = R37
+REDUCE( 44, =) = R37
+REDUCE( 44, <) = R37
+REDUCE( 44, >) = R37
+===
+State-45
+GOTO( 45, E) = S46
+GOTO( 45, not) = S45
+GOTO( 45, T) = S43
+GOTO( 45, F) = S44
+GOTO( 45, fc) = S34
+GOTO( 45, id) = S40
+GOTO( 45, () = S42
+GOTO( 45, ic) = S38
+GOTO( 45, {) = S39
+GOTO( 45, NE) = S82
+GOTO( 45, RE) = S35
+===
+State-46
+GOTO( 46, <) = S87
+GOTO( 46, -) = S86
+GOTO( 46, =) = S85
+GOTO( 46, >) = S84
+GOTO( 46, +) = S83
+===
+State-47
+REDUCE( 47, and) = R25
+REDUCE( 47, or) = R25
+REDUCE( 47, then) = R25
+===
+State-48
+GOTO( 48, T) = S43
+GOTO( 48, F) = S44
+GOTO( 48, E) = S78
+GOTO( 48, not) = S77
+GOTO( 48, NE) = S76
+GOTO( 48, () = S42
+GOTO( 48, id) = S40
+GOTO( 48, BE) = S88
+GOTO( 48, ic) = S38
+GOTO( 48, AE) = S74
+GOTO( 48, RE) = S73
+GOTO( 48, {) = S72
+GOTO( 48, fc) = S34
+===
+State-49
+REDUCE( 49, and) = R28
+REDUCE( 49, or) = R28
+REDUCE( 49, then) = R28
+===
+State-50
+GOTO( 50, then) = S90
+GOTO( 50, or) = S89
+===
+State-51
+GOTO( 51, and) = S91
+REDUCE( 51, or) = R23
+REDUCE( 51, then) = R23
+===
+State-52
+GOTO( 52, E) = S53
+GOTO( 52, not) = S52
+GOTO( 52, T) = S43
+GOTO( 52, F) = S44
+GOTO( 52, () = S42
+GOTO( 52, id) = S40
+GOTO( 52, ic) = S38
+GOTO( 52, fc) = S34
+GOTO( 52, {) = S48
+GOTO( 52, NE) = S92
+GOTO( 52, RE) = S49
+===
+State-53
+GOTO( 53, +) = S83
+GOTO( 53, =) = S95
+GOTO( 53, >) = S94
+GOTO( 53, -) = S86
+GOTO( 53, <) = S93
+===
+State-54
+REDUCE( 54, $) = R0
+===
+State-55
+GOTO( 55, F) = S102
+GOTO( 55, T) = S101
+GOTO( 55, E) = S100
+GOTO( 55, ic) = S99
+GOTO( 55, id) = S98
+GOTO( 55, () = S97
+GOTO( 55, fc) = S96
+===
+State-56
+REDUCE( 56, end) = R3
+REDUCE( 56, scan) = R3
+REDUCE( 56, id) = R3
+REDUCE( 56, if) = R3
+REDUCE( 56, int) = R3
+REDUCE( 56, float) = R3
+REDUCE( 56, print) = R3
+REDUCE( 56, while) = R3
+===
+State-57
+REDUCE( 57, ;) = R6
+===
+State-58
+REDUCE( 58, +) = R41
+REDUCE( 58, )) = R41
+REDUCE( 58, -) = R41
+REDUCE( 58, ∗) = R41
+REDUCE( 58, /) = R41
+===
+State-59
+REDUCE( 59, +) = R39
+REDUCE( 59, )) = R39
+REDUCE( 59, -) = R39
+REDUCE( 59, ∗) = R39
+REDUCE( 59, /) = R39
+===
+State-60
+GOTO( 60, ∗) = S104
+GOTO( 60, /) = S103
+REDUCE( 60, +) = R34
+REDUCE( 60, )) = R34
+REDUCE( 60, -) = R34
+===
+State-61
+REDUCE( 61, +) = R37
+REDUCE( 61, )) = R37
+REDUCE( 61, -) = R37
+REDUCE( 61, ∗) = R37
+REDUCE( 61, /) = R37
+===
+State-62
+GOTO( 62, -) = S107
+GOTO( 62, )) = S106
+GOTO( 62, +) = S105
+===
+State-63
+GOTO( 63, E) = S108
+GOTO( 63, () = S63
+GOTO( 63, id) = S59
+GOTO( 63, F) = S61
+GOTO( 63, T) = S60
+GOTO( 63, ic) = S64
+GOTO( 63, fc) = S58
+===
+State-64
+REDUCE( 64, +) = R40
+REDUCE( 64, )) = R40
+REDUCE( 64, -) = R40
+REDUCE( 64, ∗) = R40
+REDUCE( 64, /) = R40
+===
+State-65
+GOTO( 65, fc) = S27
+GOTO( 65, ic) = S33
+GOTO( 65, id) = S28
+GOTO( 65, F) = S109
+GOTO( 65, () = S25
+===
+State-66
+GOTO( 66, id) = S28
+GOTO( 66, ic) = S33
+GOTO( 66, F) = S110
+GOTO( 66, () = S25
+GOTO( 66, fc) = S27
+===
+State-67
+GOTO( 67, id) = S28
+GOTO( 67, T) = S111
+GOTO( 67, F) = S29
+GOTO( 67, ic) = S33
+GOTO( 67, () = S25
+GOTO( 67, fc) = S27
+===
+State-68
+GOTO( 68, T) = S112
+GOTO( 68, F) = S29
+GOTO( 68, ic) = S33
+GOTO( 68, id) = S28
+GOTO( 68, fc) = S27
+GOTO( 68, () = S25
+===
+State-69
+GOTO( 69, E) = S46
+GOTO( 69, not) = S45
+GOTO( 69, F) = S44
+GOTO( 69, T) = S43
+GOTO( 69, NE) = S113
+GOTO( 69, RE) = S35
+GOTO( 69, id) = S40
+GOTO( 69, () = S42
+GOTO( 69, ic) = S38
+GOTO( 69, {) = S39
+GOTO( 69, fc) = S34
+===
+State-70
+GOTO( 70, not) = S45
+GOTO( 70, E) = S46
+GOTO( 70, AE) = S114
+GOTO( 70, {) = S39
+GOTO( 70, T) = S43
+GOTO( 70, F) = S44
+GOTO( 70, id) = S40
+GOTO( 70, ic) = S38
+GOTO( 70, RE) = S35
+GOTO( 70, () = S42
+GOTO( 70, NE) = S41
+GOTO( 70, fc) = S34
+===
+State-71
+GOTO( 71, if) = S15
+GOTO( 71, WS) = S12
+GOTO( 71, S) = S9
+GOTO( 71, scan) = S10
+GOTO( 71, IS) = S19
+GOTO( 71, print) = S11
+GOTO( 71, ES) = S16
+GOTO( 71, IOS) = S13
+GOTO( 71, while) = S14
+GOTO( 71, id) = S18
+GOTO( 71, SL) = S115
+REDUCE( 71, end) = R9
+===
+State-72
+GOTO( 72, E) = S78
+GOTO( 72, not) = S77
+GOTO( 72, T) = S43
+GOTO( 72, F) = S44
+GOTO( 72, () = S42
+GOTO( 72, NE) = S76
+GOTO( 72, id) = S40
+GOTO( 72, BE) = S116
+GOTO( 72, ic) = S38
+GOTO( 72, AE) = S74
+GOTO( 72, RE) = S73
+GOTO( 72, {) = S72
+GOTO( 72, fc) = S34
+===
+State-73
+REDUCE( 73, }) = R28
+REDUCE( 73, and) = R28
+REDUCE( 73, or) = R28
+===
+State-74
+GOTO( 74, and) = S117
+REDUCE( 74, }) = R23
+REDUCE( 74, or) = R23
+===
+State-75
+GOTO( 75, }) = S119
+GOTO( 75, or) = S118
+===
+State-76
+REDUCE( 76, }) = R25
+REDUCE( 76, and) = R25
+REDUCE( 76, or) = R25
+===
+State-77
+GOTO( 77, E) = S78
+GOTO( 77, not) = S77
+GOTO( 77, T) = S43
+GOTO( 77, F) = S44
+GOTO( 77, fc) = S34
+GOTO( 77, id) = S40
+GOTO( 77, () = S42
+GOTO( 77, ic) = S38
+GOTO( 77, {) = S72
+GOTO( 77, NE) = S120
+GOTO( 77, RE) = S73
+===
+State-78
+GOTO( 78, <) = S123
+GOTO( 78, =) = S122
+GOTO( 78, >) = S121
+GOTO( 78, +) = S83
+GOTO( 78, -) = S86
+===
+State-79
+GOTO( 79, +) = S105
+GOTO( 79, )) = S124
+GOTO( 79, -) = S107
+===
+State-80
+GOTO( 80, ic) = S38
+GOTO( 80, id) = S40
+GOTO( 80, () = S42
+GOTO( 80, F) = S125
+GOTO( 80, fc) = S34
+===
+State-81
+GOTO( 81, ic) = S38
+GOTO( 81, id) = S40
+GOTO( 81, fc) = S34
+GOTO( 81, () = S42
+GOTO( 81, F) = S126
+===
+State-82
+REDUCE( 82, and) = R26
+REDUCE( 82, do) = R26
+REDUCE( 82, or) = R26
+===
+State-83
+GOTO( 83, F) = S44
+GOTO( 83, T) = S127
+GOTO( 83, ic) = S38
+GOTO( 83, id) = S40
+GOTO( 83, fc) = S34
+GOTO( 83, () = S42
+===
+State-84
+GOTO( 84, id) = S134
+GOTO( 84, T) = S133
+GOTO( 84, F) = S132
+GOTO( 84, E) = S131
+GOTO( 84, () = S130
+GOTO( 84, ic) = S129
+GOTO( 84, fc) = S128
+===
+State-85
+GOTO( 85, id) = S134
+GOTO( 85, F) = S132
+GOTO( 85, T) = S133
+GOTO( 85, E) = S135
+GOTO( 85, ic) = S129
+GOTO( 85, () = S130
+GOTO( 85, fc) = S128
+===
+State-86
+GOTO( 86, () = S42
+GOTO( 86, id) = S40
+GOTO( 86, F) = S44
+GOTO( 86, T) = S136
+GOTO( 86, fc) = S34
+GOTO( 86, ic) = S38
+===
+State-87
+GOTO( 87, T) = S133
+GOTO( 87, F) = S132
+GOTO( 87, () = S130
+GOTO( 87, E) = S137
+GOTO( 87, id) = S134
+GOTO( 87, ic) = S129
+GOTO( 87, fc) = S128
+===
+State-88
+GOTO( 88, }) = S138
+GOTO( 88, or) = S118
+===
+State-89
+GOTO( 89, E) = S53
+GOTO( 89, not) = S52
+GOTO( 89, T) = S43
+GOTO( 89, F) = S44
+GOTO( 89, AE) = S139
+GOTO( 89, {) = S48
+GOTO( 89, id) = S40
+GOTO( 89, ic) = S38
+GOTO( 89, RE) = S49
+GOTO( 89, () = S42
+GOTO( 89, NE) = S47
+GOTO( 89, fc) = S34
+===
+State-90
+GOTO( 90, ES) = S150
+GOTO( 90, id) = S149
+GOTO( 90, SL) = S148
+GOTO( 90, if) = S147
+GOTO( 90, print) = S146
+GOTO( 90, WS) = S145
+GOTO( 90, IOS) = S144
+GOTO( 90, while) = S143
+GOTO( 90, scan) = S142
+GOTO( 90, S) = S141
+GOTO( 90, IS) = S140
+REDUCE( 90, else) = R9
+REDUCE( 90, end) = R9
+===
+State-91
+GOTO( 91, NE) = S151
+GOTO( 91, E) = S53
+GOTO( 91, not) = S52
+GOTO( 91, T) = S43
+GOTO( 91, F) = S44
+GOTO( 91, RE) = S49
+GOTO( 91, id) = S40
+GOTO( 91, () = S42
+GOTO( 91, ic) = S38
+GOTO( 91, {) = S48
+GOTO( 91, fc) = S34
+===
+State-92
+REDUCE( 92, and) = R26
+REDUCE( 92, or) = R26
+REDUCE( 92, then) = R26
+===
+State-93
+GOTO( 93, () = S158
+GOTO( 93, ic) = S157
+GOTO( 93, E) = S156
+GOTO( 93, T) = S155
+GOTO( 93, F) = S154
+GOTO( 93, fc) = S153
+GOTO( 93, id) = S152
+===
+State-94
+GOTO( 94, () = S158
+GOTO( 94, id) = S152
+GOTO( 94, E) = S159
+GOTO( 94, T) = S155
+GOTO( 94, F) = S154
+GOTO( 94, ic) = S157
+GOTO( 94, fc) = S153
+===
+State-95
+GOTO( 95, F) = S154
+GOTO( 95, T) = S155
+GOTO( 95, ic) = S157
+GOTO( 95, E) = S160
+GOTO( 95, id) = S152
+GOTO( 95, () = S158
+GOTO( 95, fc) = S153
+===
+State-96
+REDUCE( 96, +) = R41
+REDUCE( 96, -) = R41
+REDUCE( 96, ∗) = R41
+REDUCE( 96, /) = R41
+REDUCE( 96, ;) = R41
+===
+State-97
+GOTO( 97, ic) = S64
+GOTO( 97, E) = S161
+GOTO( 97, F) = S61
+GOTO( 97, T) = S60
+GOTO( 97, () = S63
+GOTO( 97, id) = S59
+GOTO( 97, fc) = S58
+===
+State-98
+REDUCE( 98, +) = R39
+REDUCE( 98, -) = R39
+REDUCE( 98, ∗) = R39
+REDUCE( 98, /) = R39
+REDUCE( 98, ;) = R39
+===
+State-99
+REDUCE( 99, +) = R40
+REDUCE( 99, -) = R40
+REDUCE( 99, ∗) = R40
+REDUCE( 99, /) = R40
+REDUCE( 99, ;) = R40
+===
+State-100
+GOTO( 100, -) = S164
+GOTO( 100, ;) = S163
+GOTO( 100, +) = S162
+===
+State-101
+GOTO( 101, ∗) = S166
+GOTO( 101, /) = S165
+REDUCE( 101, +) = R34
+REDUCE( 101, -) = R34
+REDUCE( 101, ;) = R34
+===
+State-102
+REDUCE( 102, +) = R37
+REDUCE( 102, -) = R37
+REDUCE( 102, ∗) = R37
+REDUCE( 102, /) = R37
+REDUCE( 102, ;) = R37
+===
+State-103
+GOTO( 103, ic) = S64
+GOTO( 103, fc) = S58
+GOTO( 103, F) = S167
+GOTO( 103, id) = S59
+GOTO( 103, () = S63
+===
+State-104
+GOTO( 104, ic) = S64
+GOTO( 104, fc) = S58
+GOTO( 104, id) = S59
+GOTO( 104, () = S63
+GOTO( 104, F) = S168
+===
+State-105
+GOTO( 105, T) = S169
+GOTO( 105, F) = S61
+GOTO( 105, id) = S59
+GOTO( 105, ic) = S64
+GOTO( 105, fc) = S58
+GOTO( 105, () = S63
+===
+State-106
+REDUCE( 106, +) = R38
+REDUCE( 106, -) = R38
+REDUCE( 106, print) = R38
+REDUCE( 106, ∗) = R38
+REDUCE( 106, /) = R38
+REDUCE( 106, while) = R38
+REDUCE( 106, end) = R38
+REDUCE( 106, scan) = R38
+REDUCE( 106, id) = R38
+REDUCE( 106, if) = R38
+===
+State-107
+GOTO( 107, () = S63
+GOTO( 107, ic) = S64
+GOTO( 107, id) = S59
+GOTO( 107, T) = S170
+GOTO( 107, F) = S61
+GOTO( 107, fc) = S58
+===
+State-108
+GOTO( 108, -) = S107
+GOTO( 108, )) = S171
+GOTO( 108, +) = S105
+===
+State-109
+REDUCE( 109, +) = R35
+REDUCE( 109, -) = R35
+REDUCE( 109, print) = R35
+REDUCE( 109, ∗) = R35
+REDUCE( 109, /) = R35
+REDUCE( 109, while) = R35
+REDUCE( 109, end) = R35
+REDUCE( 109, scan) = R35
+REDUCE( 109, id) = R35
+REDUCE( 109, if) = R35
+===
+State-110
+REDUCE( 110, +) = R36
+REDUCE( 110, -) = R36
+REDUCE( 110, print) = R36
+REDUCE( 110, ∗) = R36
+REDUCE( 110, /) = R36
+REDUCE( 110, while) = R36
+REDUCE( 110, end) = R36
+REDUCE( 110, scan) = R36
+REDUCE( 110, id) = R36
+REDUCE( 110, if) = R36
+===
+State-111
+GOTO( 111, ∗) = S65
+GOTO( 111, /) = S66
+REDUCE( 111, +) = R33
+REDUCE( 111, -) = R33
+REDUCE( 111, print) = R33
+REDUCE( 111, end) = R33
+REDUCE( 111, scan) = R33
+REDUCE( 111, id) = R33
+REDUCE( 111, if) = R33
+REDUCE( 111, while) = R33
+===
+State-112
+GOTO( 112, ∗) = S65
+GOTO( 112, /) = S66
+REDUCE( 112, +) = R32
+REDUCE( 112, -) = R32
+REDUCE( 112, print) = R32
+REDUCE( 112, end) = R32
+REDUCE( 112, scan) = R32
+REDUCE( 112, id) = R32
+REDUCE( 112, if) = R32
+REDUCE( 112, while) = R32
+===
+State-113
+REDUCE( 113, and) = R24
+REDUCE( 113, do) = R24
+REDUCE( 113, or) = R24
+===
+State-114
+GOTO( 114, and) = S69
+REDUCE( 114, do) = R22
+REDUCE( 114, or) = R22
+===
+State-115
+GOTO( 115, end) = S172
+===
+State-116
+GOTO( 116, or) = S118
+GOTO( 116, }) = S173
+===
+State-117
+GOTO( 117, F) = S44
+GOTO( 117, T) = S43
+GOTO( 117, E) = S78
+GOTO( 117, not) = S77
+GOTO( 117, NE) = S174
+GOTO( 117, RE) = S73
+GOTO( 117, id) = S40
+GOTO( 117, () = S42
+GOTO( 117, ic) = S38
+GOTO( 117, {) = S72
+GOTO( 117, fc) = S34
+===
+State-118
+GOTO( 118, E) = S78
+GOTO( 118, not) = S77
+GOTO( 118, AE) = S175
+GOTO( 118, {) = S72
+GOTO( 118, T) = S43
+GOTO( 118, F) = S44
+GOTO( 118, id) = S40
+GOTO( 118, ic) = S38
+GOTO( 118, RE) = S73
+GOTO( 118, () = S42
+GOTO( 118, NE) = S76
+GOTO( 118, fc) = S34
+===
+State-119
+REDUCE( 119, and) = R27
+REDUCE( 119, do) = R27
+REDUCE( 119, or) = R27
+===
+State-120
+REDUCE( 120, }) = R26
+REDUCE( 120, and) = R26
+REDUCE( 120, or) = R26
+===
+State-121
+GOTO( 121, id) = S182
+GOTO( 121, T) = S181
+GOTO( 121, F) = S180
+GOTO( 121, E) = S179
+GOTO( 121, ic) = S178
+GOTO( 121, () = S177
+GOTO( 121, fc) = S176
+===
+State-122
+GOTO( 122, E) = S183
+GOTO( 122, T) = S181
+GOTO( 122, F) = S180
+GOTO( 122, ic) = S178
+GOTO( 122, id) = S182
+GOTO( 122, () = S177
+GOTO( 122, fc) = S176
+===
+State-123
+GOTO( 123, ic) = S178
+GOTO( 123, T) = S181
+GOTO( 123, F) = S180
+GOTO( 123, E) = S184
+GOTO( 123, () = S177
+GOTO( 123, id) = S182
+GOTO( 123, fc) = S176
+===
+State-124
+REDUCE( 124, +) = R38
+REDUCE( 124, -) = R38
+REDUCE( 124, ∗) = R38
+REDUCE( 124, /) = R38
+REDUCE( 124, =) = R38
+REDUCE( 124, <) = R38
+REDUCE( 124, >) = R38
+===
+State-125
+REDUCE( 125, +) = R35
+REDUCE( 125, -) = R35
+REDUCE( 125, ∗) = R35
+REDUCE( 125, /) = R35
+REDUCE( 125, =) = R35
+REDUCE( 125, <) = R35
+REDUCE( 125, >) = R35
+===
+State-126
+REDUCE( 126, +) = R36
+REDUCE( 126, -) = R36
+REDUCE( 126, ∗) = R36
+REDUCE( 126, /) = R36
+REDUCE( 126, =) = R36
+REDUCE( 126, <) = R36
+REDUCE( 126, >) = R36
+===
+State-127
+GOTO( 127, ∗) = S80
+GOTO( 127, /) = S81
+REDUCE( 127, +) = R32
+REDUCE( 127, -) = R32
+REDUCE( 127, =) = R32
+REDUCE( 127, <) = R32
+REDUCE( 127, >) = R32
+===
+State-128
+REDUCE( 128, +) = R41
+REDUCE( 128, -) = R41
+REDUCE( 128, ∗) = R41
+REDUCE( 128, /) = R41
+REDUCE( 128, do) = R41
+REDUCE( 128, and) = R41
+REDUCE( 128, or) = R41
+===
+State-129
+REDUCE( 129, +) = R40
+REDUCE( 129, -) = R40
+REDUCE( 129, ∗) = R40
+REDUCE( 129, /) = R40
+REDUCE( 129, do) = R40
+REDUCE( 129, and) = R40
+REDUCE( 129, or) = R40
+===
+State-130
+GOTO( 130, id) = S59
+GOTO( 130, () = S63
+GOTO( 130, E) = S185
+GOTO( 130, F) = S61
+GOTO( 130, T) = S60
+GOTO( 130, ic) = S64
+GOTO( 130, fc) = S58
+===
+State-131
+GOTO( 131, +) = S187
+GOTO( 131, -) = S186
+REDUCE( 131, and) = R31
+REDUCE( 131, do) = R31
+REDUCE( 131, or) = R31
+===
+State-132
+REDUCE( 132, +) = R37
+REDUCE( 132, -) = R37
+REDUCE( 132, ∗) = R37
+REDUCE( 132, /) = R37
+REDUCE( 132, do) = R37
+REDUCE( 132, and) = R37
+REDUCE( 132, or) = R37
+===
+State-133
+GOTO( 133, /) = S189
+GOTO( 133, ∗) = S188
+REDUCE( 133, +) = R34
+REDUCE( 133, -) = R34
+REDUCE( 133, and) = R34
+REDUCE( 133, do) = R34
+REDUCE( 133, or) = R34
+===
+State-134
+REDUCE( 134, +) = R39
+REDUCE( 134, -) = R39
+REDUCE( 134, ∗) = R39
+REDUCE( 134, /) = R39
+REDUCE( 134, do) = R39
+REDUCE( 134, and) = R39
+REDUCE( 134, or) = R39
+===
+State-135
+GOTO( 135, -) = S186
+GOTO( 135, +) = S187
+REDUCE( 135, and) = R29
+REDUCE( 135, do) = R29
+REDUCE( 135, or) = R29
+===
+State-136
+GOTO( 136, ∗) = S80
+GOTO( 136, /) = S81
+REDUCE( 136, +) = R33
+REDUCE( 136, -) = R33
+REDUCE( 136, =) = R33
+REDUCE( 136, <) = R33
+REDUCE( 136, >) = R33
+===
+State-137
+GOTO( 137, -) = S186
+GOTO( 137, +) = S187
+REDUCE( 137, and) = R30
+REDUCE( 137, do) = R30
+REDUCE( 137, or) = R30
+===
+State-138
+REDUCE( 138, and) = R27
+REDUCE( 138, or) = R27
+REDUCE( 138, then) = R27
+===
+State-139
+GOTO( 139, and) = S91
+REDUCE( 139, or) = R22
+REDUCE( 139, then) = R22
+===
+State-140
+REDUCE( 140, else) = R11
+REDUCE( 140, end) = R11
+REDUCE( 140, scan) = R11
+REDUCE( 140, id) = R11
+REDUCE( 140, if) = R11
+REDUCE( 140, print) = R11
+REDUCE( 140, while) = R11
+===
+State-141
+GOTO( 141, IS) = S140
+GOTO( 141, ES) = S150
+GOTO( 141, if) = S147
+GOTO( 141, id) = S149
+GOTO( 141, SL) = S190
+GOTO( 141, while) = S143
+GOTO( 141, IOS) = S144
+GOTO( 141, WS) = S145
+GOTO( 141, print) = S146
+GOTO( 141, scan) = S142
+GOTO( 141, S) = S141
+REDUCE( 141, else) = R9
+REDUCE( 141, end) = R9
+===
+State-142
+GOTO( 142, id) = S191
+===
+State-143
+GOTO( 143, () = S42
+GOTO( 143, E) = S46
+GOTO( 143, not) = S45
+GOTO( 143, F) = S44
+GOTO( 143, T) = S43
+GOTO( 143, NE) = S41
+GOTO( 143, id) = S40
+GOTO( 143, {) = S39
+GOTO( 143, ic) = S38
+GOTO( 143, BE) = S192
+GOTO( 143, AE) = S36
+GOTO( 143, RE) = S35
+GOTO( 143, fc) = S34
+===
+State-144
+REDUCE( 144, else) = R13
+REDUCE( 144, end) = R13
+REDUCE( 144, scan) = R13
+REDUCE( 144, id) = R13
+REDUCE( 144, if) = R13
+REDUCE( 144, print) = R13
+REDUCE( 144, while) = R13
+===
+State-145
+REDUCE( 145, else) = R12
+REDUCE( 145, end) = R12
+REDUCE( 145, scan) = R12
+REDUCE( 145, id) = R12
+REDUCE( 145, if) = R12
+REDUCE( 145, print) = R12
+REDUCE( 145, while) = R12
+===
+State-146
+GOTO( 146, E) = S201
+GOTO( 146, T) = S200
+GOTO( 146, F) = S199
+GOTO( 146, () = S198
+GOTO( 146, PE) = S197
+GOTO( 146, fc) = S196
+GOTO( 146, ic) = S195
+GOTO( 146, str) = S194
+GOTO( 146, id) = S193
+===
+State-147
+GOTO( 147, E) = S53
+GOTO( 147, not) = S52
+GOTO( 147, T) = S43
+GOTO( 147, F) = S44
+GOTO( 147, AE) = S51
+GOTO( 147, BE) = S202
+GOTO( 147, ic) = S38
+GOTO( 147, () = S42
+GOTO( 147, id) = S40
+GOTO( 147, RE) = S49
+GOTO( 147, {) = S48
+GOTO( 147, NE) = S47
+GOTO( 147, fc) = S34
+===
+State-148
+GOTO( 148, end) = S204
+GOTO( 148, else) = S203
+===
+State-149
+GOTO( 149, :=) = S205
+===
+State-150
+REDUCE( 150, else) = R10
+REDUCE( 150, end) = R10
+REDUCE( 150, scan) = R10
+REDUCE( 150, id) = R10
+REDUCE( 150, if) = R10
+REDUCE( 150, print) = R10
+REDUCE( 150, while) = R10
+===
+State-151
+REDUCE( 151, and) = R24
+REDUCE( 151, or) = R24
+REDUCE( 151, then) = R24
+===
+State-152
+REDUCE( 152, +) = R39
+REDUCE( 152, -) = R39
+REDUCE( 152, ∗) = R39
+REDUCE( 152, /) = R39
+REDUCE( 152, and) = R39
+REDUCE( 152, or) = R39
+REDUCE( 152, then) = R39
+===
+State-153
+REDUCE( 153, +) = R41
+REDUCE( 153, -) = R41
+REDUCE( 153, ∗) = R41
+REDUCE( 153, /) = R41
+REDUCE( 153, and) = R41
+REDUCE( 153, or) = R41
+REDUCE( 153, then) = R41
+===
+State-154
+REDUCE( 154, +) = R37
+REDUCE( 154, -) = R37
+REDUCE( 154, ∗) = R37
+REDUCE( 154, /) = R37
+REDUCE( 154, and) = R37
+REDUCE( 154, or) = R37
+REDUCE( 154, then) = R37
+===
+State-155
+GOTO( 155, ∗) = S207
+GOTO( 155, /) = S206
+REDUCE( 155, +) = R34
+REDUCE( 155, -) = R34
+REDUCE( 155, and) = R34
+REDUCE( 155, or) = R34
+REDUCE( 155, then) = R34
+===
+State-156
+GOTO( 156, +) = S209
+GOTO( 156, -) = S208
+REDUCE( 156, and) = R30
+REDUCE( 156, or) = R30
+REDUCE( 156, then) = R30
+===
+State-157
+REDUCE( 157, +) = R40
+REDUCE( 157, -) = R40
+REDUCE( 157, ∗) = R40
+REDUCE( 157, /) = R40
+REDUCE( 157, and) = R40
+REDUCE( 157, or) = R40
+REDUCE( 157, then) = R40
+===
+State-158
+GOTO( 158, () = S63
+GOTO( 158, F) = S61
+GOTO( 158, T) = S60
+GOTO( 158, id) = S59
+GOTO( 158, E) = S210
+GOTO( 158, ic) = S64
+GOTO( 158, fc) = S58
+===
+State-159
+GOTO( 159, -) = S208
+GOTO( 159, +) = S209
+REDUCE( 159, and) = R31
+REDUCE( 159, or) = R31
+REDUCE( 159, then) = R31
+===
+State-160
+GOTO( 160, +) = S209
+GOTO( 160, -) = S208
+REDUCE( 160, and) = R29
+REDUCE( 160, or) = R29
+REDUCE( 160, then) = R29
+===
+State-161
+GOTO( 161, )) = S211
+GOTO( 161, +) = S105
+GOTO( 161, -) = S107
+===
+State-162
+GOTO( 162, F) = S102
+GOTO( 162, T) = S212
+GOTO( 162, ic) = S99
+GOTO( 162, id) = S98
+GOTO( 162, fc) = S96
+GOTO( 162, () = S97
+===
+State-163
+REDUCE( 163, end) = R14
+REDUCE( 163, scan) = R14
+REDUCE( 163, id) = R14
+REDUCE( 163, if) = R14
+REDUCE( 163, print) = R14
+REDUCE( 163, while) = R14
+===
+State-164
+GOTO( 164, id) = S98
+GOTO( 164, () = S97
+GOTO( 164, ic) = S99
+GOTO( 164, T) = S213
+GOTO( 164, F) = S102
+GOTO( 164, fc) = S96
+===
+State-165
+GOTO( 165, F) = S214
+GOTO( 165, () = S97
+GOTO( 165, fc) = S96
+GOTO( 165, ic) = S99
+GOTO( 165, id) = S98
+===
+State-166
+GOTO( 166, id) = S98
+GOTO( 166, () = S97
+GOTO( 166, ic) = S99
+GOTO( 166, fc) = S96
+GOTO( 166, F) = S215
+===
+State-167
+REDUCE( 167, +) = R36
+REDUCE( 167, )) = R36
+REDUCE( 167, -) = R36
+REDUCE( 167, ∗) = R36
+REDUCE( 167, /) = R36
+===
+State-168
+REDUCE( 168, +) = R35
+REDUCE( 168, )) = R35
+REDUCE( 168, -) = R35
+REDUCE( 168, ∗) = R35
+REDUCE( 168, /) = R35
+===
+State-169
+GOTO( 169, /) = S103
+GOTO( 169, ∗) = S104
+REDUCE( 169, +) = R32
+REDUCE( 169, )) = R32
+REDUCE( 169, -) = R32
+===
+State-170
+GOTO( 170, ∗) = S104
+GOTO( 170, /) = S103
+REDUCE( 170, +) = R33
+REDUCE( 170, )) = R33
+REDUCE( 170, -) = R33
+===
+State-171
+REDUCE( 171, +) = R38
+REDUCE( 171, )) = R38
+REDUCE( 171, -) = R38
+REDUCE( 171, ∗) = R38
+REDUCE( 171, /) = R38
+===
+State-172
+REDUCE( 172, end) = R17
+REDUCE( 172, scan) = R17
+REDUCE( 172, id) = R17
+REDUCE( 172, if) = R17
+REDUCE( 172, print) = R17
+REDUCE( 172, while) = R17
+===
+State-173
+REDUCE( 173, }) = R27
+REDUCE( 173, and) = R27
+REDUCE( 173, or) = R27
+===
+State-174
+REDUCE( 174, }) = R24
+REDUCE( 174, and) = R24
+REDUCE( 174, or) = R24
+===
+State-175
+GOTO( 175, and) = S117
+REDUCE( 175, }) = R22
+REDUCE( 175, or) = R22
+===
+State-176
+REDUCE( 176, +) = R41
+REDUCE( 176, -) = R41
+REDUCE( 176, ∗) = R41
+REDUCE( 176, /) = R41
+REDUCE( 176, }) = R41
+REDUCE( 176, and) = R41
+REDUCE( 176, or) = R41
+===
+State-177
+GOTO( 177, () = S63
+GOTO( 177, E) = S216
+GOTO( 177, id) = S59
+GOTO( 177, F) = S61
+GOTO( 177, T) = S60
+GOTO( 177, ic) = S64
+GOTO( 177, fc) = S58
+===
+State-178
+REDUCE( 178, +) = R40
+REDUCE( 178, -) = R40
+REDUCE( 178, ∗) = R40
+REDUCE( 178, /) = R40
+REDUCE( 178, }) = R40
+REDUCE( 178, and) = R40
+REDUCE( 178, or) = R40
+===
+State-179
+GOTO( 179, -) = S218
+GOTO( 179, +) = S217
+REDUCE( 179, }) = R31
+REDUCE( 179, and) = R31
+REDUCE( 179, or) = R31
+===
+State-180
+REDUCE( 180, +) = R37
+REDUCE( 180, -) = R37
+REDUCE( 180, ∗) = R37
+REDUCE( 180, /) = R37
+REDUCE( 180, }) = R37
+REDUCE( 180, and) = R37
+REDUCE( 180, or) = R37
+===
+State-181
+GOTO( 181, ∗) = S220
+GOTO( 181, /) = S219
+REDUCE( 181, +) = R34
+REDUCE( 181, -) = R34
+REDUCE( 181, }) = R34
+REDUCE( 181, and) = R34
+REDUCE( 181, or) = R34
+===
+State-182
+REDUCE( 182, +) = R39
+REDUCE( 182, -) = R39
+REDUCE( 182, ∗) = R39
+REDUCE( 182, /) = R39
+REDUCE( 182, }) = R39
+REDUCE( 182, and) = R39
+REDUCE( 182, or) = R39
+===
+State-183
+GOTO( 183, -) = S218
+GOTO( 183, +) = S217
+REDUCE( 183, }) = R29
+REDUCE( 183, and) = R29
+REDUCE( 183, or) = R29
+===
+State-184
+GOTO( 184, -) = S218
+GOTO( 184, +) = S217
+REDUCE( 184, }) = R30
+REDUCE( 184, and) = R30
+REDUCE( 184, or) = R30
+===
+State-185
+GOTO( 185, +) = S105
+GOTO( 185, )) = S221
+GOTO( 185, -) = S107
+===
+State-186
+GOTO( 186, () = S130
+GOTO( 186, T) = S222
+GOTO( 186, F) = S132
+GOTO( 186, id) = S134
+GOTO( 186, ic) = S129
+GOTO( 186, fc) = S128
+===
+State-187
+GOTO( 187, F) = S132
+GOTO( 187, T) = S223
+GOTO( 187, ic) = S129
+GOTO( 187, id) = S134
+GOTO( 187, fc) = S128
+GOTO( 187, () = S130
+===
+State-188
+GOTO( 188, ic) = S129
+GOTO( 188, fc) = S128
+GOTO( 188, F) = S224
+GOTO( 188, id) = S134
+GOTO( 188, () = S130
+===
+State-189
+GOTO( 189, F) = S225
+GOTO( 189, id) = S134
+GOTO( 189, () = S130
+GOTO( 189, fc) = S128
+GOTO( 189, ic) = S129
+===
+State-190
+REDUCE( 190, else) = R8
+REDUCE( 190, end) = R8
+===
+State-191
+REDUCE( 191, else) = R19
+REDUCE( 191, end) = R19
+REDUCE( 191, scan) = R19
+REDUCE( 191, id) = R19
+REDUCE( 191, if) = R19
+REDUCE( 191, print) = R19
+REDUCE( 191, while) = R19
+===
+State-192
+GOTO( 192, or) = S70
+GOTO( 192, do) = S226
+===
+State-193
+REDUCE( 193, +) = R39
+REDUCE( 193, -) = R39
+REDUCE( 193, print) = R39
+REDUCE( 193, ∗) = R39
+REDUCE( 193, /) = R39
+REDUCE( 193, while) = R39
+REDUCE( 193, else) = R39
+REDUCE( 193, end) = R39
+REDUCE( 193, scan) = R39
+REDUCE( 193, id) = R39
+REDUCE( 193, if) = R39
+===
+State-194
+REDUCE( 194, else) = R21
+REDUCE( 194, end) = R21
+REDUCE( 194, scan) = R21
+REDUCE( 194, id) = R21
+REDUCE( 194, if) = R21
+REDUCE( 194, print) = R21
+REDUCE( 194, while) = R21
+===
+State-195
+REDUCE( 195, +) = R40
+REDUCE( 195, -) = R40
+REDUCE( 195, print) = R40
+REDUCE( 195, ∗) = R40
+REDUCE( 195, /) = R40
+REDUCE( 195, while) = R40
+REDUCE( 195, else) = R40
+REDUCE( 195, end) = R40
+REDUCE( 195, scan) = R40
+REDUCE( 195, id) = R40
+REDUCE( 195, if) = R40
+===
+State-196
+REDUCE( 196, +) = R41
+REDUCE( 196, -) = R41
+REDUCE( 196, print) = R41
+REDUCE( 196, ∗) = R41
+REDUCE( 196, /) = R41
+REDUCE( 196, while) = R41
+REDUCE( 196, else) = R41
+REDUCE( 196, end) = R41
+REDUCE( 196, scan) = R41
+REDUCE( 196, id) = R41
+REDUCE( 196, if) = R41
+===
+State-197
+REDUCE( 197, else) = R18
+REDUCE( 197, end) = R18
+REDUCE( 197, scan) = R18
+REDUCE( 197, id) = R18
+REDUCE( 197, if) = R18
+REDUCE( 197, print) = R18
+REDUCE( 197, while) = R18
+===
+State-198
+GOTO( 198, () = S63
+GOTO( 198, E) = S227
+GOTO( 198, id) = S59
+GOTO( 198, F) = S61
+GOTO( 198, T) = S60
+GOTO( 198, ic) = S64
+GOTO( 198, fc) = S58
+===
+State-199
+REDUCE( 199, +) = R37
+REDUCE( 199, -) = R37
+REDUCE( 199, print) = R37
+REDUCE( 199, ∗) = R37
+REDUCE( 199, /) = R37
+REDUCE( 199, while) = R37
+REDUCE( 199, else) = R37
+REDUCE( 199, end) = R37
+REDUCE( 199, scan) = R37
+REDUCE( 199, id) = R37
+REDUCE( 199, if) = R37
+===
+State-200
+GOTO( 200, /) = S229
+GOTO( 200, ∗) = S228
+REDUCE( 200, +) = R34
+REDUCE( 200, -) = R34
+REDUCE( 200, print) = R34
+REDUCE( 200, else) = R34
+REDUCE( 200, end) = R34
+REDUCE( 200, scan) = R34
+REDUCE( 200, id) = R34
+REDUCE( 200, if) = R34
+REDUCE( 200, while) = R34
+===
+State-201
+GOTO( 201, +) = S231
+GOTO( 201, -) = S230
+REDUCE( 201, else) = R20
+REDUCE( 201, end) = R20
+REDUCE( 201, scan) = R20
+REDUCE( 201, id) = R20
+REDUCE( 201, if) = R20
+REDUCE( 201, print) = R20
+REDUCE( 201, while) = R20
+===
+State-202
+GOTO( 202, or) = S89
+GOTO( 202, then) = S232
+===
+State-203
+GOTO( 203, if) = S15
+GOTO( 203, while) = S14
+GOTO( 203, IOS) = S13
+GOTO( 203, IS) = S19
+GOTO( 203, ES) = S16
+GOTO( 203, id) = S18
+GOTO( 203, SL) = S233
+GOTO( 203, WS) = S12
+GOTO( 203, print) = S11
+GOTO( 203, scan) = S10
+GOTO( 203, S) = S9
+REDUCE( 203, end) = R9
+===
+State-204
+REDUCE( 204, end) = R15
+REDUCE( 204, scan) = R15
+REDUCE( 204, id) = R15
+REDUCE( 204, if) = R15
+REDUCE( 204, print) = R15
+REDUCE( 204, while) = R15
+===
+State-205
+GOTO( 205, E) = S234
+GOTO( 205, id) = S98
+GOTO( 205, F) = S102
+GOTO( 205, T) = S101
+GOTO( 205, ic) = S99
+GOTO( 205, () = S97
+GOTO( 205, fc) = S96
+===
+State-206
+GOTO( 206, F) = S235
+GOTO( 206, fc) = S153
+GOTO( 206, () = S158
+GOTO( 206, ic) = S157
+GOTO( 206, id) = S152
+===
+State-207
+GOTO( 207, id) = S152
+GOTO( 207, () = S158
+GOTO( 207, F) = S236
+GOTO( 207, fc) = S153
+GOTO( 207, ic) = S157
+===
+State-208
+GOTO( 208, T) = S237
+GOTO( 208, F) = S154
+GOTO( 208, () = S158
+GOTO( 208, ic) = S157
+GOTO( 208, id) = S152
+GOTO( 208, fc) = S153
+===
+State-209
+GOTO( 209, ic) = S157
+GOTO( 209, F) = S154
+GOTO( 209, T) = S238
+GOTO( 209, id) = S152
+GOTO( 209, fc) = S153
+GOTO( 209, () = S158
+===
+State-210
+GOTO( 210, +) = S105
+GOTO( 210, )) = S239
+GOTO( 210, -) = S107
+===
+State-211
+REDUCE( 211, +) = R38
+REDUCE( 211, -) = R38
+REDUCE( 211, ∗) = R38
+REDUCE( 211, /) = R38
+REDUCE( 211, ;) = R38
+===
+State-212
+GOTO( 212, /) = S165
+GOTO( 212, ∗) = S166
+REDUCE( 212, +) = R32
+REDUCE( 212, -) = R32
+REDUCE( 212, ;) = R32
+===
+State-213
+GOTO( 213, ∗) = S166
+GOTO( 213, /) = S165
+REDUCE( 213, +) = R33
+REDUCE( 213, -) = R33
+REDUCE( 213, ;) = R33
+===
+State-214
+REDUCE( 214, +) = R36
+REDUCE( 214, -) = R36
+REDUCE( 214, ∗) = R36
+REDUCE( 214, /) = R36
+REDUCE( 214, ;) = R36
+===
+State-215
+REDUCE( 215, +) = R35
+REDUCE( 215, -) = R35
+REDUCE( 215, ∗) = R35
+REDUCE( 215, /) = R35
+REDUCE( 215, ;) = R35
+===
+State-216
+GOTO( 216, +) = S105
+GOTO( 216, )) = S240
+GOTO( 216, -) = S107
+===
+State-217
+GOTO( 217, T) = S241
+GOTO( 217, F) = S180
+GOTO( 217, id) = S182
+GOTO( 217, ic) = S178
+GOTO( 217, fc) = S176
+GOTO( 217, () = S177
+===
+State-218
+GOTO( 218, T) = S242
+GOTO( 218, F) = S180
+GOTO( 218, ic) = S178
+GOTO( 218, id) = S182
+GOTO( 218, () = S177
+GOTO( 218, fc) = S176
+===
+State-219
+GOTO( 219, ic) = S178
+GOTO( 219, fc) = S176
+GOTO( 219, () = S177
+GOTO( 219, F) = S243
+GOTO( 219, id) = S182
+===
+State-220
+GOTO( 220, id) = S182
+GOTO( 220, () = S177
+GOTO( 220, ic) = S178
+GOTO( 220, fc) = S176
+GOTO( 220, F) = S244
+===
+State-221
+REDUCE( 221, +) = R38
+REDUCE( 221, -) = R38
+REDUCE( 221, ∗) = R38
+REDUCE( 221, /) = R38
+REDUCE( 221, do) = R38
+REDUCE( 221, and) = R38
+REDUCE( 221, or) = R38
+===
+State-222
+GOTO( 222, ∗) = S188
+GOTO( 222, /) = S189
+REDUCE( 222, +) = R33
+REDUCE( 222, -) = R33
+REDUCE( 222, and) = R33
+REDUCE( 222, do) = R33
+REDUCE( 222, or) = R33
+===
+State-223
+GOTO( 223, ∗) = S188
+GOTO( 223, /) = S189
+REDUCE( 223, +) = R32
+REDUCE( 223, -) = R32
+REDUCE( 223, and) = R32
+REDUCE( 223, do) = R32
+REDUCE( 223, or) = R32
+===
+State-224
+REDUCE( 224, +) = R35
+REDUCE( 224, -) = R35
+REDUCE( 224, ∗) = R35
+REDUCE( 224, /) = R35
+REDUCE( 224, do) = R35
+REDUCE( 224, and) = R35
+REDUCE( 224, or) = R35
+===
+State-225
+REDUCE( 225, +) = R36
+REDUCE( 225, -) = R36
+REDUCE( 225, ∗) = R36
+REDUCE( 225, /) = R36
+REDUCE( 225, do) = R36
+REDUCE( 225, and) = R36
+REDUCE( 225, or) = R36
+===
+State-226
+GOTO( 226, ES) = S16
+GOTO( 226, IS) = S19
+GOTO( 226, scan) = S10
+GOTO( 226, id) = S18
+GOTO( 226, SL) = S245
+GOTO( 226, S) = S9
+GOTO( 226, WS) = S12
+GOTO( 226, print) = S11
+GOTO( 226, if) = S15
+GOTO( 226, IOS) = S13
+GOTO( 226, while) = S14
+REDUCE( 226, end) = R9
+===
+State-227
+GOTO( 227, -) = S107
+GOTO( 227, )) = S246
+GOTO( 227, +) = S105
+===
+State-228
+GOTO( 228, () = S198
+GOTO( 228, F) = S247
+GOTO( 228, fc) = S196
+GOTO( 228, ic) = S195
+GOTO( 228, id) = S193
+===
+State-229
+GOTO( 229, fc) = S196
+GOTO( 229, id) = S193
+GOTO( 229, ic) = S195
+GOTO( 229, () = S198
+GOTO( 229, F) = S248
+===
+State-230
+GOTO( 230, T) = S249
+GOTO( 230, F) = S199
+GOTO( 230, () = S198
+GOTO( 230, id) = S193
+GOTO( 230, ic) = S195
+GOTO( 230, fc) = S196
+===
+State-231
+GOTO( 231, F) = S199
+GOTO( 231, T) = S250
+GOTO( 231, ic) = S195
+GOTO( 231, id) = S193
+GOTO( 231, fc) = S196
+GOTO( 231, () = S198
+===
+State-232
+GOTO( 232, SL) = S251
+GOTO( 232, id) = S149
+GOTO( 232, IOS) = S144
+GOTO( 232, while) = S143
+GOTO( 232, IS) = S140
+GOTO( 232, ES) = S150
+GOTO( 232, scan) = S142
+GOTO( 232, S) = S141
+GOTO( 232, WS) = S145
+GOTO( 232, print) = S146
+GOTO( 232, if) = S147
+REDUCE( 232, else) = R9
+REDUCE( 232, end) = R9
+===
+State-233
+GOTO( 233, end) = S252
+===
+State-234
+GOTO( 234, -) = S164
+GOTO( 234, ;) = S253
+GOTO( 234, +) = S162
+===
+State-235
+REDUCE( 235, +) = R36
+REDUCE( 235, -) = R36
+REDUCE( 235, ∗) = R36
+REDUCE( 235, /) = R36
+REDUCE( 235, and) = R36
+REDUCE( 235, or) = R36
+REDUCE( 235, then) = R36
+===
+State-236
+REDUCE( 236, +) = R35
+REDUCE( 236, -) = R35
+REDUCE( 236, ∗) = R35
+REDUCE( 236, /) = R35
+REDUCE( 236, and) = R35
+REDUCE( 236, or) = R35
+REDUCE( 236, then) = R35
+===
+State-237
+GOTO( 237, /) = S206
+GOTO( 237, ∗) = S207
+REDUCE( 237, +) = R33
+REDUCE( 237, -) = R33
+REDUCE( 237, and) = R33
+REDUCE( 237, or) = R33
+REDUCE( 237, then) = R33
+===
+State-238
+GOTO( 238, /) = S206
+GOTO( 238, ∗) = S207
+REDUCE( 238, +) = R32
+REDUCE( 238, -) = R32
+REDUCE( 238, and) = R32
+REDUCE( 238, or) = R32
+REDUCE( 238, then) = R32
+===
+State-239
+REDUCE( 239, +) = R38
+REDUCE( 239, -) = R38
+REDUCE( 239, ∗) = R38
+REDUCE( 239, /) = R38
+REDUCE( 239, and) = R38
+REDUCE( 239, or) = R38
+REDUCE( 239, then) = R38
+===
+State-240
+REDUCE( 240, +) = R38
+REDUCE( 240, -) = R38
+REDUCE( 240, ∗) = R38
+REDUCE( 240, /) = R38
+REDUCE( 240, }) = R38
+REDUCE( 240, and) = R38
+REDUCE( 240, or) = R38
+===
+State-241
+GOTO( 241, /) = S219
+GOTO( 241, ∗) = S220
+REDUCE( 241, +) = R32
+REDUCE( 241, -) = R32
+REDUCE( 241, }) = R32
+REDUCE( 241, and) = R32
+REDUCE( 241, or) = R32
+===
+State-242
+GOTO( 242, ∗) = S220
+GOTO( 242, /) = S219
+REDUCE( 242, +) = R33
+REDUCE( 242, -) = R33
+REDUCE( 242, }) = R33
+REDUCE( 242, and) = R33
+REDUCE( 242, or) = R33
+===
+State-243
+REDUCE( 243, +) = R36
+REDUCE( 243, -) = R36
+REDUCE( 243, ∗) = R36
+REDUCE( 243, /) = R36
+REDUCE( 243, }) = R36
+REDUCE( 243, and) = R36
+REDUCE( 243, or) = R36
+===
+State-244
+REDUCE( 244, +) = R35
+REDUCE( 244, -) = R35
+REDUCE( 244, ∗) = R35
+REDUCE( 244, /) = R35
+REDUCE( 244, }) = R35
+REDUCE( 244, and) = R35
+REDUCE( 244, or) = R35
+===
+State-245
+GOTO( 245, end) = S254
+===
+State-246
+REDUCE( 246, +) = R38
+REDUCE( 246, -) = R38
+REDUCE( 246, print) = R38
+REDUCE( 246, ∗) = R38
+REDUCE( 246, /) = R38
+REDUCE( 246, while) = R38
+REDUCE( 246, else) = R38
+REDUCE( 246, end) = R38
+REDUCE( 246, scan) = R38
+REDUCE( 246, id) = R38
+REDUCE( 246, if) = R38
+===
+State-247
+REDUCE( 247, +) = R35
+REDUCE( 247, -) = R35
+REDUCE( 247, print) = R35
+REDUCE( 247, ∗) = R35
+REDUCE( 247, /) = R35
+REDUCE( 247, while) = R35
+REDUCE( 247, else) = R35
+REDUCE( 247, end) = R35
+REDUCE( 247, scan) = R35
+REDUCE( 247, id) = R35
+REDUCE( 247, if) = R35
+===
+State-248
+REDUCE( 248, +) = R36
+REDUCE( 248, -) = R36
+REDUCE( 248, print) = R36
+REDUCE( 248, ∗) = R36
+REDUCE( 248, /) = R36
+REDUCE( 248, while) = R36
+REDUCE( 248, else) = R36
+REDUCE( 248, end) = R36
+REDUCE( 248, scan) = R36
+REDUCE( 248, id) = R36
+REDUCE( 248, if) = R36
+===
+State-249
+GOTO( 249, ∗) = S228
+GOTO( 249, /) = S229
+REDUCE( 249, +) = R33
+REDUCE( 249, -) = R33
+REDUCE( 249, print) = R33
+REDUCE( 249, else) = R33
+REDUCE( 249, end) = R33
+REDUCE( 249, scan) = R33
+REDUCE( 249, id) = R33
+REDUCE( 249, if) = R33
+REDUCE( 249, while) = R33
+===
+State-250
+GOTO( 250, ∗) = S228
+GOTO( 250, /) = S229
+REDUCE( 250, +) = R32
+REDUCE( 250, -) = R32
+REDUCE( 250, print) = R32
+REDUCE( 250, else) = R32
+REDUCE( 250, end) = R32
+REDUCE( 250, scan) = R32
+REDUCE( 250, id) = R32
+REDUCE( 250, if) = R32
+REDUCE( 250, while) = R32
+===
+State-251
+GOTO( 251, else) = S256
+GOTO( 251, end) = S255
+===
+State-252
+REDUCE( 252, end) = R16
+REDUCE( 252, scan) = R16
+REDUCE( 252, id) = R16
+REDUCE( 252, if) = R16
+REDUCE( 252, print) = R16
+REDUCE( 252, while) = R16
+===
+State-253
+REDUCE( 253, else) = R14
+REDUCE( 253, end) = R14
+REDUCE( 253, scan) = R14
+REDUCE( 253, id) = R14
+REDUCE( 253, if) = R14
+REDUCE( 253, print) = R14
+REDUCE( 253, while) = R14
+===
+State-254
+REDUCE( 254, else) = R17
+REDUCE( 254, end) = R17
+REDUCE( 254, scan) = R17
+REDUCE( 254, id) = R17
+REDUCE( 254, if) = R17
+REDUCE( 254, print) = R17
+REDUCE( 254, while) = R17
+===
+State-255
+REDUCE( 255, else) = R15
+REDUCE( 255, end) = R15
+REDUCE( 255, scan) = R15
+REDUCE( 255, id) = R15
+REDUCE( 255, if) = R15
+REDUCE( 255, print) = R15
+REDUCE( 255, while) = R15
+===
+State-256
+GOTO( 256, ES) = S16
+GOTO( 256, IS) = S19
+GOTO( 256, if) = S15
+GOTO( 256, id) = S18
+GOTO( 256, SL) = S257
+GOTO( 256, while) = S14
+GOTO( 256, IOS) = S13
+GOTO( 256, WS) = S12
+GOTO( 256, print) = S11
+GOTO( 256, scan) = S10
+GOTO( 256, S) = S9
+REDUCE( 256, end) = R9
+===
+State-257
+GOTO( 257, end) = S258
+===
+State-258
+REDUCE( 258, else) = R16
+REDUCE( 258, end) = R16
+REDUCE( 258, scan) = R16
+REDUCE( 258, id) = R16
+REDUCE( 258, if) = R16
+REDUCE( 258, print) = R16
+REDUCE( 258, while) = R16
+===
+Enter a directory to store created GOTO/REDUCE actions and LR1 Grammar: Enter input:
+Test-input:
+Token: prog
+Token: int
+Token: id
+Token: ;
+Token: int
+Token: id
+Token: ;
+Token: int
+Token: id
+Token: ;
+Token: int
+Token: id
+Token: ;
+Token: id
+Token: :=
+Token: ic
+Token: ;
+Token: id
+Token: :=
+Token: ic
+Token: ;
+Token: scan
+Token: id
+Token: print
+Token: id
+Token: if
+Token: id
+Token: =
+Token: ic
+Token: then
+Token: id
+Token: :=
+Token: ic
+Token: ;
+Token: else
+Token: if
+Token: id
+Token: <
+Token: ic
+Token: then
+Token: id
+Token: :=
+Token: fc
+Token: ;
+Token: end
+Token: while
+Token: id
+Token: >
+Token: fc
+Token: do
+Token: id
+Token: :=
+Token: id
+Token: -
+Token: ic
+Token: ;
+Token: end
+Token: end
+Token: while
+Token: id
+Token: >
+Token: ic
+Token: do
+Token: id
+Token: :=
+Token: id
+Token: +
+Token: ic
+Token: ;
+Token: id
+Token: :=
+Token: fc
+Token: ;
+Token: if
+Token: id
+Token: =
+Token: ic
+Token: then
+Token: id
+Token: :=
+Token: ic
+Token: ;
+Token: end
+Token: end
+Token: end
+===
+Processing for state: 0 Token: prog
+Stack: [ 0 ] 
+Syms: [ ] 
+Action: Shift-1
+===
+Processing for state: 1 Token: int
+Stack: [ 1 0 ] 
+Syms: [ prog ] 
+Action: Shift-7
+===
+Processing for state: 7 Token: id
+Stack: [ 7 1 0 ] 
+Syms: [ int prog ] 
+Action: Reduce-4
+===
+Processing for state: 6 Token: id
+Stack: [ 6 1 0 ] 
+Syms: [ TY prog ] 
+Action: Shift-22
+===
+Processing for state: 22 Token: ;
+Stack: [ 22 6 1 0 ] 
+Syms: [ id TY prog ] 
+Action: Reduce-7
+===
+Processing for state: 21 Token: ;
+Stack: [ 21 6 1 0 ] 
+Syms: [ VL TY prog ] 
+Action: Shift-56
+===
+Processing for state: 56 Token: int
+Stack: [ 56 21 6 1 0 ] 
+Syms: [ ; VL TY prog ] 
+Action: Reduce-3
+===
+Processing for state: 4 Token: int
+Stack: [ 4 1 0 ] 
+Syms: [ D prog ] 
+Action: Shift-7
+===
+Processing for state: 7 Token: id
+Stack: [ 7 4 1 0 ] 
+Syms: [ int D prog ] 
+Action: Reduce-4
+===
+Processing for state: 6 Token: id
+Stack: [ 6 4 1 0 ] 
+Syms: [ TY D prog ] 
+Action: Shift-22
+===
+Processing for state: 22 Token: ;
+Stack: [ 22 6 4 1 0 ] 
+Syms: [ id TY D prog ] 
+Action: Reduce-7
+===
+Processing for state: 21 Token: ;
+Stack: [ 21 6 4 1 0 ] 
+Syms: [ VL TY D prog ] 
+Action: Shift-56
+===
+Processing for state: 56 Token: int
+Stack: [ 56 21 6 4 1 0 ] 
+Syms: [ ; VL TY D prog ] 
+Action: Reduce-3
+===
+Processing for state: 4 Token: int
+Stack: [ 4 4 1 0 ] 
+Syms: [ D D prog ] 
+Action: Shift-7
+===
+Processing for state: 7 Token: id
+Stack: [ 7 4 4 1 0 ] 
+Syms: [ int D D prog ] 
+Action: Reduce-4
+===
+Processing for state: 6 Token: id
+Stack: [ 6 4 4 1 0 ] 
+Syms: [ TY D D prog ] 
+Action: Shift-22
+===
+Processing for state: 22 Token: ;
+Stack: [ 22 6 4 4 1 0 ] 
+Syms: [ id TY D D prog ] 
+Action: Reduce-7
+===
+Processing for state: 21 Token: ;
+Stack: [ 21 6 4 4 1 0 ] 
+Syms: [ VL TY D D prog ] 
+Action: Shift-56
+===
+Processing for state: 56 Token: int
+Stack: [ 56 21 6 4 4 1 0 ] 
+Syms: [ ; VL TY D D prog ] 
+Action: Reduce-3
+===
+Processing for state: 4 Token: int
+Stack: [ 4 4 4 1 0 ] 
+Syms: [ D D D prog ] 
+Action: Shift-7
+===
+Processing for state: 7 Token: id
+Stack: [ 7 4 4 4 1 0 ] 
+Syms: [ int D D D prog ] 
+Action: Reduce-4
+===
+Processing for state: 6 Token: id
+Stack: [ 6 4 4 4 1 0 ] 
+Syms: [ TY D D D prog ] 
+Action: Shift-22
+===
+Processing for state: 22 Token: ;
+Stack: [ 22 6 4 4 4 1 0 ] 
+Syms: [ id TY D D D prog ] 
+Action: Reduce-7
+===
+Processing for state: 21 Token: ;
+Stack: [ 21 6 4 4 4 1 0 ] 
+Syms: [ VL TY D D D prog ] 
+Action: Shift-56
+===
+Processing for state: 56 Token: id
+Stack: [ 56 21 6 4 4 4 1 0 ] 
+Syms: [ ; VL TY D D D prog ] 
+Action: Reduce-3
+===
+Processing for state: 4 Token: id
+Stack: [ 4 4 4 4 1 0 ] 
+Syms: [ D D D D prog ] 
+Action: Reduce-2
+===
+Processing for state: 20 Token: id
+Stack: [ 20 4 4 4 4 1 0 ] 
+Syms: [ DL D D D D prog ] 
+Action: Reduce-1
+===
+Processing for state: 20 Token: id
+Stack: [ 20 4 4 4 1 0 ] 
+Syms: [ DL D D D prog ] 
+Action: Reduce-1
+===
+Processing for state: 20 Token: id
+Stack: [ 20 4 4 1 0 ] 
+Syms: [ DL D D prog ] 
+Action: Reduce-1
+===
+Processing for state: 20 Token: id
+Stack: [ 20 4 1 0 ] 
+Syms: [ DL D prog ] 
+Action: Reduce-1
+===
+Processing for state: 3 Token: id
+Stack: [ 3 1 0 ] 
+Syms: [ DL prog ] 
+Action: Shift-18
+===
+Processing for state: 18 Token: :=
+Stack: [ 18 3 1 0 ] 
+Syms: [ id DL prog ] 
+Action: Shift-55
+===
+Processing for state: 55 Token: ic
+Stack: [ 55 18 3 1 0 ] 
+Syms: [ := id DL prog ] 
+Action: Shift-99
+===
+Processing for state: 99 Token: ;
+Stack: [ 99 55 18 3 1 0 ] 
+Syms: [ ic := id DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 55 18 3 1 0 ] 
+Syms: [ F := id DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: ;
+Stack: [ 101 55 18 3 1 0 ] 
+Syms: [ T := id DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 100 Token: ;
+Stack: [ 100 55 18 3 1 0 ] 
+Syms: [ E := id DL prog ] 
+Action: Shift-163
+===
+Processing for state: 163 Token: id
+Stack: [ 163 100 55 18 3 1 0 ] 
+Syms: [ ; E := id DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 16 Token: id
+Stack: [ 16 3 1 0 ] 
+Syms: [ ES DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 9 Token: id
+Stack: [ 9 3 1 0 ] 
+Syms: [ S DL prog ] 
+Action: Shift-18
+===
+Processing for state: 18 Token: :=
+Stack: [ 18 9 3 1 0 ] 
+Syms: [ id S DL prog ] 
+Action: Shift-55
+===
+Processing for state: 55 Token: ic
+Stack: [ 55 18 9 3 1 0 ] 
+Syms: [ := id S DL prog ] 
+Action: Shift-99
+===
+Processing for state: 99 Token: ;
+Stack: [ 99 55 18 9 3 1 0 ] 
+Syms: [ ic := id S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 55 18 9 3 1 0 ] 
+Syms: [ F := id S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: ;
+Stack: [ 101 55 18 9 3 1 0 ] 
+Syms: [ T := id S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 100 Token: ;
+Stack: [ 100 55 18 9 3 1 0 ] 
+Syms: [ E := id S DL prog ] 
+Action: Shift-163
+===
+Processing for state: 163 Token: scan
+Stack: [ 163 100 55 18 9 3 1 0 ] 
+Syms: [ ; E := id S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 16 Token: scan
+Stack: [ 16 9 3 1 0 ] 
+Syms: [ ES S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 9 Token: scan
+Stack: [ 9 9 3 1 0 ] 
+Syms: [ S S DL prog ] 
+Action: Shift-10
+===
+Processing for state: 10 Token: id
+Stack: [ 10 9 9 3 1 0 ] 
+Syms: [ scan S S DL prog ] 
+Action: Shift-24
+===
+Processing for state: 24 Token: print
+Stack: [ 24 10 9 9 3 1 0 ] 
+Syms: [ id scan S S DL prog ] 
+Action: Reduce-19
+===
+Processing for state: 13 Token: print
+Stack: [ 13 9 9 3 1 0 ] 
+Syms: [ IOS S S DL prog ] 
+Action: Reduce-13
+===
+Processing for state: 9 Token: print
+Stack: [ 9 9 9 3 1 0 ] 
+Syms: [ S S S DL prog ] 
+Action: Shift-11
+===
+Processing for state: 11 Token: id
+Stack: [ 11 9 9 9 3 1 0 ] 
+Syms: [ print S S S DL prog ] 
+Action: Shift-28
+===
+Processing for state: 28 Token: if
+Stack: [ 28 11 9 9 9 3 1 0 ] 
+Syms: [ id print S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 29 Token: if
+Stack: [ 29 11 9 9 9 3 1 0 ] 
+Syms: [ F print S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 30 Token: if
+Stack: [ 30 11 9 9 9 3 1 0 ] 
+Syms: [ T print S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 31 Token: if
+Stack: [ 31 11 9 9 9 3 1 0 ] 
+Syms: [ E print S S S DL prog ] 
+Action: Reduce-20
+===
+Processing for state: 26 Token: if
+Stack: [ 26 11 9 9 9 3 1 0 ] 
+Syms: [ PE print S S S DL prog ] 
+Action: Reduce-18
+===
+Processing for state: 13 Token: if
+Stack: [ 13 9 9 9 3 1 0 ] 
+Syms: [ IOS S S S DL prog ] 
+Action: Reduce-13
+===
+Processing for state: 9 Token: if
+Stack: [ 9 9 9 9 3 1 0 ] 
+Syms: [ S S S S DL prog ] 
+Action: Shift-15
+===
+Processing for state: 15 Token: id
+Stack: [ 15 9 9 9 9 3 1 0 ] 
+Syms: [ if S S S S DL prog ] 
+Action: Shift-40
+===
+Processing for state: 40 Token: =
+Stack: [ 40 15 9 9 9 9 3 1 0 ] 
+Syms: [ id if S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 44 Token: =
+Stack: [ 44 15 9 9 9 9 3 1 0 ] 
+Syms: [ F if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 43 Token: =
+Stack: [ 43 15 9 9 9 9 3 1 0 ] 
+Syms: [ T if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 53 Token: =
+Stack: [ 53 15 9 9 9 9 3 1 0 ] 
+Syms: [ E if S S S S DL prog ] 
+Action: Shift-95
+===
+Processing for state: 95 Token: ic
+Stack: [ 95 53 15 9 9 9 9 3 1 0 ] 
+Syms: [ = E if S S S S DL prog ] 
+Action: Shift-157
+===
+Processing for state: 157 Token: then
+Stack: [ 157 95 53 15 9 9 9 9 3 1 0 ] 
+Syms: [ ic = E if S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 154 Token: then
+Stack: [ 154 95 53 15 9 9 9 9 3 1 0 ] 
+Syms: [ F = E if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 155 Token: then
+Stack: [ 155 95 53 15 9 9 9 9 3 1 0 ] 
+Syms: [ T = E if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 160 Token: then
+Stack: [ 160 95 53 15 9 9 9 9 3 1 0 ] 
+Syms: [ E = E if S S S S DL prog ] 
+Action: Reduce-29
+===
+Processing for state: 49 Token: then
+Stack: [ 49 15 9 9 9 9 3 1 0 ] 
+Syms: [ RE if S S S S DL prog ] 
+Action: Reduce-28
+===
+Processing for state: 47 Token: then
+Stack: [ 47 15 9 9 9 9 3 1 0 ] 
+Syms: [ NE if S S S S DL prog ] 
+Action: Reduce-25
+===
+Processing for state: 51 Token: then
+Stack: [ 51 15 9 9 9 9 3 1 0 ] 
+Syms: [ AE if S S S S DL prog ] 
+Action: Reduce-23
+===
+Processing for state: 50 Token: then
+Stack: [ 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ BE if S S S S DL prog ] 
+Action: Shift-90
+===
+Processing for state: 90 Token: id
+Stack: [ 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ then BE if S S S S DL prog ] 
+Action: Shift-149
+===
+Processing for state: 149 Token: :=
+Stack: [ 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ id then BE if S S S S DL prog ] 
+Action: Shift-205
+===
+Processing for state: 205 Token: ic
+Stack: [ 205 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ := id then BE if S S S S DL prog ] 
+Action: Shift-99
+===
+Processing for state: 99 Token: ;
+Stack: [ 99 205 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ic := id then BE if S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 205 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F := id then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: ;
+Stack: [ 101 205 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T := id then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 234 Token: ;
+Stack: [ 234 205 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E := id then BE if S S S S DL prog ] 
+Action: Shift-253
+===
+Processing for state: 253 Token: else
+Stack: [ 253 234 205 149 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ; E := id then BE if S S S S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 150 Token: else
+Stack: [ 150 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ES then BE if S S S S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 141 Token: else
+Stack: [ 141 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ S then BE if S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 190 Token: else
+Stack: [ 190 141 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL S then BE if S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 148 Token: else
+Stack: [ 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL then BE if S S S S DL prog ] 
+Action: Shift-203
+===
+Processing for state: 203 Token: if
+Stack: [ 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ else SL then BE if S S S S DL prog ] 
+Action: Shift-15
+===
+Processing for state: 15 Token: id
+Stack: [ 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ if else SL then BE if S S S S DL prog ] 
+Action: Shift-40
+===
+Processing for state: 40 Token: <
+Stack: [ 40 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ id if else SL then BE if S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 44 Token: <
+Stack: [ 44 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F if else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 43 Token: <
+Stack: [ 43 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T if else SL then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 53 Token: <
+Stack: [ 53 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E if else SL then BE if S S S S DL prog ] 
+Action: Shift-93
+===
+Processing for state: 93 Token: ic
+Stack: [ 93 53 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ < E if else SL then BE if S S S S DL prog ] 
+Action: Shift-157
+===
+Processing for state: 157 Token: then
+Stack: [ 157 93 53 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ic < E if else SL then BE if S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 154 Token: then
+Stack: [ 154 93 53 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F < E if else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 155 Token: then
+Stack: [ 155 93 53 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T < E if else SL then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 156 Token: then
+Stack: [ 156 93 53 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E < E if else SL then BE if S S S S DL prog ] 
+Action: Reduce-30
+===
+Processing for state: 49 Token: then
+Stack: [ 49 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ RE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-28
+===
+Processing for state: 47 Token: then
+Stack: [ 47 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ NE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-25
+===
+Processing for state: 51 Token: then
+Stack: [ 51 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ AE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-23
+===
+Processing for state: 50 Token: then
+Stack: [ 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ BE if else SL then BE if S S S S DL prog ] 
+Action: Shift-90
+===
+Processing for state: 90 Token: id
+Stack: [ 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ then BE if else SL then BE if S S S S DL prog ] 
+Action: Shift-149
+===
+Processing for state: 149 Token: :=
+Stack: [ 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ id then BE if else SL then BE if S S S S DL prog ] 
+Action: Shift-205
+===
+Processing for state: 205 Token: fc
+Stack: [ 205 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ := id then BE if else SL then BE if S S S S DL prog ] 
+Action: Shift-96
+===
+Processing for state: 96 Token: ;
+Stack: [ 96 205 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ fc := id then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-41
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 205 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F := id then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: ;
+Stack: [ 101 205 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T := id then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 234 Token: ;
+Stack: [ 234 205 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E := id then BE if else SL then BE if S S S S DL prog ] 
+Action: Shift-253
+===
+Processing for state: 253 Token: end
+Stack: [ 253 234 205 149 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ; E := id then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 150 Token: end
+Stack: [ 150 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ES then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 141 Token: end
+Stack: [ 141 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ S then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 190 Token: end
+Stack: [ 190 141 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL S then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 148 Token: end
+Stack: [ 148 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL then BE if else SL then BE if S S S S DL prog ] 
+Action: Shift-204
+===
+Processing for state: 204 Token: while
+Stack: [ 204 148 90 50 15 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ end SL then BE if else SL then BE if S S S S DL prog ] 
+Action: Reduce-15
+===
+Processing for state: 19 Token: while
+Stack: [ 19 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ IS else SL then BE if S S S S DL prog ] 
+Action: Reduce-11
+===
+Processing for state: 9 Token: while
+Stack: [ 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ S else SL then BE if S S S S DL prog ] 
+Action: Shift-14
+===
+Processing for state: 14 Token: id
+Stack: [ 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ while S else SL then BE if S S S S DL prog ] 
+Action: Shift-40
+===
+Processing for state: 40 Token: >
+Stack: [ 40 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ id while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 44 Token: >
+Stack: [ 44 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 43 Token: >
+Stack: [ 43 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 46 Token: >
+Stack: [ 46 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E while S else SL then BE if S S S S DL prog ] 
+Action: Shift-84
+===
+Processing for state: 84 Token: fc
+Stack: [ 84 46 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ > E while S else SL then BE if S S S S DL prog ] 
+Action: Shift-128
+===
+Processing for state: 128 Token: do
+Stack: [ 128 84 46 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ fc > E while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-41
+===
+Processing for state: 132 Token: do
+Stack: [ 132 84 46 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F > E while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 133 Token: do
+Stack: [ 133 84 46 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T > E while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 131 Token: do
+Stack: [ 131 84 46 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E > E while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-31
+===
+Processing for state: 35 Token: do
+Stack: [ 35 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ RE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-28
+===
+Processing for state: 41 Token: do
+Stack: [ 41 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ NE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-25
+===
+Processing for state: 36 Token: do
+Stack: [ 36 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ AE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-23
+===
+Processing for state: 37 Token: do
+Stack: [ 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-71
+===
+Processing for state: 71 Token: id
+Stack: [ 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-18
+===
+Processing for state: 18 Token: :=
+Stack: [ 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-55
+===
+Processing for state: 55 Token: id
+Stack: [ 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-98
+===
+Processing for state: 98 Token: -
+Stack: [ 98 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ id := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 102 Token: -
+Stack: [ 102 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: -
+Stack: [ 101 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 100 Token: -
+Stack: [ 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-164
+===
+Processing for state: 164 Token: ic
+Stack: [ 164 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ - E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-99
+===
+Processing for state: 99 Token: ;
+Stack: [ 99 164 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ic - E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 164 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ F - E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 213 Token: ;
+Stack: [ 213 164 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ T - E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-33
+===
+Processing for state: 100 Token: ;
+Stack: [ 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-163
+===
+Processing for state: 163 Token: end
+Stack: [ 163 100 55 18 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ; E := id do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 16 Token: end
+Stack: [ 16 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ ES do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 9 Token: end
+Stack: [ 9 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ S do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL S do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 115 Token: end
+Stack: [ 115 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL do BE while S else SL then BE if S S S S DL prog ] 
+Action: Shift-172
+===
+Processing for state: 172 Token: end
+Stack: [ 172 115 71 37 14 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ end SL do BE while S else SL then BE if S S S S DL prog ] 
+Action: Reduce-17
+===
+Processing for state: 12 Token: end
+Stack: [ 12 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ WS S else SL then BE if S S S S DL prog ] 
+Action: Reduce-12
+===
+Processing for state: 9 Token: end
+Stack: [ 9 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ S S else SL then BE if S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL S S else SL then BE if S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL S else SL then BE if S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 233 Token: end
+Stack: [ 233 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ SL else SL then BE if S S S S DL prog ] 
+Action: Shift-252
+===
+Processing for state: 252 Token: while
+Stack: [ 252 233 203 148 90 50 15 9 9 9 9 3 1 0 ] 
+Syms: [ end SL else SL then BE if S S S S DL prog ] 
+Action: Reduce-16
+===
+Processing for state: 19 Token: while
+Stack: [ 19 9 9 9 9 3 1 0 ] 
+Syms: [ IS S S S S DL prog ] 
+Action: Reduce-11
+===
+Processing for state: 9 Token: while
+Stack: [ 9 9 9 9 9 3 1 0 ] 
+Syms: [ S S S S S DL prog ] 
+Action: Shift-14
+===
+Processing for state: 14 Token: id
+Stack: [ 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ while S S S S S DL prog ] 
+Action: Shift-40
+===
+Processing for state: 40 Token: >
+Stack: [ 40 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ id while S S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 44 Token: >
+Stack: [ 44 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 43 Token: >
+Stack: [ 43 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 46 Token: >
+Stack: [ 46 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E while S S S S S DL prog ] 
+Action: Shift-84
+===
+Processing for state: 84 Token: ic
+Stack: [ 84 46 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ > E while S S S S S DL prog ] 
+Action: Shift-129
+===
+Processing for state: 129 Token: do
+Stack: [ 129 84 46 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ic > E while S S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 132 Token: do
+Stack: [ 132 84 46 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F > E while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 133 Token: do
+Stack: [ 133 84 46 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T > E while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 131 Token: do
+Stack: [ 131 84 46 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E > E while S S S S S DL prog ] 
+Action: Reduce-31
+===
+Processing for state: 35 Token: do
+Stack: [ 35 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ RE while S S S S S DL prog ] 
+Action: Reduce-28
+===
+Processing for state: 41 Token: do
+Stack: [ 41 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ NE while S S S S S DL prog ] 
+Action: Reduce-25
+===
+Processing for state: 36 Token: do
+Stack: [ 36 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ AE while S S S S S DL prog ] 
+Action: Reduce-23
+===
+Processing for state: 37 Token: do
+Stack: [ 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ BE while S S S S S DL prog ] 
+Action: Shift-71
+===
+Processing for state: 71 Token: id
+Stack: [ 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ do BE while S S S S S DL prog ] 
+Action: Shift-18
+===
+Processing for state: 18 Token: :=
+Stack: [ 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ id do BE while S S S S S DL prog ] 
+Action: Shift-55
+===
+Processing for state: 55 Token: id
+Stack: [ 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ := id do BE while S S S S S DL prog ] 
+Action: Shift-98
+===
+Processing for state: 98 Token: +
+Stack: [ 98 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ id := id do BE while S S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 102 Token: +
+Stack: [ 102 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F := id do BE while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: +
+Stack: [ 101 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T := id do BE while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 100 Token: +
+Stack: [ 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E := id do BE while S S S S S DL prog ] 
+Action: Shift-162
+===
+Processing for state: 162 Token: ic
+Stack: [ 162 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ + E := id do BE while S S S S S DL prog ] 
+Action: Shift-99
+===
+Processing for state: 99 Token: ;
+Stack: [ 99 162 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ic + E := id do BE while S S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 162 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F + E := id do BE while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 212 Token: ;
+Stack: [ 212 162 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T + E := id do BE while S S S S S DL prog ] 
+Action: Reduce-32
+===
+Processing for state: 100 Token: ;
+Stack: [ 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E := id do BE while S S S S S DL prog ] 
+Action: Shift-163
+===
+Processing for state: 163 Token: id
+Stack: [ 163 100 55 18 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ; E := id do BE while S S S S S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 16 Token: id
+Stack: [ 16 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ES do BE while S S S S S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 9 Token: id
+Stack: [ 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ S do BE while S S S S S DL prog ] 
+Action: Shift-18
+===
+Processing for state: 18 Token: :=
+Stack: [ 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ id S do BE while S S S S S DL prog ] 
+Action: Shift-55
+===
+Processing for state: 55 Token: fc
+Stack: [ 55 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ := id S do BE while S S S S S DL prog ] 
+Action: Shift-96
+===
+Processing for state: 96 Token: ;
+Stack: [ 96 55 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ fc := id S do BE while S S S S S DL prog ] 
+Action: Reduce-41
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 55 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F := id S do BE while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: ;
+Stack: [ 101 55 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T := id S do BE while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 100 Token: ;
+Stack: [ 100 55 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E := id S do BE while S S S S S DL prog ] 
+Action: Shift-163
+===
+Processing for state: 163 Token: if
+Stack: [ 163 100 55 18 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ; E := id S do BE while S S S S S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 16 Token: if
+Stack: [ 16 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ES S do BE while S S S S S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 9 Token: if
+Stack: [ 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ S S do BE while S S S S S DL prog ] 
+Action: Shift-15
+===
+Processing for state: 15 Token: id
+Stack: [ 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ if S S do BE while S S S S S DL prog ] 
+Action: Shift-40
+===
+Processing for state: 40 Token: =
+Stack: [ 40 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ id if S S do BE while S S S S S DL prog ] 
+Action: Reduce-39
+===
+Processing for state: 44 Token: =
+Stack: [ 44 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F if S S do BE while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 43 Token: =
+Stack: [ 43 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T if S S do BE while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 53 Token: =
+Stack: [ 53 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E if S S do BE while S S S S S DL prog ] 
+Action: Shift-95
+===
+Processing for state: 95 Token: ic
+Stack: [ 95 53 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ = E if S S do BE while S S S S S DL prog ] 
+Action: Shift-157
+===
+Processing for state: 157 Token: then
+Stack: [ 157 95 53 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ic = E if S S do BE while S S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 154 Token: then
+Stack: [ 154 95 53 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F = E if S S do BE while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 155 Token: then
+Stack: [ 155 95 53 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T = E if S S do BE while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 160 Token: then
+Stack: [ 160 95 53 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E = E if S S do BE while S S S S S DL prog ] 
+Action: Reduce-29
+===
+Processing for state: 49 Token: then
+Stack: [ 49 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ RE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-28
+===
+Processing for state: 47 Token: then
+Stack: [ 47 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ NE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-25
+===
+Processing for state: 51 Token: then
+Stack: [ 51 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ AE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-23
+===
+Processing for state: 50 Token: then
+Stack: [ 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ BE if S S do BE while S S S S S DL prog ] 
+Action: Shift-90
+===
+Processing for state: 90 Token: id
+Stack: [ 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ then BE if S S do BE while S S S S S DL prog ] 
+Action: Shift-149
+===
+Processing for state: 149 Token: :=
+Stack: [ 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ id then BE if S S do BE while S S S S S DL prog ] 
+Action: Shift-205
+===
+Processing for state: 205 Token: ic
+Stack: [ 205 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ := id then BE if S S do BE while S S S S S DL prog ] 
+Action: Shift-99
+===
+Processing for state: 99 Token: ;
+Stack: [ 99 205 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ic := id then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-40
+===
+Processing for state: 102 Token: ;
+Stack: [ 102 205 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ F := id then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-37
+===
+Processing for state: 101 Token: ;
+Stack: [ 101 205 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ T := id then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-34
+===
+Processing for state: 234 Token: ;
+Stack: [ 234 205 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ E := id then BE if S S do BE while S S S S S DL prog ] 
+Action: Shift-253
+===
+Processing for state: 253 Token: end
+Stack: [ 253 234 205 149 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ; E := id then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-14
+===
+Processing for state: 150 Token: end
+Stack: [ 150 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ ES then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-10
+===
+Processing for state: 141 Token: end
+Stack: [ 141 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ S then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 190 Token: end
+Stack: [ 190 141 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL S then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 148 Token: end
+Stack: [ 148 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL then BE if S S do BE while S S S S S DL prog ] 
+Action: Shift-204
+===
+Processing for state: 204 Token: end
+Stack: [ 204 148 90 50 15 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ end SL then BE if S S do BE while S S S S S DL prog ] 
+Action: Reduce-15
+===
+Processing for state: 19 Token: end
+Stack: [ 19 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ IS S S do BE while S S S S S DL prog ] 
+Action: Reduce-11
+===
+Processing for state: 9 Token: end
+Stack: [ 9 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ S S S do BE while S S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL S S S do BE while S S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL S S do BE while S S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL S do BE while S S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 115 Token: end
+Stack: [ 115 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL do BE while S S S S S DL prog ] 
+Action: Shift-172
+===
+Processing for state: 172 Token: end
+Stack: [ 172 115 71 37 14 9 9 9 9 9 3 1 0 ] 
+Syms: [ end SL do BE while S S S S S DL prog ] 
+Action: Reduce-17
+===
+Processing for state: 12 Token: end
+Stack: [ 12 9 9 9 9 9 3 1 0 ] 
+Syms: [ WS S S S S S DL prog ] 
+Action: Reduce-12
+===
+Processing for state: 9 Token: end
+Stack: [ 9 9 9 9 9 9 3 1 0 ] 
+Syms: [ S S S S S S DL prog ] 
+Action: Reduce-9
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL S S S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 9 9 9 3 1 0 ] 
+Syms: [ SL S S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 9 9 3 1 0 ] 
+Syms: [ SL S S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 9 3 1 0 ] 
+Syms: [ SL S S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 9 3 1 0 ] 
+Syms: [ SL S S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 23 Token: end
+Stack: [ 23 9 3 1 0 ] 
+Syms: [ SL S DL prog ] 
+Action: Reduce-8
+===
+Processing for state: 17 Token: end
+Stack: [ 17 3 1 0 ] 
+Syms: [ SL DL prog ] 
+Action: Shift-54
+===
+Processing for state: 54 Token: $
+Stack: [ 54 17 3 1 0 ] 
+Syms: [ end SL DL prog ] 
+Action: Reduce-0
+===
+Processing for state: 2 Token: $
+Stack: [ 2 0 ] 
+Syms: [ P ] 
+Verdict: Accepted

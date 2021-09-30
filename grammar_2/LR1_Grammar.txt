@@ -1,0 +1,2706 @@
+===LR1-grammar-begin:
+Terminals: 34 ε  $  +  -  ∗  /  =  <  >  (  )  {  }  :=  ;  and  else  end  ic  id  if  int  do  fc  float  not  or  \  print  prog  scan  str  then  while  
+Non-terminals: 20 AE  BE  D  DL  E  F  ES  IOS  IS  NE  P  PE  RE  S  SL  T  TY  VL  WS  S_'  
+Eps-symbol: ε 
+Dollar-symbol: $ 
+Start-symbol: S_' 
+===Production-rules-begin:
+43
+id: 42 rule: S_' -> [ P $ ] 
+id: 37 rule: T -> [ F ] 
+id: 36 rule: T -> [ T / F ] 
+id: 35 rule: T -> [ T ∗ F ] 
+id: 34 rule: E -> [ T ] 
+id: 33 rule: E -> [ E - T ] 
+id: 32 rule: E -> [ E + T ] 
+id: 31 rule: RE -> [ E > E ] 
+id: 30 rule: RE -> [ E < E ] 
+id: 29 rule: RE -> [ E = E ] 
+id: 28 rule: NE -> [ RE ] 
+id: 27 rule: NE -> [ { BE } ] 
+id: 26 rule: NE -> [ not NE ] 
+id: 41 rule: F -> [ fc ] 
+id: 40 rule: F -> [ ic ] 
+id: 39 rule: F -> [ id ] 
+id: 38 rule: F -> [ ( E ) ] 
+id: 25 rule: AE -> [ NE ] 
+id: 24 rule: AE -> [ AE and NE ] 
+id: 0 rule: P -> [ prog DL SL end ] 
+id: 7 rule: VL -> [ id ] 
+id: 6 rule: VL -> [ id VL ] 
+id: 2 rule: DL -> [ ε ] 
+id: 1 rule: DL -> [ D DL ] 
+id: 9 rule: SL -> [ ε ] 
+id: 8 rule: SL -> [ S SL ] 
+id: 3 rule: D -> [ TY VL ; ] 
+id: 5 rule: TY -> [ float ] 
+id: 4 rule: TY -> [ int ] 
+id: 14 rule: ES -> [ id := E ; ] 
+id: 13 rule: S -> [ IOS ] 
+id: 12 rule: S -> [ WS ] 
+id: 11 rule: S -> [ IS ] 
+id: 10 rule: S -> [ ES ] 
+id: 23 rule: BE -> [ AE ] 
+id: 22 rule: BE -> [ BE or AE ] 
+id: 16 rule: IS -> [ if BE then SL else SL end ] 
+id: 15 rule: IS -> [ if BE then SL end ] 
+id: 17 rule: WS -> [ while BE do SL end ] 
+id: 21 rule: PE -> [ str ] 
+id: 20 rule: PE -> [ E ] 
+id: 19 rule: IOS -> [ scan id ] 
+id: 18 rule: IOS -> [ print PE ] 
+===Production-rules-end
+===GOTO-REDUCE-begin
+numStates: 259
+State: 0
+numGOTO: 2
+GOTO( 0, P ) = 2
+GOTO( 0, prog ) = 1
+numREDUCE: 0
+===
+State: 1
+numGOTO: 5
+GOTO( 1, int ) = 7
+GOTO( 1, TY ) = 6
+GOTO( 1, float ) = 5
+GOTO( 1, D ) = 4
+GOTO( 1, DL ) = 3
+numREDUCE: 6
+REDUCE( 1, end ) = 2
+REDUCE( 1, scan ) = 2
+REDUCE( 1, id ) = 2
+REDUCE( 1, if ) = 2
+REDUCE( 1, print ) = 2
+REDUCE( 1, while ) = 2
+===
+State: 2
+numGOTO: 1
+GOTO( 2, $ ) = 8
+numREDUCE: 0
+===
+State: 3
+numGOTO: 11
+GOTO( 3, IS ) = 19
+GOTO( 3, id ) = 18
+GOTO( 3, SL ) = 17
+GOTO( 3, ES ) = 16
+GOTO( 3, if ) = 15
+GOTO( 3, while ) = 14
+GOTO( 3, IOS ) = 13
+GOTO( 3, WS ) = 12
+GOTO( 3, print ) = 11
+GOTO( 3, scan ) = 10
+GOTO( 3, S ) = 9
+numREDUCE: 1
+REDUCE( 3, end ) = 9
+===
+State: 4
+numGOTO: 5
+GOTO( 4, float ) = 5
+GOTO( 4, D ) = 4
+GOTO( 4, DL ) = 20
+GOTO( 4, int ) = 7
+GOTO( 4, TY ) = 6
+numREDUCE: 6
+REDUCE( 4, end ) = 2
+REDUCE( 4, scan ) = 2
+REDUCE( 4, id ) = 2
+REDUCE( 4, if ) = 2
+REDUCE( 4, print ) = 2
+REDUCE( 4, while ) = 2
+===
+State: 5
+numGOTO: 0
+numREDUCE: 1
+REDUCE( 5, id ) = 5
+===
+State: 6
+numGOTO: 2
+GOTO( 6, id ) = 22
+GOTO( 6, VL ) = 21
+numREDUCE: 0
+===
+State: 7
+numGOTO: 0
+numREDUCE: 1
+REDUCE( 7, id ) = 4
+===
+State: 8
+numGOTO: 0
+numREDUCE: 1
+REDUCE( 8, $ ) = 42
+===
+State: 9
+numGOTO: 11
+GOTO( 9, id ) = 18
+GOTO( 9, SL ) = 23
+GOTO( 9, if ) = 15
+GOTO( 9, IS ) = 19
+GOTO( 9, ES ) = 16
+GOTO( 9, while ) = 14
+GOTO( 9, IOS ) = 13
+GOTO( 9, WS ) = 12
+GOTO( 9, print ) = 11
+GOTO( 9, scan ) = 10
+GOTO( 9, S ) = 9
+numREDUCE: 1
+REDUCE( 9, end ) = 9
+===
+State: 10
+numGOTO: 1
+GOTO( 10, id ) = 24
+numREDUCE: 0
+===
+State: 11
+numGOTO: 9
+GOTO( 11, ic ) = 33
+GOTO( 11, str ) = 32
+GOTO( 11, E ) = 31
+GOTO( 11, T ) = 30
+GOTO( 11, F ) = 29
+GOTO( 11, id ) = 28
+GOTO( 11, fc ) = 27
+GOTO( 11, PE ) = 26
+GOTO( 11, ( ) = 25
+numREDUCE: 0
+===
+State: 12
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 12, end ) = 12
+REDUCE( 12, scan ) = 12
+REDUCE( 12, id ) = 12
+REDUCE( 12, if ) = 12
+REDUCE( 12, print ) = 12
+REDUCE( 12, while ) = 12
+===
+State: 13
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 13, end ) = 13
+REDUCE( 13, scan ) = 13
+REDUCE( 13, id ) = 13
+REDUCE( 13, if ) = 13
+REDUCE( 13, print ) = 13
+REDUCE( 13, while ) = 13
+===
+State: 14
+numGOTO: 13
+GOTO( 14, E ) = 46
+GOTO( 14, not ) = 45
+GOTO( 14, F ) = 44
+GOTO( 14, T ) = 43
+GOTO( 14, ( ) = 42
+GOTO( 14, NE ) = 41
+GOTO( 14, id ) = 40
+GOTO( 14, { ) = 39
+GOTO( 14, ic ) = 38
+GOTO( 14, BE ) = 37
+GOTO( 14, AE ) = 36
+GOTO( 14, RE ) = 35
+GOTO( 14, fc ) = 34
+numREDUCE: 0
+===
+State: 15
+numGOTO: 13
+GOTO( 15, E ) = 53
+GOTO( 15, not ) = 52
+GOTO( 15, AE ) = 51
+GOTO( 15, T ) = 43
+GOTO( 15, F ) = 44
+GOTO( 15, BE ) = 50
+GOTO( 15, ic ) = 38
+GOTO( 15, ( ) = 42
+GOTO( 15, id ) = 40
+GOTO( 15, RE ) = 49
+GOTO( 15, { ) = 48
+GOTO( 15, NE ) = 47
+GOTO( 15, fc ) = 34
+numREDUCE: 0
+===
+State: 16
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 16, end ) = 10
+REDUCE( 16, scan ) = 10
+REDUCE( 16, id ) = 10
+REDUCE( 16, if ) = 10
+REDUCE( 16, print ) = 10
+REDUCE( 16, while ) = 10
+===
+State: 17
+numGOTO: 1
+GOTO( 17, end ) = 54
+numREDUCE: 0
+===
+State: 18
+numGOTO: 1
+GOTO( 18, := ) = 55
+numREDUCE: 0
+===
+State: 19
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 19, end ) = 11
+REDUCE( 19, scan ) = 11
+REDUCE( 19, id ) = 11
+REDUCE( 19, if ) = 11
+REDUCE( 19, print ) = 11
+REDUCE( 19, while ) = 11
+===
+State: 20
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 20, end ) = 1
+REDUCE( 20, scan ) = 1
+REDUCE( 20, id ) = 1
+REDUCE( 20, if ) = 1
+REDUCE( 20, print ) = 1
+REDUCE( 20, while ) = 1
+===
+State: 21
+numGOTO: 1
+GOTO( 21, ; ) = 56
+numREDUCE: 0
+===
+State: 22
+numGOTO: 2
+GOTO( 22, id ) = 22
+GOTO( 22, VL ) = 57
+numREDUCE: 1
+REDUCE( 22, ; ) = 7
+===
+State: 23
+numGOTO: 0
+numREDUCE: 1
+REDUCE( 23, end ) = 8
+===
+State: 24
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 24, end ) = 19
+REDUCE( 24, scan ) = 19
+REDUCE( 24, id ) = 19
+REDUCE( 24, if ) = 19
+REDUCE( 24, print ) = 19
+REDUCE( 24, while ) = 19
+===
+State: 25
+numGOTO: 7
+GOTO( 25, ic ) = 64
+GOTO( 25, ( ) = 63
+GOTO( 25, E ) = 62
+GOTO( 25, F ) = 61
+GOTO( 25, T ) = 60
+GOTO( 25, id ) = 59
+GOTO( 25, fc ) = 58
+numREDUCE: 0
+===
+State: 26
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 26, end ) = 18
+REDUCE( 26, scan ) = 18
+REDUCE( 26, id ) = 18
+REDUCE( 26, if ) = 18
+REDUCE( 26, print ) = 18
+REDUCE( 26, while ) = 18
+===
+State: 27
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 27, + ) = 41
+REDUCE( 27, - ) = 41
+REDUCE( 27, print ) = 41
+REDUCE( 27, ∗ ) = 41
+REDUCE( 27, / ) = 41
+REDUCE( 27, while ) = 41
+REDUCE( 27, end ) = 41
+REDUCE( 27, scan ) = 41
+REDUCE( 27, id ) = 41
+REDUCE( 27, if ) = 41
+===
+State: 28
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 28, + ) = 39
+REDUCE( 28, - ) = 39
+REDUCE( 28, print ) = 39
+REDUCE( 28, ∗ ) = 39
+REDUCE( 28, / ) = 39
+REDUCE( 28, while ) = 39
+REDUCE( 28, end ) = 39
+REDUCE( 28, scan ) = 39
+REDUCE( 28, id ) = 39
+REDUCE( 28, if ) = 39
+===
+State: 29
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 29, + ) = 37
+REDUCE( 29, - ) = 37
+REDUCE( 29, print ) = 37
+REDUCE( 29, ∗ ) = 37
+REDUCE( 29, / ) = 37
+REDUCE( 29, while ) = 37
+REDUCE( 29, end ) = 37
+REDUCE( 29, scan ) = 37
+REDUCE( 29, id ) = 37
+REDUCE( 29, if ) = 37
+===
+State: 30
+numGOTO: 2
+GOTO( 30, / ) = 66
+GOTO( 30, ∗ ) = 65
+numREDUCE: 8
+REDUCE( 30, + ) = 34
+REDUCE( 30, - ) = 34
+REDUCE( 30, print ) = 34
+REDUCE( 30, end ) = 34
+REDUCE( 30, scan ) = 34
+REDUCE( 30, id ) = 34
+REDUCE( 30, if ) = 34
+REDUCE( 30, while ) = 34
+===
+State: 31
+numGOTO: 2
+GOTO( 31, + ) = 68
+GOTO( 31, - ) = 67
+numREDUCE: 6
+REDUCE( 31, end ) = 20
+REDUCE( 31, scan ) = 20
+REDUCE( 31, id ) = 20
+REDUCE( 31, if ) = 20
+REDUCE( 31, print ) = 20
+REDUCE( 31, while ) = 20
+===
+State: 32
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 32, end ) = 21
+REDUCE( 32, scan ) = 21
+REDUCE( 32, id ) = 21
+REDUCE( 32, if ) = 21
+REDUCE( 32, print ) = 21
+REDUCE( 32, while ) = 21
+===
+State: 33
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 33, + ) = 40
+REDUCE( 33, - ) = 40
+REDUCE( 33, print ) = 40
+REDUCE( 33, ∗ ) = 40
+REDUCE( 33, / ) = 40
+REDUCE( 33, while ) = 40
+REDUCE( 33, end ) = 40
+REDUCE( 33, scan ) = 40
+REDUCE( 33, id ) = 40
+REDUCE( 33, if ) = 40
+===
+State: 34
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 34, + ) = 41
+REDUCE( 34, - ) = 41
+REDUCE( 34, ∗ ) = 41
+REDUCE( 34, / ) = 41
+REDUCE( 34, = ) = 41
+REDUCE( 34, < ) = 41
+REDUCE( 34, > ) = 41
+===
+State: 35
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 35, and ) = 28
+REDUCE( 35, do ) = 28
+REDUCE( 35, or ) = 28
+===
+State: 36
+numGOTO: 1
+GOTO( 36, and ) = 69
+numREDUCE: 2
+REDUCE( 36, do ) = 23
+REDUCE( 36, or ) = 23
+===
+State: 37
+numGOTO: 2
+GOTO( 37, do ) = 71
+GOTO( 37, or ) = 70
+numREDUCE: 0
+===
+State: 38
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 38, + ) = 40
+REDUCE( 38, - ) = 40
+REDUCE( 38, ∗ ) = 40
+REDUCE( 38, / ) = 40
+REDUCE( 38, = ) = 40
+REDUCE( 38, < ) = 40
+REDUCE( 38, > ) = 40
+===
+State: 39
+numGOTO: 13
+GOTO( 39, E ) = 78
+GOTO( 39, not ) = 77
+GOTO( 39, NE ) = 76
+GOTO( 39, ( ) = 42
+GOTO( 39, T ) = 43
+GOTO( 39, F ) = 44
+GOTO( 39, id ) = 40
+GOTO( 39, BE ) = 75
+GOTO( 39, ic ) = 38
+GOTO( 39, AE ) = 74
+GOTO( 39, RE ) = 73
+GOTO( 39, { ) = 72
+GOTO( 39, fc ) = 34
+numREDUCE: 0
+===
+State: 40
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 40, + ) = 39
+REDUCE( 40, - ) = 39
+REDUCE( 40, ∗ ) = 39
+REDUCE( 40, / ) = 39
+REDUCE( 40, = ) = 39
+REDUCE( 40, < ) = 39
+REDUCE( 40, > ) = 39
+===
+State: 41
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 41, and ) = 25
+REDUCE( 41, do ) = 25
+REDUCE( 41, or ) = 25
+===
+State: 42
+numGOTO: 7
+GOTO( 42, T ) = 60
+GOTO( 42, F ) = 61
+GOTO( 42, id ) = 59
+GOTO( 42, ( ) = 63
+GOTO( 42, E ) = 79
+GOTO( 42, fc ) = 58
+GOTO( 42, ic ) = 64
+numREDUCE: 0
+===
+State: 43
+numGOTO: 2
+GOTO( 43, / ) = 81
+GOTO( 43, ∗ ) = 80
+numREDUCE: 5
+REDUCE( 43, + ) = 34
+REDUCE( 43, - ) = 34
+REDUCE( 43, = ) = 34
+REDUCE( 43, < ) = 34
+REDUCE( 43, > ) = 34
+===
+State: 44
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 44, + ) = 37
+REDUCE( 44, - ) = 37
+REDUCE( 44, ∗ ) = 37
+REDUCE( 44, / ) = 37
+REDUCE( 44, = ) = 37
+REDUCE( 44, < ) = 37
+REDUCE( 44, > ) = 37
+===
+State: 45
+numGOTO: 11
+GOTO( 45, E ) = 46
+GOTO( 45, not ) = 45
+GOTO( 45, T ) = 43
+GOTO( 45, F ) = 44
+GOTO( 45, fc ) = 34
+GOTO( 45, id ) = 40
+GOTO( 45, ( ) = 42
+GOTO( 45, ic ) = 38
+GOTO( 45, { ) = 39
+GOTO( 45, NE ) = 82
+GOTO( 45, RE ) = 35
+numREDUCE: 0
+===
+State: 46
+numGOTO: 5
+GOTO( 46, < ) = 87
+GOTO( 46, - ) = 86
+GOTO( 46, = ) = 85
+GOTO( 46, > ) = 84
+GOTO( 46, + ) = 83
+numREDUCE: 0
+===
+State: 47
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 47, and ) = 25
+REDUCE( 47, or ) = 25
+REDUCE( 47, then ) = 25
+===
+State: 48
+numGOTO: 13
+GOTO( 48, T ) = 43
+GOTO( 48, F ) = 44
+GOTO( 48, E ) = 78
+GOTO( 48, not ) = 77
+GOTO( 48, NE ) = 76
+GOTO( 48, ( ) = 42
+GOTO( 48, id ) = 40
+GOTO( 48, BE ) = 88
+GOTO( 48, ic ) = 38
+GOTO( 48, AE ) = 74
+GOTO( 48, RE ) = 73
+GOTO( 48, { ) = 72
+GOTO( 48, fc ) = 34
+numREDUCE: 0
+===
+State: 49
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 49, and ) = 28
+REDUCE( 49, or ) = 28
+REDUCE( 49, then ) = 28
+===
+State: 50
+numGOTO: 2
+GOTO( 50, then ) = 90
+GOTO( 50, or ) = 89
+numREDUCE: 0
+===
+State: 51
+numGOTO: 1
+GOTO( 51, and ) = 91
+numREDUCE: 2
+REDUCE( 51, or ) = 23
+REDUCE( 51, then ) = 23
+===
+State: 52
+numGOTO: 11
+GOTO( 52, E ) = 53
+GOTO( 52, not ) = 52
+GOTO( 52, T ) = 43
+GOTO( 52, F ) = 44
+GOTO( 52, ( ) = 42
+GOTO( 52, id ) = 40
+GOTO( 52, ic ) = 38
+GOTO( 52, fc ) = 34
+GOTO( 52, { ) = 48
+GOTO( 52, NE ) = 92
+GOTO( 52, RE ) = 49
+numREDUCE: 0
+===
+State: 53
+numGOTO: 5
+GOTO( 53, + ) = 83
+GOTO( 53, = ) = 95
+GOTO( 53, > ) = 94
+GOTO( 53, - ) = 86
+GOTO( 53, < ) = 93
+numREDUCE: 0
+===
+State: 54
+numGOTO: 0
+numREDUCE: 1
+REDUCE( 54, $ ) = 0
+===
+State: 55
+numGOTO: 7
+GOTO( 55, F ) = 102
+GOTO( 55, T ) = 101
+GOTO( 55, E ) = 100
+GOTO( 55, ic ) = 99
+GOTO( 55, id ) = 98
+GOTO( 55, ( ) = 97
+GOTO( 55, fc ) = 96
+numREDUCE: 0
+===
+State: 56
+numGOTO: 0
+numREDUCE: 8
+REDUCE( 56, end ) = 3
+REDUCE( 56, scan ) = 3
+REDUCE( 56, id ) = 3
+REDUCE( 56, if ) = 3
+REDUCE( 56, int ) = 3
+REDUCE( 56, float ) = 3
+REDUCE( 56, print ) = 3
+REDUCE( 56, while ) = 3
+===
+State: 57
+numGOTO: 0
+numREDUCE: 1
+REDUCE( 57, ; ) = 6
+===
+State: 58
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 58, + ) = 41
+REDUCE( 58, ) ) = 41
+REDUCE( 58, - ) = 41
+REDUCE( 58, ∗ ) = 41
+REDUCE( 58, / ) = 41
+===
+State: 59
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 59, + ) = 39
+REDUCE( 59, ) ) = 39
+REDUCE( 59, - ) = 39
+REDUCE( 59, ∗ ) = 39
+REDUCE( 59, / ) = 39
+===
+State: 60
+numGOTO: 2
+GOTO( 60, ∗ ) = 104
+GOTO( 60, / ) = 103
+numREDUCE: 3
+REDUCE( 60, + ) = 34
+REDUCE( 60, ) ) = 34
+REDUCE( 60, - ) = 34
+===
+State: 61
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 61, + ) = 37
+REDUCE( 61, ) ) = 37
+REDUCE( 61, - ) = 37
+REDUCE( 61, ∗ ) = 37
+REDUCE( 61, / ) = 37
+===
+State: 62
+numGOTO: 3
+GOTO( 62, - ) = 107
+GOTO( 62, ) ) = 106
+GOTO( 62, + ) = 105
+numREDUCE: 0
+===
+State: 63
+numGOTO: 7
+GOTO( 63, E ) = 108
+GOTO( 63, ( ) = 63
+GOTO( 63, id ) = 59
+GOTO( 63, F ) = 61
+GOTO( 63, T ) = 60
+GOTO( 63, ic ) = 64
+GOTO( 63, fc ) = 58
+numREDUCE: 0
+===
+State: 64
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 64, + ) = 40
+REDUCE( 64, ) ) = 40
+REDUCE( 64, - ) = 40
+REDUCE( 64, ∗ ) = 40
+REDUCE( 64, / ) = 40
+===
+State: 65
+numGOTO: 5
+GOTO( 65, fc ) = 27
+GOTO( 65, ic ) = 33
+GOTO( 65, id ) = 28
+GOTO( 65, F ) = 109
+GOTO( 65, ( ) = 25
+numREDUCE: 0
+===
+State: 66
+numGOTO: 5
+GOTO( 66, id ) = 28
+GOTO( 66, ic ) = 33
+GOTO( 66, F ) = 110
+GOTO( 66, ( ) = 25
+GOTO( 66, fc ) = 27
+numREDUCE: 0
+===
+State: 67
+numGOTO: 6
+GOTO( 67, id ) = 28
+GOTO( 67, T ) = 111
+GOTO( 67, F ) = 29
+GOTO( 67, ic ) = 33
+GOTO( 67, ( ) = 25
+GOTO( 67, fc ) = 27
+numREDUCE: 0
+===
+State: 68
+numGOTO: 6
+GOTO( 68, T ) = 112
+GOTO( 68, F ) = 29
+GOTO( 68, ic ) = 33
+GOTO( 68, id ) = 28
+GOTO( 68, fc ) = 27
+GOTO( 68, ( ) = 25
+numREDUCE: 0
+===
+State: 69
+numGOTO: 11
+GOTO( 69, E ) = 46
+GOTO( 69, not ) = 45
+GOTO( 69, F ) = 44
+GOTO( 69, T ) = 43
+GOTO( 69, NE ) = 113
+GOTO( 69, RE ) = 35
+GOTO( 69, id ) = 40
+GOTO( 69, ( ) = 42
+GOTO( 69, ic ) = 38
+GOTO( 69, { ) = 39
+GOTO( 69, fc ) = 34
+numREDUCE: 0
+===
+State: 70
+numGOTO: 12
+GOTO( 70, not ) = 45
+GOTO( 70, E ) = 46
+GOTO( 70, AE ) = 114
+GOTO( 70, { ) = 39
+GOTO( 70, T ) = 43
+GOTO( 70, F ) = 44
+GOTO( 70, id ) = 40
+GOTO( 70, ic ) = 38
+GOTO( 70, RE ) = 35
+GOTO( 70, ( ) = 42
+GOTO( 70, NE ) = 41
+GOTO( 70, fc ) = 34
+numREDUCE: 0
+===
+State: 71
+numGOTO: 11
+GOTO( 71, if ) = 15
+GOTO( 71, WS ) = 12
+GOTO( 71, S ) = 9
+GOTO( 71, scan ) = 10
+GOTO( 71, IS ) = 19
+GOTO( 71, print ) = 11
+GOTO( 71, ES ) = 16
+GOTO( 71, IOS ) = 13
+GOTO( 71, while ) = 14
+GOTO( 71, id ) = 18
+GOTO( 71, SL ) = 115
+numREDUCE: 1
+REDUCE( 71, end ) = 9
+===
+State: 72
+numGOTO: 13
+GOTO( 72, E ) = 78
+GOTO( 72, not ) = 77
+GOTO( 72, T ) = 43
+GOTO( 72, F ) = 44
+GOTO( 72, ( ) = 42
+GOTO( 72, NE ) = 76
+GOTO( 72, id ) = 40
+GOTO( 72, BE ) = 116
+GOTO( 72, ic ) = 38
+GOTO( 72, AE ) = 74
+GOTO( 72, RE ) = 73
+GOTO( 72, { ) = 72
+GOTO( 72, fc ) = 34
+numREDUCE: 0
+===
+State: 73
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 73, } ) = 28
+REDUCE( 73, and ) = 28
+REDUCE( 73, or ) = 28
+===
+State: 74
+numGOTO: 1
+GOTO( 74, and ) = 117
+numREDUCE: 2
+REDUCE( 74, } ) = 23
+REDUCE( 74, or ) = 23
+===
+State: 75
+numGOTO: 2
+GOTO( 75, } ) = 119
+GOTO( 75, or ) = 118
+numREDUCE: 0
+===
+State: 76
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 76, } ) = 25
+REDUCE( 76, and ) = 25
+REDUCE( 76, or ) = 25
+===
+State: 77
+numGOTO: 11
+GOTO( 77, E ) = 78
+GOTO( 77, not ) = 77
+GOTO( 77, T ) = 43
+GOTO( 77, F ) = 44
+GOTO( 77, fc ) = 34
+GOTO( 77, id ) = 40
+GOTO( 77, ( ) = 42
+GOTO( 77, ic ) = 38
+GOTO( 77, { ) = 72
+GOTO( 77, NE ) = 120
+GOTO( 77, RE ) = 73
+numREDUCE: 0
+===
+State: 78
+numGOTO: 5
+GOTO( 78, < ) = 123
+GOTO( 78, = ) = 122
+GOTO( 78, > ) = 121
+GOTO( 78, + ) = 83
+GOTO( 78, - ) = 86
+numREDUCE: 0
+===
+State: 79
+numGOTO: 3
+GOTO( 79, + ) = 105
+GOTO( 79, ) ) = 124
+GOTO( 79, - ) = 107
+numREDUCE: 0
+===
+State: 80
+numGOTO: 5
+GOTO( 80, ic ) = 38
+GOTO( 80, id ) = 40
+GOTO( 80, ( ) = 42
+GOTO( 80, F ) = 125
+GOTO( 80, fc ) = 34
+numREDUCE: 0
+===
+State: 81
+numGOTO: 5
+GOTO( 81, ic ) = 38
+GOTO( 81, id ) = 40
+GOTO( 81, fc ) = 34
+GOTO( 81, ( ) = 42
+GOTO( 81, F ) = 126
+numREDUCE: 0
+===
+State: 82
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 82, and ) = 26
+REDUCE( 82, do ) = 26
+REDUCE( 82, or ) = 26
+===
+State: 83
+numGOTO: 6
+GOTO( 83, F ) = 44
+GOTO( 83, T ) = 127
+GOTO( 83, ic ) = 38
+GOTO( 83, id ) = 40
+GOTO( 83, fc ) = 34
+GOTO( 83, ( ) = 42
+numREDUCE: 0
+===
+State: 84
+numGOTO: 7
+GOTO( 84, id ) = 134
+GOTO( 84, T ) = 133
+GOTO( 84, F ) = 132
+GOTO( 84, E ) = 131
+GOTO( 84, ( ) = 130
+GOTO( 84, ic ) = 129
+GOTO( 84, fc ) = 128
+numREDUCE: 0
+===
+State: 85
+numGOTO: 7
+GOTO( 85, id ) = 134
+GOTO( 85, F ) = 132
+GOTO( 85, T ) = 133
+GOTO( 85, E ) = 135
+GOTO( 85, ic ) = 129
+GOTO( 85, ( ) = 130
+GOTO( 85, fc ) = 128
+numREDUCE: 0
+===
+State: 86
+numGOTO: 6
+GOTO( 86, ( ) = 42
+GOTO( 86, id ) = 40
+GOTO( 86, F ) = 44
+GOTO( 86, T ) = 136
+GOTO( 86, fc ) = 34
+GOTO( 86, ic ) = 38
+numREDUCE: 0
+===
+State: 87
+numGOTO: 7
+GOTO( 87, T ) = 133
+GOTO( 87, F ) = 132
+GOTO( 87, ( ) = 130
+GOTO( 87, E ) = 137
+GOTO( 87, id ) = 134
+GOTO( 87, ic ) = 129
+GOTO( 87, fc ) = 128
+numREDUCE: 0
+===
+State: 88
+numGOTO: 2
+GOTO( 88, } ) = 138
+GOTO( 88, or ) = 118
+numREDUCE: 0
+===
+State: 89
+numGOTO: 12
+GOTO( 89, E ) = 53
+GOTO( 89, not ) = 52
+GOTO( 89, T ) = 43
+GOTO( 89, F ) = 44
+GOTO( 89, AE ) = 139
+GOTO( 89, { ) = 48
+GOTO( 89, id ) = 40
+GOTO( 89, ic ) = 38
+GOTO( 89, RE ) = 49
+GOTO( 89, ( ) = 42
+GOTO( 89, NE ) = 47
+GOTO( 89, fc ) = 34
+numREDUCE: 0
+===
+State: 90
+numGOTO: 11
+GOTO( 90, ES ) = 150
+GOTO( 90, id ) = 149
+GOTO( 90, SL ) = 148
+GOTO( 90, if ) = 147
+GOTO( 90, print ) = 146
+GOTO( 90, WS ) = 145
+GOTO( 90, IOS ) = 144
+GOTO( 90, while ) = 143
+GOTO( 90, scan ) = 142
+GOTO( 90, S ) = 141
+GOTO( 90, IS ) = 140
+numREDUCE: 2
+REDUCE( 90, else ) = 9
+REDUCE( 90, end ) = 9
+===
+State: 91
+numGOTO: 11
+GOTO( 91, NE ) = 151
+GOTO( 91, E ) = 53
+GOTO( 91, not ) = 52
+GOTO( 91, T ) = 43
+GOTO( 91, F ) = 44
+GOTO( 91, RE ) = 49
+GOTO( 91, id ) = 40
+GOTO( 91, ( ) = 42
+GOTO( 91, ic ) = 38
+GOTO( 91, { ) = 48
+GOTO( 91, fc ) = 34
+numREDUCE: 0
+===
+State: 92
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 92, and ) = 26
+REDUCE( 92, or ) = 26
+REDUCE( 92, then ) = 26
+===
+State: 93
+numGOTO: 7
+GOTO( 93, ( ) = 158
+GOTO( 93, ic ) = 157
+GOTO( 93, E ) = 156
+GOTO( 93, T ) = 155
+GOTO( 93, F ) = 154
+GOTO( 93, fc ) = 153
+GOTO( 93, id ) = 152
+numREDUCE: 0
+===
+State: 94
+numGOTO: 7
+GOTO( 94, ( ) = 158
+GOTO( 94, id ) = 152
+GOTO( 94, E ) = 159
+GOTO( 94, T ) = 155
+GOTO( 94, F ) = 154
+GOTO( 94, ic ) = 157
+GOTO( 94, fc ) = 153
+numREDUCE: 0
+===
+State: 95
+numGOTO: 7
+GOTO( 95, F ) = 154
+GOTO( 95, T ) = 155
+GOTO( 95, ic ) = 157
+GOTO( 95, E ) = 160
+GOTO( 95, id ) = 152
+GOTO( 95, ( ) = 158
+GOTO( 95, fc ) = 153
+numREDUCE: 0
+===
+State: 96
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 96, + ) = 41
+REDUCE( 96, - ) = 41
+REDUCE( 96, ∗ ) = 41
+REDUCE( 96, / ) = 41
+REDUCE( 96, ; ) = 41
+===
+State: 97
+numGOTO: 7
+GOTO( 97, ic ) = 64
+GOTO( 97, E ) = 161
+GOTO( 97, F ) = 61
+GOTO( 97, T ) = 60
+GOTO( 97, ( ) = 63
+GOTO( 97, id ) = 59
+GOTO( 97, fc ) = 58
+numREDUCE: 0
+===
+State: 98
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 98, + ) = 39
+REDUCE( 98, - ) = 39
+REDUCE( 98, ∗ ) = 39
+REDUCE( 98, / ) = 39
+REDUCE( 98, ; ) = 39
+===
+State: 99
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 99, + ) = 40
+REDUCE( 99, - ) = 40
+REDUCE( 99, ∗ ) = 40
+REDUCE( 99, / ) = 40
+REDUCE( 99, ; ) = 40
+===
+State: 100
+numGOTO: 3
+GOTO( 100, - ) = 164
+GOTO( 100, ; ) = 163
+GOTO( 100, + ) = 162
+numREDUCE: 0
+===
+State: 101
+numGOTO: 2
+GOTO( 101, ∗ ) = 166
+GOTO( 101, / ) = 165
+numREDUCE: 3
+REDUCE( 101, + ) = 34
+REDUCE( 101, - ) = 34
+REDUCE( 101, ; ) = 34
+===
+State: 102
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 102, + ) = 37
+REDUCE( 102, - ) = 37
+REDUCE( 102, ∗ ) = 37
+REDUCE( 102, / ) = 37
+REDUCE( 102, ; ) = 37
+===
+State: 103
+numGOTO: 5
+GOTO( 103, ic ) = 64
+GOTO( 103, fc ) = 58
+GOTO( 103, F ) = 167
+GOTO( 103, id ) = 59
+GOTO( 103, ( ) = 63
+numREDUCE: 0
+===
+State: 104
+numGOTO: 5
+GOTO( 104, ic ) = 64
+GOTO( 104, fc ) = 58
+GOTO( 104, id ) = 59
+GOTO( 104, ( ) = 63
+GOTO( 104, F ) = 168
+numREDUCE: 0
+===
+State: 105
+numGOTO: 6
+GOTO( 105, T ) = 169
+GOTO( 105, F ) = 61
+GOTO( 105, id ) = 59
+GOTO( 105, ic ) = 64
+GOTO( 105, fc ) = 58
+GOTO( 105, ( ) = 63
+numREDUCE: 0
+===
+State: 106
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 106, + ) = 38
+REDUCE( 106, - ) = 38
+REDUCE( 106, print ) = 38
+REDUCE( 106, ∗ ) = 38
+REDUCE( 106, / ) = 38
+REDUCE( 106, while ) = 38
+REDUCE( 106, end ) = 38
+REDUCE( 106, scan ) = 38
+REDUCE( 106, id ) = 38
+REDUCE( 106, if ) = 38
+===
+State: 107
+numGOTO: 6
+GOTO( 107, ( ) = 63
+GOTO( 107, ic ) = 64
+GOTO( 107, id ) = 59
+GOTO( 107, T ) = 170
+GOTO( 107, F ) = 61
+GOTO( 107, fc ) = 58
+numREDUCE: 0
+===
+State: 108
+numGOTO: 3
+GOTO( 108, - ) = 107
+GOTO( 108, ) ) = 171
+GOTO( 108, + ) = 105
+numREDUCE: 0
+===
+State: 109
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 109, + ) = 35
+REDUCE( 109, - ) = 35
+REDUCE( 109, print ) = 35
+REDUCE( 109, ∗ ) = 35
+REDUCE( 109, / ) = 35
+REDUCE( 109, while ) = 35
+REDUCE( 109, end ) = 35
+REDUCE( 109, scan ) = 35
+REDUCE( 109, id ) = 35
+REDUCE( 109, if ) = 35
+===
+State: 110
+numGOTO: 0
+numREDUCE: 10
+REDUCE( 110, + ) = 36
+REDUCE( 110, - ) = 36
+REDUCE( 110, print ) = 36
+REDUCE( 110, ∗ ) = 36
+REDUCE( 110, / ) = 36
+REDUCE( 110, while ) = 36
+REDUCE( 110, end ) = 36
+REDUCE( 110, scan ) = 36
+REDUCE( 110, id ) = 36
+REDUCE( 110, if ) = 36
+===
+State: 111
+numGOTO: 2
+GOTO( 111, ∗ ) = 65
+GOTO( 111, / ) = 66
+numREDUCE: 8
+REDUCE( 111, + ) = 33
+REDUCE( 111, - ) = 33
+REDUCE( 111, print ) = 33
+REDUCE( 111, end ) = 33
+REDUCE( 111, scan ) = 33
+REDUCE( 111, id ) = 33
+REDUCE( 111, if ) = 33
+REDUCE( 111, while ) = 33
+===
+State: 112
+numGOTO: 2
+GOTO( 112, ∗ ) = 65
+GOTO( 112, / ) = 66
+numREDUCE: 8
+REDUCE( 112, + ) = 32
+REDUCE( 112, - ) = 32
+REDUCE( 112, print ) = 32
+REDUCE( 112, end ) = 32
+REDUCE( 112, scan ) = 32
+REDUCE( 112, id ) = 32
+REDUCE( 112, if ) = 32
+REDUCE( 112, while ) = 32
+===
+State: 113
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 113, and ) = 24
+REDUCE( 113, do ) = 24
+REDUCE( 113, or ) = 24
+===
+State: 114
+numGOTO: 1
+GOTO( 114, and ) = 69
+numREDUCE: 2
+REDUCE( 114, do ) = 22
+REDUCE( 114, or ) = 22
+===
+State: 115
+numGOTO: 1
+GOTO( 115, end ) = 172
+numREDUCE: 0
+===
+State: 116
+numGOTO: 2
+GOTO( 116, or ) = 118
+GOTO( 116, } ) = 173
+numREDUCE: 0
+===
+State: 117
+numGOTO: 11
+GOTO( 117, F ) = 44
+GOTO( 117, T ) = 43
+GOTO( 117, E ) = 78
+GOTO( 117, not ) = 77
+GOTO( 117, NE ) = 174
+GOTO( 117, RE ) = 73
+GOTO( 117, id ) = 40
+GOTO( 117, ( ) = 42
+GOTO( 117, ic ) = 38
+GOTO( 117, { ) = 72
+GOTO( 117, fc ) = 34
+numREDUCE: 0
+===
+State: 118
+numGOTO: 12
+GOTO( 118, E ) = 78
+GOTO( 118, not ) = 77
+GOTO( 118, AE ) = 175
+GOTO( 118, { ) = 72
+GOTO( 118, T ) = 43
+GOTO( 118, F ) = 44
+GOTO( 118, id ) = 40
+GOTO( 118, ic ) = 38
+GOTO( 118, RE ) = 73
+GOTO( 118, ( ) = 42
+GOTO( 118, NE ) = 76
+GOTO( 118, fc ) = 34
+numREDUCE: 0
+===
+State: 119
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 119, and ) = 27
+REDUCE( 119, do ) = 27
+REDUCE( 119, or ) = 27
+===
+State: 120
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 120, } ) = 26
+REDUCE( 120, and ) = 26
+REDUCE( 120, or ) = 26
+===
+State: 121
+numGOTO: 7
+GOTO( 121, id ) = 182
+GOTO( 121, T ) = 181
+GOTO( 121, F ) = 180
+GOTO( 121, E ) = 179
+GOTO( 121, ic ) = 178
+GOTO( 121, ( ) = 177
+GOTO( 121, fc ) = 176
+numREDUCE: 0
+===
+State: 122
+numGOTO: 7
+GOTO( 122, E ) = 183
+GOTO( 122, T ) = 181
+GOTO( 122, F ) = 180
+GOTO( 122, ic ) = 178
+GOTO( 122, id ) = 182
+GOTO( 122, ( ) = 177
+GOTO( 122, fc ) = 176
+numREDUCE: 0
+===
+State: 123
+numGOTO: 7
+GOTO( 123, ic ) = 178
+GOTO( 123, T ) = 181
+GOTO( 123, F ) = 180
+GOTO( 123, E ) = 184
+GOTO( 123, ( ) = 177
+GOTO( 123, id ) = 182
+GOTO( 123, fc ) = 176
+numREDUCE: 0
+===
+State: 124
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 124, + ) = 38
+REDUCE( 124, - ) = 38
+REDUCE( 124, ∗ ) = 38
+REDUCE( 124, / ) = 38
+REDUCE( 124, = ) = 38
+REDUCE( 124, < ) = 38
+REDUCE( 124, > ) = 38
+===
+State: 125
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 125, + ) = 35
+REDUCE( 125, - ) = 35
+REDUCE( 125, ∗ ) = 35
+REDUCE( 125, / ) = 35
+REDUCE( 125, = ) = 35
+REDUCE( 125, < ) = 35
+REDUCE( 125, > ) = 35
+===
+State: 126
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 126, + ) = 36
+REDUCE( 126, - ) = 36
+REDUCE( 126, ∗ ) = 36
+REDUCE( 126, / ) = 36
+REDUCE( 126, = ) = 36
+REDUCE( 126, < ) = 36
+REDUCE( 126, > ) = 36
+===
+State: 127
+numGOTO: 2
+GOTO( 127, ∗ ) = 80
+GOTO( 127, / ) = 81
+numREDUCE: 5
+REDUCE( 127, + ) = 32
+REDUCE( 127, - ) = 32
+REDUCE( 127, = ) = 32
+REDUCE( 127, < ) = 32
+REDUCE( 127, > ) = 32
+===
+State: 128
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 128, + ) = 41
+REDUCE( 128, - ) = 41
+REDUCE( 128, ∗ ) = 41
+REDUCE( 128, / ) = 41
+REDUCE( 128, do ) = 41
+REDUCE( 128, and ) = 41
+REDUCE( 128, or ) = 41
+===
+State: 129
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 129, + ) = 40
+REDUCE( 129, - ) = 40
+REDUCE( 129, ∗ ) = 40
+REDUCE( 129, / ) = 40
+REDUCE( 129, do ) = 40
+REDUCE( 129, and ) = 40
+REDUCE( 129, or ) = 40
+===
+State: 130
+numGOTO: 7
+GOTO( 130, id ) = 59
+GOTO( 130, ( ) = 63
+GOTO( 130, E ) = 185
+GOTO( 130, F ) = 61
+GOTO( 130, T ) = 60
+GOTO( 130, ic ) = 64
+GOTO( 130, fc ) = 58
+numREDUCE: 0
+===
+State: 131
+numGOTO: 2
+GOTO( 131, + ) = 187
+GOTO( 131, - ) = 186
+numREDUCE: 3
+REDUCE( 131, and ) = 31
+REDUCE( 131, do ) = 31
+REDUCE( 131, or ) = 31
+===
+State: 132
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 132, + ) = 37
+REDUCE( 132, - ) = 37
+REDUCE( 132, ∗ ) = 37
+REDUCE( 132, / ) = 37
+REDUCE( 132, do ) = 37
+REDUCE( 132, and ) = 37
+REDUCE( 132, or ) = 37
+===
+State: 133
+numGOTO: 2
+GOTO( 133, / ) = 189
+GOTO( 133, ∗ ) = 188
+numREDUCE: 5
+REDUCE( 133, + ) = 34
+REDUCE( 133, - ) = 34
+REDUCE( 133, and ) = 34
+REDUCE( 133, do ) = 34
+REDUCE( 133, or ) = 34
+===
+State: 134
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 134, + ) = 39
+REDUCE( 134, - ) = 39
+REDUCE( 134, ∗ ) = 39
+REDUCE( 134, / ) = 39
+REDUCE( 134, do ) = 39
+REDUCE( 134, and ) = 39
+REDUCE( 134, or ) = 39
+===
+State: 135
+numGOTO: 2
+GOTO( 135, - ) = 186
+GOTO( 135, + ) = 187
+numREDUCE: 3
+REDUCE( 135, and ) = 29
+REDUCE( 135, do ) = 29
+REDUCE( 135, or ) = 29
+===
+State: 136
+numGOTO: 2
+GOTO( 136, ∗ ) = 80
+GOTO( 136, / ) = 81
+numREDUCE: 5
+REDUCE( 136, + ) = 33
+REDUCE( 136, - ) = 33
+REDUCE( 136, = ) = 33
+REDUCE( 136, < ) = 33
+REDUCE( 136, > ) = 33
+===
+State: 137
+numGOTO: 2
+GOTO( 137, - ) = 186
+GOTO( 137, + ) = 187
+numREDUCE: 3
+REDUCE( 137, and ) = 30
+REDUCE( 137, do ) = 30
+REDUCE( 137, or ) = 30
+===
+State: 138
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 138, and ) = 27
+REDUCE( 138, or ) = 27
+REDUCE( 138, then ) = 27
+===
+State: 139
+numGOTO: 1
+GOTO( 139, and ) = 91
+numREDUCE: 2
+REDUCE( 139, or ) = 22
+REDUCE( 139, then ) = 22
+===
+State: 140
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 140, else ) = 11
+REDUCE( 140, end ) = 11
+REDUCE( 140, scan ) = 11
+REDUCE( 140, id ) = 11
+REDUCE( 140, if ) = 11
+REDUCE( 140, print ) = 11
+REDUCE( 140, while ) = 11
+===
+State: 141
+numGOTO: 11
+GOTO( 141, IS ) = 140
+GOTO( 141, ES ) = 150
+GOTO( 141, if ) = 147
+GOTO( 141, id ) = 149
+GOTO( 141, SL ) = 190
+GOTO( 141, while ) = 143
+GOTO( 141, IOS ) = 144
+GOTO( 141, WS ) = 145
+GOTO( 141, print ) = 146
+GOTO( 141, scan ) = 142
+GOTO( 141, S ) = 141
+numREDUCE: 2
+REDUCE( 141, else ) = 9
+REDUCE( 141, end ) = 9
+===
+State: 142
+numGOTO: 1
+GOTO( 142, id ) = 191
+numREDUCE: 0
+===
+State: 143
+numGOTO: 13
+GOTO( 143, ( ) = 42
+GOTO( 143, E ) = 46
+GOTO( 143, not ) = 45
+GOTO( 143, F ) = 44
+GOTO( 143, T ) = 43
+GOTO( 143, NE ) = 41
+GOTO( 143, id ) = 40
+GOTO( 143, { ) = 39
+GOTO( 143, ic ) = 38
+GOTO( 143, BE ) = 192
+GOTO( 143, AE ) = 36
+GOTO( 143, RE ) = 35
+GOTO( 143, fc ) = 34
+numREDUCE: 0
+===
+State: 144
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 144, else ) = 13
+REDUCE( 144, end ) = 13
+REDUCE( 144, scan ) = 13
+REDUCE( 144, id ) = 13
+REDUCE( 144, if ) = 13
+REDUCE( 144, print ) = 13
+REDUCE( 144, while ) = 13
+===
+State: 145
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 145, else ) = 12
+REDUCE( 145, end ) = 12
+REDUCE( 145, scan ) = 12
+REDUCE( 145, id ) = 12
+REDUCE( 145, if ) = 12
+REDUCE( 145, print ) = 12
+REDUCE( 145, while ) = 12
+===
+State: 146
+numGOTO: 9
+GOTO( 146, E ) = 201
+GOTO( 146, T ) = 200
+GOTO( 146, F ) = 199
+GOTO( 146, ( ) = 198
+GOTO( 146, PE ) = 197
+GOTO( 146, fc ) = 196
+GOTO( 146, ic ) = 195
+GOTO( 146, str ) = 194
+GOTO( 146, id ) = 193
+numREDUCE: 0
+===
+State: 147
+numGOTO: 13
+GOTO( 147, E ) = 53
+GOTO( 147, not ) = 52
+GOTO( 147, T ) = 43
+GOTO( 147, F ) = 44
+GOTO( 147, AE ) = 51
+GOTO( 147, BE ) = 202
+GOTO( 147, ic ) = 38
+GOTO( 147, ( ) = 42
+GOTO( 147, id ) = 40
+GOTO( 147, RE ) = 49
+GOTO( 147, { ) = 48
+GOTO( 147, NE ) = 47
+GOTO( 147, fc ) = 34
+numREDUCE: 0
+===
+State: 148
+numGOTO: 2
+GOTO( 148, end ) = 204
+GOTO( 148, else ) = 203
+numREDUCE: 0
+===
+State: 149
+numGOTO: 1
+GOTO( 149, := ) = 205
+numREDUCE: 0
+===
+State: 150
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 150, else ) = 10
+REDUCE( 150, end ) = 10
+REDUCE( 150, scan ) = 10
+REDUCE( 150, id ) = 10
+REDUCE( 150, if ) = 10
+REDUCE( 150, print ) = 10
+REDUCE( 150, while ) = 10
+===
+State: 151
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 151, and ) = 24
+REDUCE( 151, or ) = 24
+REDUCE( 151, then ) = 24
+===
+State: 152
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 152, + ) = 39
+REDUCE( 152, - ) = 39
+REDUCE( 152, ∗ ) = 39
+REDUCE( 152, / ) = 39
+REDUCE( 152, and ) = 39
+REDUCE( 152, or ) = 39
+REDUCE( 152, then ) = 39
+===
+State: 153
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 153, + ) = 41
+REDUCE( 153, - ) = 41
+REDUCE( 153, ∗ ) = 41
+REDUCE( 153, / ) = 41
+REDUCE( 153, and ) = 41
+REDUCE( 153, or ) = 41
+REDUCE( 153, then ) = 41
+===
+State: 154
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 154, + ) = 37
+REDUCE( 154, - ) = 37
+REDUCE( 154, ∗ ) = 37
+REDUCE( 154, / ) = 37
+REDUCE( 154, and ) = 37
+REDUCE( 154, or ) = 37
+REDUCE( 154, then ) = 37
+===
+State: 155
+numGOTO: 2
+GOTO( 155, ∗ ) = 207
+GOTO( 155, / ) = 206
+numREDUCE: 5
+REDUCE( 155, + ) = 34
+REDUCE( 155, - ) = 34
+REDUCE( 155, and ) = 34
+REDUCE( 155, or ) = 34
+REDUCE( 155, then ) = 34
+===
+State: 156
+numGOTO: 2
+GOTO( 156, + ) = 209
+GOTO( 156, - ) = 208
+numREDUCE: 3
+REDUCE( 156, and ) = 30
+REDUCE( 156, or ) = 30
+REDUCE( 156, then ) = 30
+===
+State: 157
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 157, + ) = 40
+REDUCE( 157, - ) = 40
+REDUCE( 157, ∗ ) = 40
+REDUCE( 157, / ) = 40
+REDUCE( 157, and ) = 40
+REDUCE( 157, or ) = 40
+REDUCE( 157, then ) = 40
+===
+State: 158
+numGOTO: 7
+GOTO( 158, ( ) = 63
+GOTO( 158, F ) = 61
+GOTO( 158, T ) = 60
+GOTO( 158, id ) = 59
+GOTO( 158, E ) = 210
+GOTO( 158, ic ) = 64
+GOTO( 158, fc ) = 58
+numREDUCE: 0
+===
+State: 159
+numGOTO: 2
+GOTO( 159, - ) = 208
+GOTO( 159, + ) = 209
+numREDUCE: 3
+REDUCE( 159, and ) = 31
+REDUCE( 159, or ) = 31
+REDUCE( 159, then ) = 31
+===
+State: 160
+numGOTO: 2
+GOTO( 160, + ) = 209
+GOTO( 160, - ) = 208
+numREDUCE: 3
+REDUCE( 160, and ) = 29
+REDUCE( 160, or ) = 29
+REDUCE( 160, then ) = 29
+===
+State: 161
+numGOTO: 3
+GOTO( 161, ) ) = 211
+GOTO( 161, + ) = 105
+GOTO( 161, - ) = 107
+numREDUCE: 0
+===
+State: 162
+numGOTO: 6
+GOTO( 162, F ) = 102
+GOTO( 162, T ) = 212
+GOTO( 162, ic ) = 99
+GOTO( 162, id ) = 98
+GOTO( 162, fc ) = 96
+GOTO( 162, ( ) = 97
+numREDUCE: 0
+===
+State: 163
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 163, end ) = 14
+REDUCE( 163, scan ) = 14
+REDUCE( 163, id ) = 14
+REDUCE( 163, if ) = 14
+REDUCE( 163, print ) = 14
+REDUCE( 163, while ) = 14
+===
+State: 164
+numGOTO: 6
+GOTO( 164, id ) = 98
+GOTO( 164, ( ) = 97
+GOTO( 164, ic ) = 99
+GOTO( 164, T ) = 213
+GOTO( 164, F ) = 102
+GOTO( 164, fc ) = 96
+numREDUCE: 0
+===
+State: 165
+numGOTO: 5
+GOTO( 165, F ) = 214
+GOTO( 165, ( ) = 97
+GOTO( 165, fc ) = 96
+GOTO( 165, ic ) = 99
+GOTO( 165, id ) = 98
+numREDUCE: 0
+===
+State: 166
+numGOTO: 5
+GOTO( 166, id ) = 98
+GOTO( 166, ( ) = 97
+GOTO( 166, ic ) = 99
+GOTO( 166, fc ) = 96
+GOTO( 166, F ) = 215
+numREDUCE: 0
+===
+State: 167
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 167, + ) = 36
+REDUCE( 167, ) ) = 36
+REDUCE( 167, - ) = 36
+REDUCE( 167, ∗ ) = 36
+REDUCE( 167, / ) = 36
+===
+State: 168
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 168, + ) = 35
+REDUCE( 168, ) ) = 35
+REDUCE( 168, - ) = 35
+REDUCE( 168, ∗ ) = 35
+REDUCE( 168, / ) = 35
+===
+State: 169
+numGOTO: 2
+GOTO( 169, / ) = 103
+GOTO( 169, ∗ ) = 104
+numREDUCE: 3
+REDUCE( 169, + ) = 32
+REDUCE( 169, ) ) = 32
+REDUCE( 169, - ) = 32
+===
+State: 170
+numGOTO: 2
+GOTO( 170, ∗ ) = 104
+GOTO( 170, / ) = 103
+numREDUCE: 3
+REDUCE( 170, + ) = 33
+REDUCE( 170, ) ) = 33
+REDUCE( 170, - ) = 33
+===
+State: 171
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 171, + ) = 38
+REDUCE( 171, ) ) = 38
+REDUCE( 171, - ) = 38
+REDUCE( 171, ∗ ) = 38
+REDUCE( 171, / ) = 38
+===
+State: 172
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 172, end ) = 17
+REDUCE( 172, scan ) = 17
+REDUCE( 172, id ) = 17
+REDUCE( 172, if ) = 17
+REDUCE( 172, print ) = 17
+REDUCE( 172, while ) = 17
+===
+State: 173
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 173, } ) = 27
+REDUCE( 173, and ) = 27
+REDUCE( 173, or ) = 27
+===
+State: 174
+numGOTO: 0
+numREDUCE: 3
+REDUCE( 174, } ) = 24
+REDUCE( 174, and ) = 24
+REDUCE( 174, or ) = 24
+===
+State: 175
+numGOTO: 1
+GOTO( 175, and ) = 117
+numREDUCE: 2
+REDUCE( 175, } ) = 22
+REDUCE( 175, or ) = 22
+===
+State: 176
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 176, + ) = 41
+REDUCE( 176, - ) = 41
+REDUCE( 176, ∗ ) = 41
+REDUCE( 176, / ) = 41
+REDUCE( 176, } ) = 41
+REDUCE( 176, and ) = 41
+REDUCE( 176, or ) = 41
+===
+State: 177
+numGOTO: 7
+GOTO( 177, ( ) = 63
+GOTO( 177, E ) = 216
+GOTO( 177, id ) = 59
+GOTO( 177, F ) = 61
+GOTO( 177, T ) = 60
+GOTO( 177, ic ) = 64
+GOTO( 177, fc ) = 58
+numREDUCE: 0
+===
+State: 178
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 178, + ) = 40
+REDUCE( 178, - ) = 40
+REDUCE( 178, ∗ ) = 40
+REDUCE( 178, / ) = 40
+REDUCE( 178, } ) = 40
+REDUCE( 178, and ) = 40
+REDUCE( 178, or ) = 40
+===
+State: 179
+numGOTO: 2
+GOTO( 179, - ) = 218
+GOTO( 179, + ) = 217
+numREDUCE: 3
+REDUCE( 179, } ) = 31
+REDUCE( 179, and ) = 31
+REDUCE( 179, or ) = 31
+===
+State: 180
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 180, + ) = 37
+REDUCE( 180, - ) = 37
+REDUCE( 180, ∗ ) = 37
+REDUCE( 180, / ) = 37
+REDUCE( 180, } ) = 37
+REDUCE( 180, and ) = 37
+REDUCE( 180, or ) = 37
+===
+State: 181
+numGOTO: 2
+GOTO( 181, ∗ ) = 220
+GOTO( 181, / ) = 219
+numREDUCE: 5
+REDUCE( 181, + ) = 34
+REDUCE( 181, - ) = 34
+REDUCE( 181, } ) = 34
+REDUCE( 181, and ) = 34
+REDUCE( 181, or ) = 34
+===
+State: 182
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 182, + ) = 39
+REDUCE( 182, - ) = 39
+REDUCE( 182, ∗ ) = 39
+REDUCE( 182, / ) = 39
+REDUCE( 182, } ) = 39
+REDUCE( 182, and ) = 39
+REDUCE( 182, or ) = 39
+===
+State: 183
+numGOTO: 2
+GOTO( 183, - ) = 218
+GOTO( 183, + ) = 217
+numREDUCE: 3
+REDUCE( 183, } ) = 29
+REDUCE( 183, and ) = 29
+REDUCE( 183, or ) = 29
+===
+State: 184
+numGOTO: 2
+GOTO( 184, - ) = 218
+GOTO( 184, + ) = 217
+numREDUCE: 3
+REDUCE( 184, } ) = 30
+REDUCE( 184, and ) = 30
+REDUCE( 184, or ) = 30
+===
+State: 185
+numGOTO: 3
+GOTO( 185, + ) = 105
+GOTO( 185, ) ) = 221
+GOTO( 185, - ) = 107
+numREDUCE: 0
+===
+State: 186
+numGOTO: 6
+GOTO( 186, ( ) = 130
+GOTO( 186, T ) = 222
+GOTO( 186, F ) = 132
+GOTO( 186, id ) = 134
+GOTO( 186, ic ) = 129
+GOTO( 186, fc ) = 128
+numREDUCE: 0
+===
+State: 187
+numGOTO: 6
+GOTO( 187, F ) = 132
+GOTO( 187, T ) = 223
+GOTO( 187, ic ) = 129
+GOTO( 187, id ) = 134
+GOTO( 187, fc ) = 128
+GOTO( 187, ( ) = 130
+numREDUCE: 0
+===
+State: 188
+numGOTO: 5
+GOTO( 188, ic ) = 129
+GOTO( 188, fc ) = 128
+GOTO( 188, F ) = 224
+GOTO( 188, id ) = 134
+GOTO( 188, ( ) = 130
+numREDUCE: 0
+===
+State: 189
+numGOTO: 5
+GOTO( 189, F ) = 225
+GOTO( 189, id ) = 134
+GOTO( 189, ( ) = 130
+GOTO( 189, fc ) = 128
+GOTO( 189, ic ) = 129
+numREDUCE: 0
+===
+State: 190
+numGOTO: 0
+numREDUCE: 2
+REDUCE( 190, else ) = 8
+REDUCE( 190, end ) = 8
+===
+State: 191
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 191, else ) = 19
+REDUCE( 191, end ) = 19
+REDUCE( 191, scan ) = 19
+REDUCE( 191, id ) = 19
+REDUCE( 191, if ) = 19
+REDUCE( 191, print ) = 19
+REDUCE( 191, while ) = 19
+===
+State: 192
+numGOTO: 2
+GOTO( 192, or ) = 70
+GOTO( 192, do ) = 226
+numREDUCE: 0
+===
+State: 193
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 193, + ) = 39
+REDUCE( 193, - ) = 39
+REDUCE( 193, print ) = 39
+REDUCE( 193, ∗ ) = 39
+REDUCE( 193, / ) = 39
+REDUCE( 193, while ) = 39
+REDUCE( 193, else ) = 39
+REDUCE( 193, end ) = 39
+REDUCE( 193, scan ) = 39
+REDUCE( 193, id ) = 39
+REDUCE( 193, if ) = 39
+===
+State: 194
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 194, else ) = 21
+REDUCE( 194, end ) = 21
+REDUCE( 194, scan ) = 21
+REDUCE( 194, id ) = 21
+REDUCE( 194, if ) = 21
+REDUCE( 194, print ) = 21
+REDUCE( 194, while ) = 21
+===
+State: 195
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 195, + ) = 40
+REDUCE( 195, - ) = 40
+REDUCE( 195, print ) = 40
+REDUCE( 195, ∗ ) = 40
+REDUCE( 195, / ) = 40
+REDUCE( 195, while ) = 40
+REDUCE( 195, else ) = 40
+REDUCE( 195, end ) = 40
+REDUCE( 195, scan ) = 40
+REDUCE( 195, id ) = 40
+REDUCE( 195, if ) = 40
+===
+State: 196
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 196, + ) = 41
+REDUCE( 196, - ) = 41
+REDUCE( 196, print ) = 41
+REDUCE( 196, ∗ ) = 41
+REDUCE( 196, / ) = 41
+REDUCE( 196, while ) = 41
+REDUCE( 196, else ) = 41
+REDUCE( 196, end ) = 41
+REDUCE( 196, scan ) = 41
+REDUCE( 196, id ) = 41
+REDUCE( 196, if ) = 41
+===
+State: 197
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 197, else ) = 18
+REDUCE( 197, end ) = 18
+REDUCE( 197, scan ) = 18
+REDUCE( 197, id ) = 18
+REDUCE( 197, if ) = 18
+REDUCE( 197, print ) = 18
+REDUCE( 197, while ) = 18
+===
+State: 198
+numGOTO: 7
+GOTO( 198, ( ) = 63
+GOTO( 198, E ) = 227
+GOTO( 198, id ) = 59
+GOTO( 198, F ) = 61
+GOTO( 198, T ) = 60
+GOTO( 198, ic ) = 64
+GOTO( 198, fc ) = 58
+numREDUCE: 0
+===
+State: 199
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 199, + ) = 37
+REDUCE( 199, - ) = 37
+REDUCE( 199, print ) = 37
+REDUCE( 199, ∗ ) = 37
+REDUCE( 199, / ) = 37
+REDUCE( 199, while ) = 37
+REDUCE( 199, else ) = 37
+REDUCE( 199, end ) = 37
+REDUCE( 199, scan ) = 37
+REDUCE( 199, id ) = 37
+REDUCE( 199, if ) = 37
+===
+State: 200
+numGOTO: 2
+GOTO( 200, / ) = 229
+GOTO( 200, ∗ ) = 228
+numREDUCE: 9
+REDUCE( 200, + ) = 34
+REDUCE( 200, - ) = 34
+REDUCE( 200, print ) = 34
+REDUCE( 200, else ) = 34
+REDUCE( 200, end ) = 34
+REDUCE( 200, scan ) = 34
+REDUCE( 200, id ) = 34
+REDUCE( 200, if ) = 34
+REDUCE( 200, while ) = 34
+===
+State: 201
+numGOTO: 2
+GOTO( 201, + ) = 231
+GOTO( 201, - ) = 230
+numREDUCE: 7
+REDUCE( 201, else ) = 20
+REDUCE( 201, end ) = 20
+REDUCE( 201, scan ) = 20
+REDUCE( 201, id ) = 20
+REDUCE( 201, if ) = 20
+REDUCE( 201, print ) = 20
+REDUCE( 201, while ) = 20
+===
+State: 202
+numGOTO: 2
+GOTO( 202, or ) = 89
+GOTO( 202, then ) = 232
+numREDUCE: 0
+===
+State: 203
+numGOTO: 11
+GOTO( 203, if ) = 15
+GOTO( 203, while ) = 14
+GOTO( 203, IOS ) = 13
+GOTO( 203, IS ) = 19
+GOTO( 203, ES ) = 16
+GOTO( 203, id ) = 18
+GOTO( 203, SL ) = 233
+GOTO( 203, WS ) = 12
+GOTO( 203, print ) = 11
+GOTO( 203, scan ) = 10
+GOTO( 203, S ) = 9
+numREDUCE: 1
+REDUCE( 203, end ) = 9
+===
+State: 204
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 204, end ) = 15
+REDUCE( 204, scan ) = 15
+REDUCE( 204, id ) = 15
+REDUCE( 204, if ) = 15
+REDUCE( 204, print ) = 15
+REDUCE( 204, while ) = 15
+===
+State: 205
+numGOTO: 7
+GOTO( 205, E ) = 234
+GOTO( 205, id ) = 98
+GOTO( 205, F ) = 102
+GOTO( 205, T ) = 101
+GOTO( 205, ic ) = 99
+GOTO( 205, ( ) = 97
+GOTO( 205, fc ) = 96
+numREDUCE: 0
+===
+State: 206
+numGOTO: 5
+GOTO( 206, F ) = 235
+GOTO( 206, fc ) = 153
+GOTO( 206, ( ) = 158
+GOTO( 206, ic ) = 157
+GOTO( 206, id ) = 152
+numREDUCE: 0
+===
+State: 207
+numGOTO: 5
+GOTO( 207, id ) = 152
+GOTO( 207, ( ) = 158
+GOTO( 207, F ) = 236
+GOTO( 207, fc ) = 153
+GOTO( 207, ic ) = 157
+numREDUCE: 0
+===
+State: 208
+numGOTO: 6
+GOTO( 208, T ) = 237
+GOTO( 208, F ) = 154
+GOTO( 208, ( ) = 158
+GOTO( 208, ic ) = 157
+GOTO( 208, id ) = 152
+GOTO( 208, fc ) = 153
+numREDUCE: 0
+===
+State: 209
+numGOTO: 6
+GOTO( 209, ic ) = 157
+GOTO( 209, F ) = 154
+GOTO( 209, T ) = 238
+GOTO( 209, id ) = 152
+GOTO( 209, fc ) = 153
+GOTO( 209, ( ) = 158
+numREDUCE: 0
+===
+State: 210
+numGOTO: 3
+GOTO( 210, + ) = 105
+GOTO( 210, ) ) = 239
+GOTO( 210, - ) = 107
+numREDUCE: 0
+===
+State: 211
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 211, + ) = 38
+REDUCE( 211, - ) = 38
+REDUCE( 211, ∗ ) = 38
+REDUCE( 211, / ) = 38
+REDUCE( 211, ; ) = 38
+===
+State: 212
+numGOTO: 2
+GOTO( 212, / ) = 165
+GOTO( 212, ∗ ) = 166
+numREDUCE: 3
+REDUCE( 212, + ) = 32
+REDUCE( 212, - ) = 32
+REDUCE( 212, ; ) = 32
+===
+State: 213
+numGOTO: 2
+GOTO( 213, ∗ ) = 166
+GOTO( 213, / ) = 165
+numREDUCE: 3
+REDUCE( 213, + ) = 33
+REDUCE( 213, - ) = 33
+REDUCE( 213, ; ) = 33
+===
+State: 214
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 214, + ) = 36
+REDUCE( 214, - ) = 36
+REDUCE( 214, ∗ ) = 36
+REDUCE( 214, / ) = 36
+REDUCE( 214, ; ) = 36
+===
+State: 215
+numGOTO: 0
+numREDUCE: 5
+REDUCE( 215, + ) = 35
+REDUCE( 215, - ) = 35
+REDUCE( 215, ∗ ) = 35
+REDUCE( 215, / ) = 35
+REDUCE( 215, ; ) = 35
+===
+State: 216
+numGOTO: 3
+GOTO( 216, + ) = 105
+GOTO( 216, ) ) = 240
+GOTO( 216, - ) = 107
+numREDUCE: 0
+===
+State: 217
+numGOTO: 6
+GOTO( 217, T ) = 241
+GOTO( 217, F ) = 180
+GOTO( 217, id ) = 182
+GOTO( 217, ic ) = 178
+GOTO( 217, fc ) = 176
+GOTO( 217, ( ) = 177
+numREDUCE: 0
+===
+State: 218
+numGOTO: 6
+GOTO( 218, T ) = 242
+GOTO( 218, F ) = 180
+GOTO( 218, ic ) = 178
+GOTO( 218, id ) = 182
+GOTO( 218, ( ) = 177
+GOTO( 218, fc ) = 176
+numREDUCE: 0
+===
+State: 219
+numGOTO: 5
+GOTO( 219, ic ) = 178
+GOTO( 219, fc ) = 176
+GOTO( 219, ( ) = 177
+GOTO( 219, F ) = 243
+GOTO( 219, id ) = 182
+numREDUCE: 0
+===
+State: 220
+numGOTO: 5
+GOTO( 220, id ) = 182
+GOTO( 220, ( ) = 177
+GOTO( 220, ic ) = 178
+GOTO( 220, fc ) = 176
+GOTO( 220, F ) = 244
+numREDUCE: 0
+===
+State: 221
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 221, + ) = 38
+REDUCE( 221, - ) = 38
+REDUCE( 221, ∗ ) = 38
+REDUCE( 221, / ) = 38
+REDUCE( 221, do ) = 38
+REDUCE( 221, and ) = 38
+REDUCE( 221, or ) = 38
+===
+State: 222
+numGOTO: 2
+GOTO( 222, ∗ ) = 188
+GOTO( 222, / ) = 189
+numREDUCE: 5
+REDUCE( 222, + ) = 33
+REDUCE( 222, - ) = 33
+REDUCE( 222, and ) = 33
+REDUCE( 222, do ) = 33
+REDUCE( 222, or ) = 33
+===
+State: 223
+numGOTO: 2
+GOTO( 223, ∗ ) = 188
+GOTO( 223, / ) = 189
+numREDUCE: 5
+REDUCE( 223, + ) = 32
+REDUCE( 223, - ) = 32
+REDUCE( 223, and ) = 32
+REDUCE( 223, do ) = 32
+REDUCE( 223, or ) = 32
+===
+State: 224
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 224, + ) = 35
+REDUCE( 224, - ) = 35
+REDUCE( 224, ∗ ) = 35
+REDUCE( 224, / ) = 35
+REDUCE( 224, do ) = 35
+REDUCE( 224, and ) = 35
+REDUCE( 224, or ) = 35
+===
+State: 225
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 225, + ) = 36
+REDUCE( 225, - ) = 36
+REDUCE( 225, ∗ ) = 36
+REDUCE( 225, / ) = 36
+REDUCE( 225, do ) = 36
+REDUCE( 225, and ) = 36
+REDUCE( 225, or ) = 36
+===
+State: 226
+numGOTO: 11
+GOTO( 226, ES ) = 16
+GOTO( 226, IS ) = 19
+GOTO( 226, scan ) = 10
+GOTO( 226, id ) = 18
+GOTO( 226, SL ) = 245
+GOTO( 226, S ) = 9
+GOTO( 226, WS ) = 12
+GOTO( 226, print ) = 11
+GOTO( 226, if ) = 15
+GOTO( 226, IOS ) = 13
+GOTO( 226, while ) = 14
+numREDUCE: 1
+REDUCE( 226, end ) = 9
+===
+State: 227
+numGOTO: 3
+GOTO( 227, - ) = 107
+GOTO( 227, ) ) = 246
+GOTO( 227, + ) = 105
+numREDUCE: 0
+===
+State: 228
+numGOTO: 5
+GOTO( 228, ( ) = 198
+GOTO( 228, F ) = 247
+GOTO( 228, fc ) = 196
+GOTO( 228, ic ) = 195
+GOTO( 228, id ) = 193
+numREDUCE: 0
+===
+State: 229
+numGOTO: 5
+GOTO( 229, fc ) = 196
+GOTO( 229, id ) = 193
+GOTO( 229, ic ) = 195
+GOTO( 229, ( ) = 198
+GOTO( 229, F ) = 248
+numREDUCE: 0
+===
+State: 230
+numGOTO: 6
+GOTO( 230, T ) = 249
+GOTO( 230, F ) = 199
+GOTO( 230, ( ) = 198
+GOTO( 230, id ) = 193
+GOTO( 230, ic ) = 195
+GOTO( 230, fc ) = 196
+numREDUCE: 0
+===
+State: 231
+numGOTO: 6
+GOTO( 231, F ) = 199
+GOTO( 231, T ) = 250
+GOTO( 231, ic ) = 195
+GOTO( 231, id ) = 193
+GOTO( 231, fc ) = 196
+GOTO( 231, ( ) = 198
+numREDUCE: 0
+===
+State: 232
+numGOTO: 11
+GOTO( 232, SL ) = 251
+GOTO( 232, id ) = 149
+GOTO( 232, IOS ) = 144
+GOTO( 232, while ) = 143
+GOTO( 232, IS ) = 140
+GOTO( 232, ES ) = 150
+GOTO( 232, scan ) = 142
+GOTO( 232, S ) = 141
+GOTO( 232, WS ) = 145
+GOTO( 232, print ) = 146
+GOTO( 232, if ) = 147
+numREDUCE: 2
+REDUCE( 232, else ) = 9
+REDUCE( 232, end ) = 9
+===
+State: 233
+numGOTO: 1
+GOTO( 233, end ) = 252
+numREDUCE: 0
+===
+State: 234
+numGOTO: 3
+GOTO( 234, - ) = 164
+GOTO( 234, ; ) = 253
+GOTO( 234, + ) = 162
+numREDUCE: 0
+===
+State: 235
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 235, + ) = 36
+REDUCE( 235, - ) = 36
+REDUCE( 235, ∗ ) = 36
+REDUCE( 235, / ) = 36
+REDUCE( 235, and ) = 36
+REDUCE( 235, or ) = 36
+REDUCE( 235, then ) = 36
+===
+State: 236
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 236, + ) = 35
+REDUCE( 236, - ) = 35
+REDUCE( 236, ∗ ) = 35
+REDUCE( 236, / ) = 35
+REDUCE( 236, and ) = 35
+REDUCE( 236, or ) = 35
+REDUCE( 236, then ) = 35
+===
+State: 237
+numGOTO: 2
+GOTO( 237, / ) = 206
+GOTO( 237, ∗ ) = 207
+numREDUCE: 5
+REDUCE( 237, + ) = 33
+REDUCE( 237, - ) = 33
+REDUCE( 237, and ) = 33
+REDUCE( 237, or ) = 33
+REDUCE( 237, then ) = 33
+===
+State: 238
+numGOTO: 2
+GOTO( 238, / ) = 206
+GOTO( 238, ∗ ) = 207
+numREDUCE: 5
+REDUCE( 238, + ) = 32
+REDUCE( 238, - ) = 32
+REDUCE( 238, and ) = 32
+REDUCE( 238, or ) = 32
+REDUCE( 238, then ) = 32
+===
+State: 239
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 239, + ) = 38
+REDUCE( 239, - ) = 38
+REDUCE( 239, ∗ ) = 38
+REDUCE( 239, / ) = 38
+REDUCE( 239, and ) = 38
+REDUCE( 239, or ) = 38
+REDUCE( 239, then ) = 38
+===
+State: 240
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 240, + ) = 38
+REDUCE( 240, - ) = 38
+REDUCE( 240, ∗ ) = 38
+REDUCE( 240, / ) = 38
+REDUCE( 240, } ) = 38
+REDUCE( 240, and ) = 38
+REDUCE( 240, or ) = 38
+===
+State: 241
+numGOTO: 2
+GOTO( 241, / ) = 219
+GOTO( 241, ∗ ) = 220
+numREDUCE: 5
+REDUCE( 241, + ) = 32
+REDUCE( 241, - ) = 32
+REDUCE( 241, } ) = 32
+REDUCE( 241, and ) = 32
+REDUCE( 241, or ) = 32
+===
+State: 242
+numGOTO: 2
+GOTO( 242, ∗ ) = 220
+GOTO( 242, / ) = 219
+numREDUCE: 5
+REDUCE( 242, + ) = 33
+REDUCE( 242, - ) = 33
+REDUCE( 242, } ) = 33
+REDUCE( 242, and ) = 33
+REDUCE( 242, or ) = 33
+===
+State: 243
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 243, + ) = 36
+REDUCE( 243, - ) = 36
+REDUCE( 243, ∗ ) = 36
+REDUCE( 243, / ) = 36
+REDUCE( 243, } ) = 36
+REDUCE( 243, and ) = 36
+REDUCE( 243, or ) = 36
+===
+State: 244
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 244, + ) = 35
+REDUCE( 244, - ) = 35
+REDUCE( 244, ∗ ) = 35
+REDUCE( 244, / ) = 35
+REDUCE( 244, } ) = 35
+REDUCE( 244, and ) = 35
+REDUCE( 244, or ) = 35
+===
+State: 245
+numGOTO: 1
+GOTO( 245, end ) = 254
+numREDUCE: 0
+===
+State: 246
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 246, + ) = 38
+REDUCE( 246, - ) = 38
+REDUCE( 246, print ) = 38
+REDUCE( 246, ∗ ) = 38
+REDUCE( 246, / ) = 38
+REDUCE( 246, while ) = 38
+REDUCE( 246, else ) = 38
+REDUCE( 246, end ) = 38
+REDUCE( 246, scan ) = 38
+REDUCE( 246, id ) = 38
+REDUCE( 246, if ) = 38
+===
+State: 247
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 247, + ) = 35
+REDUCE( 247, - ) = 35
+REDUCE( 247, print ) = 35
+REDUCE( 247, ∗ ) = 35
+REDUCE( 247, / ) = 35
+REDUCE( 247, while ) = 35
+REDUCE( 247, else ) = 35
+REDUCE( 247, end ) = 35
+REDUCE( 247, scan ) = 35
+REDUCE( 247, id ) = 35
+REDUCE( 247, if ) = 35
+===
+State: 248
+numGOTO: 0
+numREDUCE: 11
+REDUCE( 248, + ) = 36
+REDUCE( 248, - ) = 36
+REDUCE( 248, print ) = 36
+REDUCE( 248, ∗ ) = 36
+REDUCE( 248, / ) = 36
+REDUCE( 248, while ) = 36
+REDUCE( 248, else ) = 36
+REDUCE( 248, end ) = 36
+REDUCE( 248, scan ) = 36
+REDUCE( 248, id ) = 36
+REDUCE( 248, if ) = 36
+===
+State: 249
+numGOTO: 2
+GOTO( 249, ∗ ) = 228
+GOTO( 249, / ) = 229
+numREDUCE: 9
+REDUCE( 249, + ) = 33
+REDUCE( 249, - ) = 33
+REDUCE( 249, print ) = 33
+REDUCE( 249, else ) = 33
+REDUCE( 249, end ) = 33
+REDUCE( 249, scan ) = 33
+REDUCE( 249, id ) = 33
+REDUCE( 249, if ) = 33
+REDUCE( 249, while ) = 33
+===
+State: 250
+numGOTO: 2
+GOTO( 250, ∗ ) = 228
+GOTO( 250, / ) = 229
+numREDUCE: 9
+REDUCE( 250, + ) = 32
+REDUCE( 250, - ) = 32
+REDUCE( 250, print ) = 32
+REDUCE( 250, else ) = 32
+REDUCE( 250, end ) = 32
+REDUCE( 250, scan ) = 32
+REDUCE( 250, id ) = 32
+REDUCE( 250, if ) = 32
+REDUCE( 250, while ) = 32
+===
+State: 251
+numGOTO: 2
+GOTO( 251, else ) = 256
+GOTO( 251, end ) = 255
+numREDUCE: 0
+===
+State: 252
+numGOTO: 0
+numREDUCE: 6
+REDUCE( 252, end ) = 16
+REDUCE( 252, scan ) = 16
+REDUCE( 252, id ) = 16
+REDUCE( 252, if ) = 16
+REDUCE( 252, print ) = 16
+REDUCE( 252, while ) = 16
+===
+State: 253
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 253, else ) = 14
+REDUCE( 253, end ) = 14
+REDUCE( 253, scan ) = 14
+REDUCE( 253, id ) = 14
+REDUCE( 253, if ) = 14
+REDUCE( 253, print ) = 14
+REDUCE( 253, while ) = 14
+===
+State: 254
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 254, else ) = 17
+REDUCE( 254, end ) = 17
+REDUCE( 254, scan ) = 17
+REDUCE( 254, id ) = 17
+REDUCE( 254, if ) = 17
+REDUCE( 254, print ) = 17
+REDUCE( 254, while ) = 17
+===
+State: 255
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 255, else ) = 15
+REDUCE( 255, end ) = 15
+REDUCE( 255, scan ) = 15
+REDUCE( 255, id ) = 15
+REDUCE( 255, if ) = 15
+REDUCE( 255, print ) = 15
+REDUCE( 255, while ) = 15
+===
+State: 256
+numGOTO: 11
+GOTO( 256, ES ) = 16
+GOTO( 256, IS ) = 19
+GOTO( 256, if ) = 15
+GOTO( 256, id ) = 18
+GOTO( 256, SL ) = 257
+GOTO( 256, while ) = 14
+GOTO( 256, IOS ) = 13
+GOTO( 256, WS ) = 12
+GOTO( 256, print ) = 11
+GOTO( 256, scan ) = 10
+GOTO( 256, S ) = 9
+numREDUCE: 1
+REDUCE( 256, end ) = 9
+===
+State: 257
+numGOTO: 1
+GOTO( 257, end ) = 258
+numREDUCE: 0
+===
+State: 258
+numGOTO: 0
+numREDUCE: 7
+REDUCE( 258, else ) = 16
+REDUCE( 258, end ) = 16
+REDUCE( 258, scan ) = 16
+REDUCE( 258, id ) = 16
+REDUCE( 258, if ) = 16
+REDUCE( 258, print ) = 16
+REDUCE( 258, while ) = 16
+===
+===GOTO-REDUCE-end
+===LR1-grammar-end

@@ -3,7 +3,11 @@
 
 int main() {
   LR1 cfg;
-  cfg.setDirPath("./grammar_2");
+  cout << "Enter a directory to store created GOTO/REDUCE actions and LR1 "
+          "Grammar: ";
+  string dir;
+  cin >> dir;
+  cfg.setDirPath(dir);
   cfg.createLR1File();
   cout << "Enter input:\n";
   vector<string> tokens;
@@ -21,6 +25,7 @@ int main() {
     token = yylex();
   }
   tokens.push_back(DOLLAR_SYMBOL);
-  cout << (cfg.parseTokens(tokens) ? "Accepted" : "Rejected") << "\n";
+  bool isValid = cfg.parseTokens(tokens);
+  cout << "Verdict: " << (isValid ? "Accepted" : "Rejected") << "\n";
   return 0;
 }

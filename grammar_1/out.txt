@@ -1,0 +1,432 @@
+Note: terminal symbols and non-terminal symbols can be strings. The string must not contain either of whitespace, tab, newline, ']', $, and '_'. Use "ε" as epsilon.
+
+Enter number of non-terminals: Enter 3 non-terminals:
+Enter number of terminals: Enter 5 terminals:
+
+===
+Production rule must have the following format:
+Non-terminal -> [ a space separated list of terminals and non-terminals ] (first and last symbols on rhs must be separated from the square brackets by at least one space)
+pipe-sign ('|') can be used "within square brackets" (not outside) as OR for multiple RHS
+Example: A -> [ a B C d a A | X y z W s ]
+NOTE: Do not include S' -> [ S $ ] as it is added by the program
+===
+
+Enter number of production rules:
+Enter 3 production rules:
+Enter start symbol: 
+ You entered:
+=== CFG
+Terminals: ε $ ( ) + * id 
+Non-terminals: E T F 
+Start symbol: E
+
+Production rules:
+Id: 5 id: 5 rule: F -> [ id ] 
+Id: 4 id: 4 rule: F -> [ ( E ) ] 
+Id: 3 id: 3 rule: T -> [ F ] 
+Id: 2 id: 2 rule: T -> [ T * F ] 
+Id: 1 id: 1 rule: E -> [ T ] 
+Id: 0 id: 0 rule: E -> [ E + T ] 
+===
+DFA States:
+=====
+State-index: 0:
+T -> [ . F ] Dot-index: 0 Lookup: [ $ + * ]
+S_' -> [ . E $ ] Dot-index: 0 Lookup: [ $ ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ $ + * ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ $ + ]
+F -> [ . id ] Dot-index: 0 Lookup: [ $ + * ]
+T -> [ . T * F ] Dot-index: 0 Lookup: [ $ + * ]
+E -> [ . T ] Dot-index: 0 Lookup: [ $ + ]
+=====
+=====
+State-index: 1:
+E -> [ T . ] Dot-index: 1 Lookup: [ $ + ]
+T -> [ T . * F ] Dot-index: 1 Lookup: [ $ + * ]
+=====
+=====
+State-index: 2:
+F -> [ id . ] Dot-index: 1 Lookup: [ $ + * ]
+=====
+=====
+State-index: 3:
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ $ + * ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ ) + ]
+F -> [ . id ] Dot-index: 0 Lookup: [ ) + * ]
+E -> [ . T ] Dot-index: 0 Lookup: [ ) + ]
+T -> [ . T * F ] Dot-index: 0 Lookup: [ ) + * ]
+T -> [ . F ] Dot-index: 0 Lookup: [ ) + * ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ ) + * ]
+=====
+=====
+State-index: 4:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ $ + ]
+S_' -> [ E . $ ] Dot-index: 1 Lookup: [ $ ]
+=====
+=====
+State-index: 5:
+T -> [ F . ] Dot-index: 1 Lookup: [ $ + * ]
+=====
+=====
+State-index: 6:
+F -> [ . id ] Dot-index: 0 Lookup: [ $ + * ]
+T -> [ T * . F ] Dot-index: 2 Lookup: [ $ + * ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ $ + * ]
+=====
+=====
+State-index: 7:
+F -> [ . id ] Dot-index: 0 Lookup: [ ) + * ]
+E -> [ . E + T ] Dot-index: 0 Lookup: [ ) + ]
+F -> [ ( . E ) ] Dot-index: 1 Lookup: [ ) + * ]
+E -> [ . T ] Dot-index: 0 Lookup: [ ) + ]
+T -> [ . T * F ] Dot-index: 0 Lookup: [ ) + * ]
+T -> [ . F ] Dot-index: 0 Lookup: [ ) + * ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ ) + * ]
+=====
+=====
+State-index: 8:
+T -> [ F . ] Dot-index: 1 Lookup: [ ) + * ]
+=====
+=====
+State-index: 9:
+E -> [ T . ] Dot-index: 1 Lookup: [ ) + ]
+T -> [ T . * F ] Dot-index: 1 Lookup: [ ) + * ]
+=====
+=====
+State-index: 10:
+F -> [ id . ] Dot-index: 1 Lookup: [ ) + * ]
+=====
+=====
+State-index: 11:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ ) + ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ $ + * ]
+=====
+=====
+State-index: 12:
+S_' -> [ E $ . ] Dot-index: 2 Lookup: [ $ ]
+=====
+=====
+State-index: 13:
+E -> [ E + . T ] Dot-index: 2 Lookup: [ $ + ]
+T -> [ . F ] Dot-index: 0 Lookup: [ $ + * ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ $ + * ]
+F -> [ . id ] Dot-index: 0 Lookup: [ $ + * ]
+T -> [ . T * F ] Dot-index: 0 Lookup: [ $ + * ]
+=====
+=====
+State-index: 14:
+T -> [ T * F . ] Dot-index: 3 Lookup: [ $ + * ]
+=====
+=====
+State-index: 15:
+E -> [ E . + T ] Dot-index: 1 Lookup: [ ) + ]
+F -> [ ( E . ) ] Dot-index: 2 Lookup: [ ) + * ]
+=====
+=====
+State-index: 16:
+F -> [ . id ] Dot-index: 0 Lookup: [ ) + * ]
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ ) + * ]
+T -> [ T * . F ] Dot-index: 2 Lookup: [ ) + * ]
+=====
+=====
+State-index: 17:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ $ + * ]
+=====
+=====
+State-index: 18:
+F -> [ . ( E ) ] Dot-index: 0 Lookup: [ ) + * ]
+E -> [ E + . T ] Dot-index: 2 Lookup: [ ) + ]
+T -> [ . F ] Dot-index: 0 Lookup: [ ) + * ]
+F -> [ . id ] Dot-index: 0 Lookup: [ ) + * ]
+T -> [ . T * F ] Dot-index: 0 Lookup: [ ) + * ]
+=====
+=====
+State-index: 19:
+T -> [ T . * F ] Dot-index: 1 Lookup: [ $ + * ]
+E -> [ E + T . ] Dot-index: 3 Lookup: [ $ + ]
+=====
+=====
+State-index: 20:
+F -> [ ( E ) . ] Dot-index: 3 Lookup: [ ) + * ]
+=====
+=====
+State-index: 21:
+T -> [ T * F . ] Dot-index: 3 Lookup: [ ) + * ]
+=====
+=====
+State-index: 22:
+E -> [ E + T . ] Dot-index: 3 Lookup: [ ) + ]
+T -> [ T . * F ] Dot-index: 1 Lookup: [ ) + * ]
+=====
+Action and Goto for all states:
+State-0
+GOTO( 0, F) = S5
+GOTO( 0, E) = S4
+GOTO( 0, () = S3
+GOTO( 0, id) = S2
+GOTO( 0, T) = S1
+===
+State-1
+GOTO( 1, *) = S6
+REDUCE( 1, $) = R1
+REDUCE( 1, +) = R1
+===
+State-2
+REDUCE( 2, $) = R5
+REDUCE( 2, +) = R5
+REDUCE( 2, *) = R5
+===
+State-3
+GOTO( 3, E) = S11
+GOTO( 3, id) = S10
+GOTO( 3, T) = S9
+GOTO( 3, F) = S8
+GOTO( 3, () = S7
+===
+State-4
+GOTO( 4, +) = S13
+GOTO( 4, $) = S12
+===
+State-5
+REDUCE( 5, $) = R3
+REDUCE( 5, +) = R3
+REDUCE( 5, *) = R3
+===
+State-6
+GOTO( 6, id) = S2
+GOTO( 6, F) = S14
+GOTO( 6, () = S3
+===
+State-7
+GOTO( 7, id) = S10
+GOTO( 7, E) = S15
+GOTO( 7, T) = S9
+GOTO( 7, F) = S8
+GOTO( 7, () = S7
+===
+State-8
+REDUCE( 8, )) = R3
+REDUCE( 8, +) = R3
+REDUCE( 8, *) = R3
+===
+State-9
+GOTO( 9, *) = S16
+REDUCE( 9, )) = R1
+REDUCE( 9, +) = R1
+===
+State-10
+REDUCE( 10, )) = R5
+REDUCE( 10, +) = R5
+REDUCE( 10, *) = R5
+===
+State-11
+GOTO( 11, +) = S18
+GOTO( 11, )) = S17
+===
+State-12
+REDUCE( 12, $) = R6
+===
+State-13
+GOTO( 13, T) = S19
+GOTO( 13, F) = S5
+GOTO( 13, () = S3
+GOTO( 13, id) = S2
+===
+State-14
+REDUCE( 14, $) = R2
+REDUCE( 14, +) = R2
+REDUCE( 14, *) = R2
+===
+State-15
+GOTO( 15, +) = S18
+GOTO( 15, )) = S20
+===
+State-16
+GOTO( 16, id) = S10
+GOTO( 16, () = S7
+GOTO( 16, F) = S21
+===
+State-17
+REDUCE( 17, $) = R4
+REDUCE( 17, +) = R4
+REDUCE( 17, *) = R4
+===
+State-18
+GOTO( 18, () = S7
+GOTO( 18, T) = S22
+GOTO( 18, F) = S8
+GOTO( 18, id) = S10
+===
+State-19
+GOTO( 19, *) = S6
+REDUCE( 19, $) = R0
+REDUCE( 19, +) = R0
+===
+State-20
+REDUCE( 20, )) = R4
+REDUCE( 20, +) = R4
+REDUCE( 20, *) = R4
+===
+State-21
+REDUCE( 21, )) = R2
+REDUCE( 21, +) = R2
+REDUCE( 21, *) = R2
+===
+State-22
+GOTO( 22, *) = S16
+REDUCE( 22, )) = R0
+REDUCE( 22, +) = R0
+===
+Enter a directory to store created GOTO/REDUCE actions and LR1 Grammar: Enter input:
+Test-input:
+Token: id
+Token: +
+Token: id
+Token: *
+Token: id
+Token: *
+Token: (
+Token: id
+Token: +
+Token: id
+Token: )
+===
+Processing for state: 0 Token: id
+Stack: [ 0 ] 
+Syms: [ ] 
+Action: Shift-2
+===
+Processing for state: 2 Token: +
+Stack: [ 2 0 ] 
+Syms: [ id ] 
+Action: Reduce-5
+===
+Processing for state: 5 Token: +
+Stack: [ 5 0 ] 
+Syms: [ F ] 
+Action: Reduce-3
+===
+Processing for state: 1 Token: +
+Stack: [ 1 0 ] 
+Syms: [ T ] 
+Action: Reduce-1
+===
+Processing for state: 4 Token: +
+Stack: [ 4 0 ] 
+Syms: [ E ] 
+Action: Shift-13
+===
+Processing for state: 13 Token: id
+Stack: [ 13 4 0 ] 
+Syms: [ + E ] 
+Action: Shift-2
+===
+Processing for state: 2 Token: *
+Stack: [ 2 13 4 0 ] 
+Syms: [ id + E ] 
+Action: Reduce-5
+===
+Processing for state: 5 Token: *
+Stack: [ 5 13 4 0 ] 
+Syms: [ F + E ] 
+Action: Reduce-3
+===
+Processing for state: 19 Token: *
+Stack: [ 19 13 4 0 ] 
+Syms: [ T + E ] 
+Action: Shift-6
+===
+Processing for state: 6 Token: id
+Stack: [ 6 19 13 4 0 ] 
+Syms: [ * T + E ] 
+Action: Shift-2
+===
+Processing for state: 2 Token: *
+Stack: [ 2 6 19 13 4 0 ] 
+Syms: [ id * T + E ] 
+Action: Reduce-5
+===
+Processing for state: 14 Token: *
+Stack: [ 14 6 19 13 4 0 ] 
+Syms: [ F * T + E ] 
+Action: Reduce-2
+===
+Processing for state: 19 Token: *
+Stack: [ 19 13 4 0 ] 
+Syms: [ T + E ] 
+Action: Shift-6
+===
+Processing for state: 6 Token: (
+Stack: [ 6 19 13 4 0 ] 
+Syms: [ * T + E ] 
+Action: Shift-3
+===
+Processing for state: 3 Token: id
+Stack: [ 3 6 19 13 4 0 ] 
+Syms: [ ( * T + E ] 
+Action: Shift-10
+===
+Processing for state: 10 Token: +
+Stack: [ 10 3 6 19 13 4 0 ] 
+Syms: [ id ( * T + E ] 
+Action: Reduce-5
+===
+Processing for state: 8 Token: +
+Stack: [ 8 3 6 19 13 4 0 ] 
+Syms: [ F ( * T + E ] 
+Action: Reduce-3
+===
+Processing for state: 9 Token: +
+Stack: [ 9 3 6 19 13 4 0 ] 
+Syms: [ T ( * T + E ] 
+Action: Reduce-1
+===
+Processing for state: 11 Token: +
+Stack: [ 11 3 6 19 13 4 0 ] 
+Syms: [ E ( * T + E ] 
+Action: Shift-18
+===
+Processing for state: 18 Token: id
+Stack: [ 18 11 3 6 19 13 4 0 ] 
+Syms: [ + E ( * T + E ] 
+Action: Shift-10
+===
+Processing for state: 10 Token: )
+Stack: [ 10 18 11 3 6 19 13 4 0 ] 
+Syms: [ id + E ( * T + E ] 
+Action: Reduce-5
+===
+Processing for state: 8 Token: )
+Stack: [ 8 18 11 3 6 19 13 4 0 ] 
+Syms: [ F + E ( * T + E ] 
+Action: Reduce-3
+===
+Processing for state: 22 Token: )
+Stack: [ 22 18 11 3 6 19 13 4 0 ] 
+Syms: [ T + E ( * T + E ] 
+Action: Reduce-0
+===
+Processing for state: 11 Token: )
+Stack: [ 11 3 6 19 13 4 0 ] 
+Syms: [ E ( * T + E ] 
+Action: Shift-17
+===
+Processing for state: 17 Token: $
+Stack: [ 17 11 3 6 19 13 4 0 ] 
+Syms: [ ) E ( * T + E ] 
+Action: Reduce-4
+===
+Processing for state: 14 Token: $
+Stack: [ 14 6 19 13 4 0 ] 
+Syms: [ F * T + E ] 
+Action: Reduce-2
+===
+Processing for state: 19 Token: $
+Stack: [ 19 13 4 0 ] 
+Syms: [ T + E ] 
+Action: Reduce-0
+===
+Processing for state: 4 Token: $
+Stack: [ 4 0 ] 
+Syms: [ E ] 
+Verdict: Accepted
