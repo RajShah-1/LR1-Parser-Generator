@@ -113,85 +113,6 @@ bool LR1::parseTokens(const vector<string>& tokens) {
   return false;
 }
 
-bool LR1::readAndParse(int (*nextToken)(), const int& lineNum, char*& tokenType,
-                       char*& tokenText) {
-  vector<string> tokens;
-  stack<int> states;
-  states.push(0);
-
-  int token = nextToken();
-  bool isEOF = false;
-  while (token) {
-    cout << "===\n";
-    if (token == -1) {
-      cout << "Error in line " << lineNum << ", Rejecting: " << tokenText
-           << "\n";
-      continue;
-    } else {
-      cout << "Token: " << tokenType << "\n";
-      tokens.push_back(tokenType);
-    }
-
-    // Parsing logic here
-    int currState = states.top();
-    string currTokenType = tokenType;
-    cout << "Processing for state: " << currState << " Token: " << tokenType
-         << "\n";
-    if (isEOF) {
-      currTokenType = DOLLAR_SYMBOL;
-    } else if (this->symToPtr.find(currTokenType) == this->symToPtr.end()) {
-      cout << "[ERROR] Token is valid, but corresponding terminal symbol is "
-              "not in the grammar!\n";
-      cout << "Ignoring " << currTokenType << "...\n";
-      continue;
-    }
-    Symbol* sym = this->symToPtr[currTokenType];
-    if (this->gotoNewState[currState].find(sym) !=
-        this->gotoNewState[currState].end()) {
-      // shift
-      states.push(this->gotoNewState[currState][sym]);
-      cout << "Action: Shift-" << this->gotoNewState[currState][sym] << "\n";
-    } else if (this->reduction[currState].find(sym) !=
-               this->reduction[currState].end()) {
-      // reduce
-      cout << "Action: Reduce-" << this->reduction[currState][sym] << "\n";
-      ProductionRule* pr = this->idToPr[this->reduction[currState][sym]];
-      for (int count = 1; count <= pr->rhs.size(); ++count) {
-        if (states.empty()) {
-          cout << "[ERROR] Empty stack\n";
-          cout << "Exiting from the fn...\n";
-          return false;
-        }
-        states.pop();
-      }
-      if (states.empty()) {
-        cout << "[ERROR] Empty stack\n";
-        cout << "Exiting from the fn...\n";
-        return false;
-      }
-      currState = states.top();
-      if (this->gotoNewState[currState].find(pr->lhs) ==
-          this->gotoNewState[currState].end()) {
-        cout << "No goto for the non-terminal " << pr->lhs->symbol << "\n";
-        cout << "Exiting from the fn...\n";
-        return false;
-      }
-      states.push(this->gotoNewState[currState][pr->lhs]);
-    } else {
-      cout << "Unexpected token: " << currTokenType << "\n";
-      cout << "Exiting from the fn...\n";
-      return false;
-    }
-    if (isEOF) break;
-    token = nextToken();
-    if (token == 0 && !isEOF) {
-      token = 1;
-      isEOF = true;
-    }
-  }
-  return states.empty();
-}
-
 void LR1::buildDFA() {
   SetOfItems* state0 = this->createState0();
   SetOfItems* state0Closure =
@@ -269,9 +190,8 @@ void LR1::buildDFA() {
     for (const auto& rednEntry : this->reduction[stateIndex]) {
       cout << "REDUCE( " << stateIndex << ", " << rednEntry.first->symbol
            << ") = "
-           << "S" << rednEntry.second << "\n";
+           << "R" << rednEntry.second << "\n";
     }
-
     cout << "===\n";
   }
 }
@@ -455,6 +375,68 @@ void LR1::readCFG() {
   this->startSymbol = this->symToPtr[sym];
 }
 
+void LR1::createLR1File() {
+  ofstream outFile;
+  if (this->dirPath != "") {
+    outFile.open(dirPath + "/" + LR1_FILE_NAME);
+  } else {
+    outFile.open("./" + LR1_FILE_NAME);
+  }
+
+  outFile << "===LR1-grammar-begin:\n";
+  outFile << "Terminals: ";
+  outFile << this->terminals.size() << " ";
+  for (Symbol* terminal : this->terminals) {
+    outFile << terminal << " ";
+  }
+  outFile << "\n";
+
+  outFile << "Non-terminals: ";
+  outFile << this->nonTerminals.size() << " ";
+  for (Symbol* nonTerminal : this->nonTerminals) {
+    outFile << nonTerminal << " ";
+  }
+  outFile << "\n";
+
+  outFile << "Eps-symbol: " << this->epsSymbol << "\n";
+  outFile << "Dollar-symbol: " << this->dollarSymbol << "\n";
+  outFile << "Start-symbol: " << this->startSymbol << "\n";
+
+  int totalProdRules = 0;
+  for (auto pr : this->productionRules) {
+    totalProdRules += pr.second.size();
+  }
+
+  outFile << "===Production-rules-begin:\n";
+  outFile << totalProdRules << "\n";
+  for (auto pr : this->productionRules) {
+    for (ProductionRule* productionRule : pr.second) {
+      outFile << productionRule << "\n";
+    }
+  }
+  outFile << "===Production-rules-end\n";
+  outFile << "===GOTO-REDUCE-begin\n";
+  outFile << "numStates: " << this->idToDFAState.size() << "\n";
+  for (const auto& state : this->idToDFAState) {
+    int stateIndex = state.first;
+    outFile << "State: " << stateIndex << "\n";
+    outFile << "numGOTO: " << this->gotoNewState[stateIndex].size() << "\n";
+    for (const auto& gotoEntry : this->gotoNewState[stateIndex]) {
+      outFile << "GOTO( " << stateIndex << ", " << gotoEntry.first->symbol
+              << " ) = " << gotoEntry.second << "\n";
+    }
+    outFile << "numREDUCE: " << this->reduction[stateIndex].size() << "\n";
+    for (const auto& rednEntry : this->reduction[stateIndex]) {
+      outFile << "REDUCE( " << stateIndex << ", " << rednEntry.first->symbol
+              << " ) = " << rednEntry.second << "\n";
+    }
+    outFile << "===\n";
+  }
+  outFile << "===GOTO-REDUCE-end\n";
+  outFile << "===LR1-grammar-end\n";
+  outFile.close();
+}
+
 void LR1::printCFG() {
   cout << "=== CFG\n";
   cout << "Terminals: ";
@@ -491,6 +473,7 @@ ostream& operator<<(ostream& os, const Symbol* sym) {
 }
 
 ostream& operator<<(ostream& os, const ProductionRule* pr) {
+  os << "id: " << pr->id << " rule: ";
   os << pr->lhs->symbol << " -> [ ";
   for (Symbol* rhsSym : pr->rhs) {
     os << rhsSym->symbol << " ";

@@ -3,6 +3,8 @@
 
 int main() {
   LR1 cfg;
+  cfg.setDirPath("./grammar_2");
+  cfg.createLR1File();
   cout << "Enter input:\n";
   vector<string> tokens;
 

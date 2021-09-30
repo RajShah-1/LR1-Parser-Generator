@@ -75,9 +75,7 @@ class LR1 {
   void printCFG();
   void buildDFA();
   void setDirPath(const string& dirPath);
-  bool readAndParse(int (*nextToken)(), const int& lineNum,
-                    char*& tokenType, char*& tokenText);
-
+  void createLR1File();
   bool parseTokens(const vector<string>& tokens);
 };
 
