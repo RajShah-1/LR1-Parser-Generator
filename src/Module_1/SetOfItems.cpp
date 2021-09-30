@@ -14,7 +14,7 @@ string Item::computeHash() const {
   for (const Symbol* sym : lookup) {
     hash += " " + to_string(sym->id);
   }
-  hash += "]";
+  hash += " ]";
   // cout << "[DEBUG Item Hash] " << hash << "\n";
   return hash;
 }
@@ -24,13 +24,15 @@ void Item::print() const {
   int index = 0;
   for (Symbol* rhsSym : this->pr->rhs) {
     if (index == this->dotIndex) {
-      cout << "\033[1;32m.\033[0m ";
+      // cout << "\033[1;32m.\033[0m ";
+      cout << ". ";
     }
     cout << rhsSym->symbol << " ";
     index++;
   }
   if (index == this->dotIndex) {
-    cout << "\033[1;32m.\033[0m ";
+    // cout << "\033[1;32m.\033[0m ";
+    cout << ". ";
   }
   cout << "] ";
 
@@ -160,9 +162,9 @@ SetOfItems* SetOfItems::getClosure(
     auto itemClosure =
         this->closureOneItem(item, productionRules, firstSetsMap);
     for (const auto& newItem : itemClosure) {
-      cout << "[DEBUG] ";
-      newItem->print();
-      cout << "\n";
+      // cout << "[DEBUG] ";
+      // newItem->print();
+      // cout << "\n";
 
       bool doesItemExist = false;
       // -> attempt to add them to the closureMap and
@@ -184,11 +186,9 @@ SetOfItems* SetOfItems::getClosure(
       }
       if (!doesItemExist) {
         processingQueue.push(newItem);
-        // closureItems.insert(newItem);
-      } else{
+      } else {
         delete newItem;
       }
-      // cout << "[DEBUG] item processed\n";
     }
     delete item;
   }
@@ -206,7 +206,9 @@ unordered_set<Symbol*> SetOfItems::getNextSymbols() {
   unordered_set<Symbol*> nextSyms;
   for (Item* item : this->items) {
     if (item->dotIndex < item->pr->rhs.size()) {
-      nextSyms.insert(item->pr->rhs[item->dotIndex]);
+      if (item->pr->rhs[item->dotIndex]->symbol != EPSILON_SYMBOL) {
+        nextSyms.insert(item->pr->rhs[item->dotIndex]);
+      }
     }
   }
   return nextSyms;
@@ -228,10 +230,15 @@ SetOfItems* SetOfItems::goToNewState(Symbol* sym) const {
 unordered_map<Symbol*, const ProductionRule*> SetOfItems::getReductions() {
   unordered_map<Symbol*, const ProductionRule*> reductions;
   for (Item* item : this->items) {
-    if (item->dotIndex == item->pr->rhs.size()) {
+    // B-> .EPS leads to a reduction
+    if (item->dotIndex == item->pr->rhs.size() ||
+        (item->pr->rhs.size() == 1 &&
+         item->pr->rhs[0]->symbol == EPSILON_SYMBOL)) {
       for (Symbol* sym : item->lookup) {
         if (reductions.find(sym) != reductions.end()) {
-          cout << "[ERROR] Reduce-Reduce conflict!!!\n";
+          cout << "[ERROR] Reduce-Reduce conflict!!! State: "
+               << this->stateIndex << " Symbol:" << sym->symbol << "\n";
+          throw NOT_LR1_EXCEPTION;
         } else {
           reductions[sym] = item->pr;
         }
@@ -249,7 +256,7 @@ string SetOfItems::computeHash() const {
   sort(itemHashes.begin(), itemHashes.end());
   string hash;
   for (const string& str : itemHashes) {
-    hash = str + " | ";
+    hash += str + " | ";
   }
   return hash;
 }

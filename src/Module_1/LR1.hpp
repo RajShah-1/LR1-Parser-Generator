@@ -39,6 +39,9 @@ class LR1 {
   // map production-rule pointers to corresponding production-rule-id
   unordered_map<ProductionRule*, int> prToId;
 
+  // map production-rule pointers to corresponding production-rule-id
+  unordered_map<int, ProductionRule*> idToPr;
+
   // Relative path of grammar's folder from current directory
   string dirPath;
 
@@ -72,12 +75,17 @@ class LR1 {
   void printCFG();
   void buildDFA();
   void setDirPath(const string& dirPath);
-  // void createParseTableFile() const;
+  bool readAndParse(int (*nextToken)(), const int& lineNum,
+                    char*& tokenType, char*& tokenText);
+
+  bool parseTokens(const vector<string>& tokens);
 };
 
 // Operator-overloadings for easy printing
 // print stack
 ostream& operator<<(ostream& os, stack<Symbol*> st);
+ostream& operator<<(ostream& os, stack<int> st);
+ostream& operator<<(ostream& os, stack<string> st);
 // print vector from pair.second.first to pair.second.second
 // (pair.second.first inclusive and pair.second.second exclusive)
 ostream& operator<<(ostream& os,

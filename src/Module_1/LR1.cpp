@@ -41,6 +41,157 @@ LR1::~LR1() {
   }
 }
 
+bool LR1::parseTokens(const vector<string>& tokens) {
+  stack<int> states;
+  stack<string> stateSyms;
+  states.push(0);
+
+  int numTokens = tokens.size();
+  for (int tokenIndex = 0; tokenIndex < numTokens; ++tokenIndex) {
+    string tokenType = tokens[tokenIndex];
+    cout << "===\n";
+    // Parsing logic here
+    int currState = states.top();
+    cout << "Processing for state: " << currState << " Token: " << tokenType
+         << "\n";
+    cout << "Stack: " << states << "\n";
+    cout << "Syms: " << stateSyms << "\n";
+    if (this->symToPtr.find(tokenType) == this->symToPtr.end()) {
+      cout << "[ERROR] Token is valid, but corresponding terminal symbol is "
+              "not in the grammar!\n";
+      cout << "Ignoring " << tokenType << "...\n";
+      continue;
+    }
+    Symbol* sym = this->symToPtr[tokenType];
+    if (this->gotoNewState[currState].find(sym) !=
+        this->gotoNewState[currState].end()) {
+      // shift
+      if (sym == this->dollarSymbol) return true;
+      states.push(this->gotoNewState[currState][sym]);
+      stateSyms.push(sym->symbol);
+      cout << "Action: Shift-" << this->gotoNewState[currState][sym] << "\n";
+    } else if (this->reduction[currState].find(sym) !=
+               this->reduction[currState].end()) {
+      // reduce
+      cout << "Action: Reduce-" << this->reduction[currState][sym] << "\n";
+      ProductionRule* pr = this->idToPr[this->reduction[currState][sym]];
+      // if pr is of the form "NonTer -> [ EPS ]" do not pop anything from the
+      // state
+      if (pr->rhs.size() != 1 || pr->rhs[0] != this->epsSymbol) {
+        for (int count = 1; count <= pr->rhs.size(); ++count) {
+          if (states.empty()) {
+            cout << "[ERROR] Empty stack\n";
+            cout << "Exiting from the fn...\n";
+            return false;
+          }
+          states.pop();
+          stateSyms.pop();
+        }
+      }
+      if (states.empty()) {
+        cout << "[ERROR] Empty stack\n";
+        cout << "Exiting from the fn...\n";
+        return false;
+      }
+      currState = states.top();
+      if (this->gotoNewState[currState].find(pr->lhs) ==
+          this->gotoNewState[currState].end()) {
+        cout << "No goto for the non-terminal " << pr->lhs->symbol << "\n";
+        cout << "Exiting from the fn...\n";
+        return false;
+      }
+      states.push(this->gotoNewState[currState][pr->lhs]);
+      stateSyms.push(pr->lhs->symbol);
+      --tokenIndex;
+    } else {
+      cout << "Unexpected token: " << tokenType << "\n";
+      cout << "Exiting from the fn...\n";
+      return false;
+    }
+  }
+  cout << "AT END " << states;
+  return false;
+}
+
+bool LR1::readAndParse(int (*nextToken)(), const int& lineNum, char*& tokenType,
+                       char*& tokenText) {
+  vector<string> tokens;
+  stack<int> states;
+  states.push(0);
+
+  int token = nextToken();
+  bool isEOF = false;
+  while (token) {
+    cout << "===\n";
+    if (token == -1) {
+      cout << "Error in line " << lineNum << ", Rejecting: " << tokenText
+           << "\n";
+      continue;
+    } else {
+      cout << "Token: " << tokenType << "\n";
+      tokens.push_back(tokenType);
+    }
+
+    // Parsing logic here
+    int currState = states.top();
+    string currTokenType = tokenType;
+    cout << "Processing for state: " << currState << " Token: " << tokenType
+         << "\n";
+    if (isEOF) {
+      currTokenType = DOLLAR_SYMBOL;
+    } else if (this->symToPtr.find(currTokenType) == this->symToPtr.end()) {
+      cout << "[ERROR] Token is valid, but corresponding terminal symbol is "
+              "not in the grammar!\n";
+      cout << "Ignoring " << currTokenType << "...\n";
+      continue;
+    }
+    Symbol* sym = this->symToPtr[currTokenType];
+    if (this->gotoNewState[currState].find(sym) !=
+        this->gotoNewState[currState].end()) {
+      // shift
+      states.push(this->gotoNewState[currState][sym]);
+      cout << "Action: Shift-" << this->gotoNewState[currState][sym] << "\n";
+    } else if (this->reduction[currState].find(sym) !=
+               this->reduction[currState].end()) {
+      // reduce
+      cout << "Action: Reduce-" << this->reduction[currState][sym] << "\n";
+      ProductionRule* pr = this->idToPr[this->reduction[currState][sym]];
+      for (int count = 1; count <= pr->rhs.size(); ++count) {
+        if (states.empty()) {
+          cout << "[ERROR] Empty stack\n";
+          cout << "Exiting from the fn...\n";
+          return false;
+        }
+        states.pop();
+      }
+      if (states.empty()) {
+        cout << "[ERROR] Empty stack\n";
+        cout << "Exiting from the fn...\n";
+        return false;
+      }
+      currState = states.top();
+      if (this->gotoNewState[currState].find(pr->lhs) ==
+          this->gotoNewState[currState].end()) {
+        cout << "No goto for the non-terminal " << pr->lhs->symbol << "\n";
+        cout << "Exiting from the fn...\n";
+        return false;
+      }
+      states.push(this->gotoNewState[currState][pr->lhs]);
+    } else {
+      cout << "Unexpected token: " << currTokenType << "\n";
+      cout << "Exiting from the fn...\n";
+      return false;
+    }
+    if (isEOF) break;
+    token = nextToken();
+    if (token == 0 && !isEOF) {
+      token = 1;
+      isEOF = true;
+    }
+  }
+  return states.empty();
+}
+
 void LR1::buildDFA() {
   SetOfItems* state0 = this->createState0();
   SetOfItems* state0Closure =
@@ -56,7 +207,6 @@ void LR1::buildDFA() {
     processingQueue.pop();
     auto nextSyms = currState->getNextSymbols();
     for (Symbol* sym : nextSyms) {
-      // cout << "[DEBUG] " << sym->symbol << "\n";
       SetOfItems* newState = currState->goToNewState(sym);
       string newStateHash = newState->computeHash();
       if (this->hashToDFAStates.find(newStateHash) ==
@@ -69,7 +219,7 @@ void LR1::buildDFA() {
         this->hashToDFAStates[newStateHash] = newStateClosure;
         this->totNumStates++;
         processingQueue.push(newStateClosure);
-      } else{
+      } else {
         delete newState;
       }
       this->gotoNewState[currState->getStateIndex()][sym] =
@@ -84,6 +234,21 @@ void LR1::buildDFA() {
     auto redns = itemsSet->getReductions();
     for (const auto& redn : redns) {
       this->reduction[stateIndex][redn.first] = redn.second->id;
+    }
+  }
+
+  // Check for shift-reduce conflicts
+  for (const auto& state : this->idToDFAState) {
+    SetOfItems* itemsSet = state.second;
+    int stateIndex = state.first;
+    auto& shifts = this->gotoNewState[stateIndex];
+    auto& reductions = this->reduction[stateIndex];
+    for (auto sym : shifts) {
+      if (reductions.find(sym.first) != reductions.end()) {
+        cout << "[ERROR] Shift-Reduce conflict!!! State: " << stateIndex
+             << " Symbol:" << sym.first->symbol << "\n";
+        throw NOT_LR1_EXCEPTION;
+      }
     }
   }
 
@@ -112,6 +277,7 @@ void LR1::buildDFA() {
 }
 
 SetOfItems* LR1::createState0() {
+  this->totNumStates = 0;
   set<Item*> items;
   set<Symbol*> lookup;
   lookup.insert({this->dollarSymbol});
@@ -266,6 +432,7 @@ void LR1::readCFG() {
         newPrPtr = new ProductionRule(this->totNumPr, lhs, rhs);
         this->productionRules[this->symToPtr[lhsStr]].insert(newPrPtr);
         this->prToId[newPrPtr] = this->totNumPr;
+        this->idToPr[this->totNumPr] = newPrPtr;
         ++this->totNumPr;
         rhs.clear();
       } else {
@@ -277,6 +444,7 @@ void LR1::readCFG() {
     newPrPtr = new ProductionRule(this->totNumPr, lhs, rhs);
     this->productionRules[this->symToPtr[lhsStr]].insert(newPrPtr);
     this->prToId[newPrPtr] = this->totNumPr;
+    this->idToPr[this->totNumPr] = newPrPtr;
     ++this->totNumPr;
   }
 
@@ -306,6 +474,7 @@ void LR1::printCFG() {
   cout << "\nProduction rules:\n";
   for (const auto& pr : this->productionRules) {
     for (ProductionRule* productionRule : pr.second) {
+      cout << "Id: " << productionRule->id << " ";
       cout << productionRule << "\n";
     }
   }
@@ -334,6 +503,26 @@ ostream& operator<<(ostream& os, stack<Symbol*> st) {
   os << "[ ";
   while (!st.empty()) {
     os << st.top()->symbol << " ";
+    st.pop();
+  }
+  os << "] ";
+  return os;
+}
+
+ostream& operator<<(ostream& os, stack<int> st) {
+  os << "[ ";
+  while (!st.empty()) {
+    os << st.top() << " ";
+    st.pop();
+  }
+  os << "] ";
+  return os;
+}
+
+ostream& operator<<(ostream& os, stack<string> st) {
+  os << "[ ";
+  while (!st.empty()) {
+    os << st.top() << " ";
     st.pop();
   }
   os << "] ";
